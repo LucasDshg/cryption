@@ -60,20 +60,12 @@ export class MenuComponent implements OnInit {
   readonly activeTab = signal<string>('home');
   readonly menu = signal<{ path: string; icon: string }[]>([
     {
-      icon: 'ri-home-5',
+      icon: 'home',
       path: 'home',
     },
     {
-      icon: 'ri-bill',
-      path: 'ticket',
-    },
-    {
-      icon: 'ri-heart-3',
-      path: 'favorite',
-    },
-    {
-      icon: 'ri-user',
-      path: 'client',
+      icon: 'reader',
+      path: 'reader',
     },
   ]);
 

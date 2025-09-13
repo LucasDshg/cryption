@@ -4,6 +4,7 @@ import {
   DEFAULT_CURRENCY_CODE,
   LOCALE_ID,
   enableProdMode,
+  provideZonelessChangeDetection,
 } from '@angular/core';
 import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -50,6 +51,7 @@ bootstrapApplication(AppComponent, {
       provide: DATE_PIPE_DEFAULT_OPTIONS,
       useValue: { timezone: 'pt-br', dateFormat: 'dd/MM/yyyy' },
     },
+    provideZonelessChangeDetection(),
     provideAnimationsAsync(),
     // provideHttpClient(withInterceptors([authInterceptor])),
     provideIonicAngular({

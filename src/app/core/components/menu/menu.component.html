@@ -13,13 +13,14 @@
       [replaceUrl]="true"
       #elem
     >
-      <i
+      <ion-icon [name]="item.icon"></ion-icon>
+      <!-- <i
         [class]="
           elem.classList.contains('active')
             ? item.icon + '-fill'
             : item.icon + '-line'
         "
-      ></i>
+      ></i> -->
     </a>
     }
   </div>
