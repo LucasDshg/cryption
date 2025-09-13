@@ -1,0 +1,18 @@
+.list-rating {
+  list-style: none;
+  width: 100%;
+  &-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  &-label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}

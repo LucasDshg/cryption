@@ -1,0 +1,40 @@
+.menu {
+  border-radius: 30rem;
+  background: var(--ion-item-background);
+  padding: 6px;
+  box-shadow: var(--shadow);
+}
+
+.footer-menu {
+  box-shadow: none !important;
+  position: fixed;
+  bottom: 0;
+  margin: 8px 4px;
+  background: transparent;
+  transform: translateX(-50%);
+  left: 50%;
+  width: auto;
+  height: 66px !important;
+}
+
+.menu-item {
+  margin-right: 14px;
+  border-radius: 20rem;
+  padding: 12px;
+  color: var(--ion-color-dark);
+  text-decoration: unset;
+  transition: background 300ms ease-in-out;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &.active {
+    background: var(--ion-color-secondary);
+    color: var(--ion-item-background);
+  }
+
+  i {
+    font-size: 1.5rem;
+  }
+}

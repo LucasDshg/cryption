@@ -1,0 +1,33 @@
+ion-title {
+  font-size: 2rem !important;
+  font-weight: 600 !important;
+}
+
+.label-text {
+  color: var(--ion-color-dark);
+}
+
+.title {
+  transition: all 300ms ease-in-out;
+}
+
+.title-scroll {
+  position: fixed;
+  top: 26px;
+  z-index: 1000;
+  font-size: 20px !important;
+  right: 24px;
+}
+
+.ion-text-dark {
+  color: var(--ion-color-dark) !important;
+}
+.ion-text-white {
+  color: white !important;
+}
+
+.ion-text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,13 @@
+ion-datetime-button.btn-date::part(native) {
+  background: transparent;
+  padding: 0;
+  font-size: 14px;
+  color: var(--ion-color-dark);
+}
+
+ion-datetime-button.btn-date-sm::part(native) {
+  background: var(--ion-color-light);
+  padding: 0.5rem;
+  font-size: 14px;
+  color: var(--ion-color-dark);
+}

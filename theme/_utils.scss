@@ -1,0 +1,132 @@
+.ion-h-100 {
+  height: 100% !important;
+}
+.ion-w-100 {
+  width: 100% !important;
+}
+.ion-w-fit {
+  width: fit-content !important;
+}
+
+.ion-wrap-auto {
+  text-wrap: auto !important;
+}
+
+.ion-no-shadow {
+  box-shadow: none !important;
+}
+
+.ion-overflow-auto {
+  overflow: auto !important;
+}
+
+.ion-rounded {
+  border-radius: 1rem !important;
+}
+
+.disabled {
+  opacity: 0.5;
+}
+
+.line {
+  width: 100%;
+  border-top: 1px dashed var(--ion-color-medium);
+  height: 1px;
+  margin: 0 8px;
+}
+
+.blur-page {
+  height: 100vh;
+  border-radius: 5px;
+  backdrop-filter: blur(2px);
+  background-color: rgba(255, 255, 255, 0.2);
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.blur-card {
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+  backdrop-filter: blur(2px);
+  background-color: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.toggle-card {
+  max-height: 0;
+  transition: all 300ms ease-in;
+  opacity: 0;
+  padding-bottom: 0;
+
+  &.show {
+    max-height: 600px;
+    opacity: 1;
+    padding-bottom: 13px;
+  }
+}
+
+.img-card {
+  border: 1px solid #b1aeae;
+  border-radius: 6px;
+  padding: 4px;
+  display: flex;
+}
+
+.container-scroll {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+
+  ion-card {
+    width: calc(100% + 60rem);
+    &.list {
+      width: 100% !important;
+      scroll-snap-align: center;
+      min-width: calc(100% - 50px);
+    }
+  }
+}
+
+.container-scroll {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+
+  ion-card {
+    width: calc(100% + 60rem);
+    &.list {
+      width: 100% !important;
+      scroll-snap-align: center;
+      min-width: calc(100% - 16rem);
+      margin: 16px 8px;
+    }
+  }
+  &:after {
+    content: '';
+    width: 1rem;
+  }
+  &:before {
+    content: '';
+    width: 1rem;
+  }
+}
+
+.product-card {
+  border-radius: 50%;
+  object-fit: cover;
+}
+.default-product {
+  opacity: 50%;
+}

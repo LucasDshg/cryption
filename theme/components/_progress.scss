@@ -1,0 +1,7 @@
+ion-progress-bar.chart {
+  padding: 8px;
+  border-radius: 1rem;
+  &::part(progress) {
+    border-radius: 1rem;
+  }
+}

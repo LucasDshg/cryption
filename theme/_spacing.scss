@@ -1,0 +1,77 @@
+$spacing: (
+  auto: auto,
+  0: 0,
+  4: 4px,
+  8: 8px,
+  16: 16px,
+  24: 24px,
+  32: 32px,
+  80: 80px,
+) !default;
+
+$prefix: 'ion';
+
+@mixin margin($name, $value, $prefix) {
+  .#{$prefix}-m-bottom-#{$name} {
+    margin-bottom: $value !important;
+  }
+  .#{$prefix}-m-top-#{$name} {
+    margin-top: $value !important;
+  }
+
+  .#{$prefix}-m-start-#{$name} {
+    margin-left: $value !important;
+  }
+  .#{$prefix}-m-end-#{$name} {
+    margin-right: $value !important;
+  }
+
+  .#{$prefix}-m-horizontal-#{$name} {
+    margin-left: $value !important;
+    margin-right: $value !important;
+  }
+
+  .#{$prefix}-m-vertical-#{$name} {
+    margin-bottom: $value !important;
+    margin-top: $value !important;
+  }
+
+  .#{$prefix}-m-#{$name} {
+    margin: $value !important;
+  }
+}
+
+@mixin padding($name, $value, $prefix) {
+  .#{$prefix}-p-bottom-#{$name} {
+    padding-bottom: $value !important;
+  }
+  .#{$prefix}-p-top-#{$name} {
+    padding-top: $value !important;
+  }
+
+  .#{$prefix}-p-start-#{$name} {
+    padding-left: $value !important;
+  }
+  .#{$prefix}-p-end-#{$name} {
+    padding-right: $value !important;
+  }
+
+  .#{$prefix}-p-horizontal-#{$name} {
+    padding-left: $value !important;
+    padding-right: $value !important;
+  }
+
+  .#{$prefix}-p-vertical-#{$name} {
+    padding-bottom: $value !important;
+    padding-top: $value !important;
+  }
+
+  .#{$prefix}-p-#{$name} {
+    padding: $value !important;
+  }
+}
+
+@each $name, $value in $spacing {
+  @include margin($name, $value, $prefix);
+  @include padding($name, $value, $prefix);
+}

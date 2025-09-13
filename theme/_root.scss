@@ -1,0 +1,43 @@
+* {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    scrollbar-width: none;
+    -webkit-appearance: none;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+ion-title,
+ion-card-title {
+  font-family: 'Nunito';
+}
+
+p {
+  margin: 0;
+  font-weight: 500;
+}
+
+i {
+  font-size: 1.5rem;
+  font-weight: lighter;
+}
+
+hr {
+  border-top: 1px solid #dadada;
+}
+
+img {
+  object-fit: contain;
+}
+
+small {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+input::placeholder {
+  font-size: 14px;
+  font-weight: 400;
+}

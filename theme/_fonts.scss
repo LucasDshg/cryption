@@ -1,0 +1,37 @@
+.ion-fs-12 {
+  font-size: 0.75rem !important;
+}
+.ion-fs-14 {
+  font-size: 0.875rem !important;
+}
+.ion-fs-16 {
+  font-size: 1rem !important;
+}
+.ion-fs-16 {
+  font-size: 1rem !important;
+}
+.ion-fs-24 {
+  font-size: 1.5rem !important;
+}
+.ion-fs-32 {
+  font-size: 2rem !important;
+}
+
+.ion-fw-light {
+  font-weight: 300 !important;
+}
+.ion-fw-medium {
+  font-weight: 500 !important;
+}
+.ion-fw-semiBold {
+  font-weight: 600 !important;
+}
+.ion-fw-bold {
+  font-weight: 700 !important;
+}
+
+@media screen and (max-width: 400px) {
+  ion-card-title {
+    font-size: 1.125rem;
+  }
+}
