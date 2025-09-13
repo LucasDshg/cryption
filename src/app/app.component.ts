@@ -5,7 +5,6 @@ import {
   EnvironmentInjector,
   inject,
   Injector,
-  OnInit,
 } from '@angular/core';
 import { App } from '@capacitor/app';
 
@@ -26,7 +25,7 @@ import { iconList } from './shared/icons';
   imports: [IonApp, IonRouterOutlet, CommonModule],
   providers: [ModalController, NavController, AlertController],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   private _push = inject(PushNotificationsService);
   private _navCtrl = inject(NavController);
   environmentInjector = inject(EnvironmentInjector);
@@ -47,8 +46,5 @@ export class AppComponent implements OnInit {
     });
 
     this._push.notificationReceived();
-  }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
   }
 }
