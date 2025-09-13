@@ -1,0 +1,15 @@
+.statusbar {
+  background-color: #000000;
+  position: fixed;
+  display: block;
+  height: 30px;
+  top: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+ion-content {
+  --padding-start: 1.25rem;
+  --padding-end: 1.25rem;
+}

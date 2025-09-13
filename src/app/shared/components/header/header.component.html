@@ -1,0 +1,20 @@
+<ion-header id="header">
+  <ion-toolbar>
+    <div class="ion-d-flex">
+      @if (iconLeft()) {
+      <ion-buttons slot="start" class="ion-m-start-0">
+        <ion-button
+          shape="round"
+          class="ion-round-btn btn-dark"
+          (click)="leftIconClick()"
+        >
+          <i [class]="iconLeft()"></i>
+        </ion-button>
+      </ion-buttons>
+      } @if (title()) {
+      <ion-title class="ion-no-padding"> {{ title() }} </ion-title>
+      }
+      <ng-content></ng-content>
+    </div>
+  </ion-toolbar>
+</ion-header>

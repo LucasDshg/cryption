@@ -1,0 +1,24 @@
+ion-toast {
+  &.toast {
+    --box-shadow: var(--shadow);
+    font-weight: 500;
+    --border-radius: 16px;
+
+    &.success {
+      --color: #ffff;
+      --background: var(--ion-color-success);
+    }
+    &.danger {
+      --color: #ffff;
+      --background: var(--ion-color-danger);
+    }
+    &.dark {
+      --color: #ffff;
+      --background: var(--ion-color-dark);
+    }
+    &.light {
+      --color: var(--ion-text-color);
+      --background: var(--ion-item-background);
+    }
+  }
+}

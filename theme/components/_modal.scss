@@ -1,0 +1,14 @@
+ion-modal.cart-modal {
+  --height: calc(100% - 50px);
+  --border-radius: 1rem;
+}
+
+ion-modal {
+  --height: auto;
+  --border-radius: 1rem;
+}
+
+.modal-block {
+  width: 100%;
+  max-height: 640px;
+}

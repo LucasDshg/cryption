@@ -1,0 +1,80 @@
+.ion-dark {
+  ion-card-title,
+  ion-icon,
+  ion-label,
+  ion-title {
+    --color: #ffff !important;
+  }
+
+  ion-tab-bar {
+    --background: var(--ion-item-background);
+  }
+
+  ion-skeleton-text {
+    --border-radius: 9999px;
+    --background-rgb: 255, 255, 255;
+  }
+
+  ion-toolbar {
+    ion-title,
+    ion-icon,
+    ion-back-button {
+      --ion-color-base: var(--ion-color-dark) !important;
+    }
+  }
+
+  ion-toggle {
+    --track-background: var(--ion-color-light);
+    --handle-background: var(--ion-color-medium);
+  }
+
+  ion-modal {
+    --background: #191919;
+  }
+  ion-modal.cart-modal {
+    --background: #000 !important;
+  }
+
+  ion-item {
+    --ion-item-border-color: var(--ion-color-light);
+  }
+
+  ion-chip:not(.selected) {
+    --background: var(--ion-item-background);
+  }
+
+  ion-searchbar {
+    --background: var(--ion-item-background) !important;
+  }
+  ion-footer {
+    ion-toolbar {
+      --background: var(--ion-item-background) !important;
+      border-radius: 1rem !important;
+    }
+  }
+
+  ion-datetime-button {
+    &::part(native) {
+      background: var(--ion-color-light);
+    }
+  }
+
+  ion-datetime {
+    --background: var(--ion-color-light);
+    --wheel-fade-background-rgb: var(--ion-color-light);
+  }
+
+  ion-button.btn-dark {
+    --background: var(--ion-item-background) !important;
+  }
+
+  ion-toast {
+    --background: var(--ion-item-background) !important;
+  }
+
+  .notification {
+    ion-button {
+      --background: var(--ion-color-light) !important;
+    }
+  }
+}

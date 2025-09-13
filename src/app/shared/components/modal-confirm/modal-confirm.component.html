@@ -1,0 +1,32 @@
+<div class="wrapper ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <ion-card-title class="ion-margin"> {{ title() }} </ion-card-title>
+        <ion-text color="dark">
+          <p [innerHTML]="subtitle()"></p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button
+    expand="block"
+    fill="clear"
+    color="danger"
+    shape="round"
+    class="ion-margin-bottom"
+    (click)="dismiss(false)"
+  >
+    Cancelar
+  </ion-button>
+  <ion-button
+    expand="block"
+    color="danger"
+    shape="round"
+    class="ion-margin-bottom"
+    (click)="dismiss(true)"
+  >
+    {{ actionBtn() }}
+  </ion-button>
+</div>

@@ -1,0 +1,7 @@
+{
+  "name": "cryption",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

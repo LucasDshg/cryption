@@ -1,0 +1,36 @@
+.input-fill-outline.input-label-placement-stacked.sc-ion-input-md-h
+  input.sc-ion-input-md,
+.input-fill-outline.input-label-placement-floating.sc-ion-input-md-h
+  input.sc-ion-input-md,
+.input-fill-outline.input-label-placement-stacked.sc-ion-input-md-h
+  .label-text-wrapper.sc-ion-input-md {
+  margin-left: -10px !important;
+}
+ion-input,
+ion-textarea,
+ion-select,
+.ion-input {
+  &.input-fill-outline.sc-ion-input-md-h,
+  &.textarea-fill-outline.sc-ion-textarea-md-h {
+    --padding-start: 1.875rem;
+  }
+  --border-radius: 1.5rem !important;
+  --padding-start: 1.875rem;
+  --padding-end: 1rem;
+  min-height: 54px !important;
+  font-size: 14px !important;
+}
+
+ion-searchbar {
+  --border-radius: 30px !important;
+  --box-shadow: var(--shadow) !important;
+  padding: 16px 0 !important;
+
+  input {
+    font-size: 14px !important;
+  }
+}
+
+ion-select::part(text) {
+  color: var(--ion-color-dark) !important;
+}

@@ -1,0 +1,27 @@
+<ion-router-outlet></ion-router-outlet>
+
+<footer class="footer-menu" [@openClose]="showTab() ? 'open' : 'closed'">
+  @defer (when menu().length > 0) {
+  <div
+    class="ion-d-flex ion-align-items-center ion-justify-content-center menu"
+  >
+    @for (item of menu(); track $index) {
+    <a
+      class="menu-item"
+      [routerLink]="item.path"
+      routerLinkActive="active"
+      [replaceUrl]="true"
+      #elem
+    >
+      <i
+        [class]="
+          elem.classList.contains('active')
+            ? item.icon + '-fill'
+            : item.icon + '-line'
+        "
+      ></i>
+    </a>
+    }
+  </div>
+  }
+</footer>
