@@ -1,7 +1,7 @@
 .menu {
   border-radius: 30rem;
-  background: var(--ion-item-background);
-  padding: 6px;
+  background: var(--ion-color-dark);
+  padding: 6px 32px 6px 32px;
   box-shadow: var(--shadow);
 }
 
@@ -20,8 +20,8 @@
 .menu-item {
   margin-right: 14px;
   border-radius: 20rem;
-  padding: 12px;
-  color: var(--ion-color-dark);
+  padding: 8px;
+  color: var(--ion-color-white);
   text-decoration: unset;
   transition: background 300ms ease-in-out;
 
@@ -30,7 +30,7 @@
   }
 
   &.active {
-    background: var(--ion-color-secondary);
+    background: var(--ion-color-primary);
     color: var(--ion-item-background);
   }
 

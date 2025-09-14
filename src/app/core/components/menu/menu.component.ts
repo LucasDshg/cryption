@@ -20,6 +20,7 @@ import {
   RouterLinkActive,
 } from '@angular/router';
 import { IonRouterOutlet } from '@ionic/angular/standalone';
+import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.component';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 import { removeMask } from 'src/app/utils/utils.function';
 
@@ -32,6 +33,7 @@ import { removeMask } from 'src/app/utils/utils.function';
     IonicComponentsModule,
     RouterLink,
     RouterLinkActive,
+    AppIconComponent,
   ],
   animations: [
     trigger('openClose', [
@@ -66,6 +68,14 @@ export class MenuComponent implements OnInit {
     {
       icon: 'reader',
       path: 'reader',
+    },
+    {
+      icon: 'wallet',
+      path: 'wallet',
+    },
+    {
+      icon: 'grid',
+      path: 'grid',
     },
   ]);
 
