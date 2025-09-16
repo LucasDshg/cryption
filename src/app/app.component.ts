@@ -18,11 +18,12 @@ import {
 import { addIcons } from 'ionicons';
 import { PushNotificationsService } from './core/service/pushNotification.service';
 import { iconList } from './shared/icons';
+import { MenuComponent } from './core/components/menu/menu.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet, CommonModule],
+  imports: [IonApp, IonRouterOutlet, CommonModule, MenuComponent],
   providers: [ModalController, NavController, AlertController],
 })
 export class AppComponent {

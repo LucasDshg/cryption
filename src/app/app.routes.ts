@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
-import { MenuComponent } from './core/components/menu/menu.component';
 import { HOME_ROUTES } from './module/home/home.routes';
+import { LoginPage } from './module/login/login.page';
 
 export const APP_ROUTES: Routes = [
   // {
@@ -11,18 +11,16 @@ export const APP_ROUTES: Routes = [
   // },
   {
     path: '',
-    component: MenuComponent,
-    // canActivate: [authGuard],
-    children: [
-      {
-        path: 'home',
-        children: HOME_ROUTES,
-      },
-      // {
-      //   path: 'cart',
-      //   loadChildren: () =>
-      //     import('./module/cart/cart.routes').then((m) => m.CART_ROUTES),
-      // },
-    ],
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    component: LoginPage,
+    data: { showTab: false },
+  },
+  {
+    path: 'home',
+    children: HOME_ROUTES,
   },
 ];
