@@ -15,7 +15,6 @@ import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
   imports: [IonicComponentsModule, CommonModule, HeaderComponent],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
