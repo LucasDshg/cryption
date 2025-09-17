@@ -10,9 +10,7 @@ export const environment = {
     measurementId: import.meta.env.NG_APP_FIREBASE_MEASUREMENT_ID,
   },
   dataBase: '(default)',
-  algolia: {
-    appId: import.meta.env.NG_APP_ALGOLIA_ID,
-    apiKey: import.meta.env.NG_APP_ALGOLIA_KEY,
-  },
-  mapsKey: import.meta.env.NG_APP_MAPS_KEY,
+  corretora: import.meta.env.NG_APP_CORRETORA,
+  bot: import.meta.env.NG_APP_BOT,
+  api: import.meta.env.NG_APP_API,
 };

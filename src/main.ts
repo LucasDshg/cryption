@@ -32,8 +32,10 @@ import {
   provideIonicAngular,
 } from '@ionic/angular/standalone';
 
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
 import { APP_ROUTES } from './app/app.routes';
+import { authInterceptor } from './app/core/interceptor/auth.interceptor';
 import { environment } from './environments/environment';
 
 if (environment.production) {
@@ -53,7 +55,7 @@ bootstrapApplication(AppComponent, {
     },
     provideZonelessChangeDetection(),
     provideAnimationsAsync(),
-    // provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideIonicAngular({
       swipeBackEnabled: true,
       mode: 'md',

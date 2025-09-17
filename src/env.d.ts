@@ -10,10 +10,10 @@ declare interface Env {
   NG_APP_FIREBASE_MESSAGING_SENDER_ID: string;
   NG_APP_FIREBASE_APP_ID: string;
   NG_APP_FIREBASE_MEASUREMENT_ID: string;
-  NG_APP_ALGOLIA_ID: string;
-  NG_APP_ALGOLIA_KEY: string;
-  NG_APP_STRIPE_PUBLIC_KEY: string;
-  NG_APP_MAPS_KEY: string;
+  NG_APP_CORRETORA: string;
+  NG_APP_BOT: string;
+  NG_APP_API: string;
+
   [key: string]: any;
 }
 
