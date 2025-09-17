@@ -1,7 +1,72 @@
 <app-header title="Resumo"> </app-header>
 
 <ion-content>
-  <ion-text color="primary">
-    <h1>Awesome text</h1>
-  </ion-text>
+  <!-- ToDo[start]: precisa ser um component no shared -->
+  <div
+    class="ion-d-flex ion-overflow-auto ion-align-items-center"
+    style="scrollbar-width: none; scroll-snap-type: x mandatory"
+    id="div_month"
+  >
+    @for (month of months; track month.id) {
+    <ion-chip
+      class="ion-d-block ion-flex-1"
+      [ngClass]="{ 'chip-selected': month.id === monthSelected() }"
+      (click)="setMonth(month.id)"
+    >
+      {{ month.name }}
+    </ion-chip>
+    }
+  </div>
+  <!-- ToDo[end]: precisa ser um component no shared -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" class="ion-p-start-0">
+        <ion-card class="ion-no-shadow ion-m-vertical-0">
+          <ion-card-header>
+            <ion-card-title color="primary">$ 2.200,00</ion-card-title>
+            <ion-card-subtitle color="medium"
+              >Saldo Corretora</ion-card-subtitle
+            >
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6" class="ion-p-end-0">
+        <ion-card class="ion-no-shadow ion-m-vertical-0">
+          <ion-card-header>
+            <ion-card-title color="primary">$ 200,00</ion-card-title>
+            <ion-card-subtitle color="medium">Saldo MK</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" class="ion-p-horizontal-0">
+        <ion-card class="ion-no-shadow ion-m-vertical-0">
+          <ion-card-header>
+            <ion-card-title class="ion-fs-16">Win X Loss</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" class="ion-p-horizontal-0">
+        <ion-card class="ion-no-shadow ion-m-vertical-0">
+          <ion-card-header>
+            <ion-card-title class="ion-fs-16">Lucro Liquido</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" class="ion-p-horizontal-0">
+        <ion-card class="ion-no-shadow ion-m-vertical-0">
+          <ion-card-header>
+            <ion-card-title
+              class="ion-d-flex ion-justify-content-between ion-align-items-center ion-fs-16"
+            >
+              Operações
+              <ion-text>
+                <p class="ion-m-0">12</p>
+              </ion-text>
+            </ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
