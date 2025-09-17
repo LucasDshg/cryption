@@ -22,9 +22,18 @@
       <ion-card-header class="ion-p-24 ion-d-flex ion-align-items-center">
         <ion-card-title>Acessar</ion-card-title>
       </ion-card-header>
-      <ion-card-content class="ion-p-24">
+      <ion-card-content class="ion-p-24" [formGroup]="form">
         <ion-input
-          [formControl]="keyAccess"
+          formControlName="code"
+          class="ion-m-bottom-24"
+          label="Código"
+          label-placement="floating"
+          fill="outline"
+          type="tel"
+        >
+        </ion-input>
+        <ion-input
+          formControlName="key"
           class="ion-m-bottom-24"
           label="Chave de acesso"
           label-placement="floating"
@@ -33,7 +42,11 @@
         >
         </ion-input>
 
-        <ion-button shape="round" expand="full" color="primary"
+        <ion-button
+          shape="round"
+          expand="full"
+          color="primary"
+          (click)="submit()"
           >Entrar</ion-button
         >
       </ion-card-content>

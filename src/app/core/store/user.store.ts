@@ -1,25 +1,24 @@
 import { Injectable, signal } from '@angular/core';
-import { IClient } from '../interfaces/client.interface';
+import { IUser } from '../interfaces/user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UserStore {
-  private _signal = signal<IClient | undefined>(this.localStorage);
+  private _signal = signal<IUser | undefined>(this.localStorage);
 
   store = this._signal.asReadonly();
-  isDemo = signal<boolean>(false);
 
-  get localStorage(): IClient | undefined {
-    const local = localStorage.getItem('dahorta');
+  get localStorage(): IUser | undefined {
+    const local = localStorage.getItem('cryption');
 
     if (local) return JSON.parse(local);
     return undefined;
   }
 
-  set localStorage(value: IClient) {
-    localStorage.setItem('store', JSON.stringify({ ...value }));
+  set localStorage(value: IUser) {
+    localStorage.setItem('cryption', JSON.stringify({ ...value }));
   }
 
-  set update(value: Partial<IClient>) {
+  update(value: Partial<IUser>) {
     this._signal.set({
       ...this.store()!,
       ...value,
@@ -27,13 +26,13 @@ export class UserStore {
     this.localStorage = this.store()!;
   }
 
-  init(value: IClient): void {
+  init(value: IUser): void {
     this.localStorage = value;
     this._signal.set(value);
   }
 
   clear(): void {
     this._signal.set(undefined);
-    localStorage.removeItem('dahorta');
+    localStorage.removeItem('cryption');
   }
 }

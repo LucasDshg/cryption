@@ -1,17 +1,12 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  inject,
-  signal,
-} from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { ModalController } from '@ionic/angular/standalone';
+import { CorretoraService } from 'src/app/core/service/corretor.service';
 
 import { PushNotificationsService } from 'src/app/core/service/pushNotification.service';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
-import { MONTHS } from 'src/app/shared/constants/months.constants';
+import { MONTHS, MONTHS_DIC } from 'src/app/shared/constants/months.constants';
 import { EMonths } from 'src/app/shared/enums/months.enum';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 
@@ -20,16 +15,24 @@ import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
   templateUrl: './home.page.html',
   imports: [IonicComponentsModule, CommonModule, HeaderComponent],
   providers: [],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomePage {
   private _push = inject(PushNotificationsService);
   private _modalCtrl = inject(ModalController);
-  private _router = inject(Router);
+  private _corretora = inject(CorretoraService);
   private _cdr = inject(ChangeDetectorRef);
 
-  readonly monthSelected = signal<EMonths>(EMonths.HOJE);
   readonly months = MONTHS;
+
+  readonly monthSelected = signal<EMonths>(EMonths.HOJE);
+  readonly data = rxResource({
+    params: () => this.monthSelected,
+    stream: ({ params }) =>
+      this._corretora.trades({
+        start: MONTHS_DIC.get(params())!.start!,
+        end: MONTHS_DIC.get(params())!.end!,
+      }),
+  });
 
   constructor() {
     this._push.requestPermissions();

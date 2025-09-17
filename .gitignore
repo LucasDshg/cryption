@@ -11,11 +11,14 @@ $RECYCLE.BIN/
 
 *.log
 log.txt
-
+firebase.*
+firestore.*
+.firebaserc
 .env
 /.sourcemaps
 /.versions
 /coverage
+/mocks
 
 # Ionic
 /.ionic
