@@ -1,31 +1,38 @@
 import { CommonModule } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
-  ChangeDetectorRef,
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  inject,
-} from '@angular/core';
-import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular/standalone';
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
-import { PushNotificationsService } from 'src/app/core/service/pushNotification.service';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
-  imports: [IonicComponentsModule, CommonModule],
+  styles: [
+    `
+      .logo-content {
+        width: 160px;
+        height: 182px;
+      }
+    `,
+  ],
+  imports: [
+    IonicComponentsModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LoginPage {
-  private _push = inject(PushNotificationsService);
-  private _modalCtrl = inject(ModalController);
-  private _router = inject(Router);
-  private _cdr = inject(ChangeDetectorRef);
+  keyAccess = new FormControl('', Validators.required);
 
-  constructor() {
-    this._push.requestPermissions();
+  submit(): void {
+    //ToDO: valid key and go to home
   }
 }

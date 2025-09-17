@@ -18,20 +18,25 @@
       </ion-text>
     </div>
 
-    <div
-      class="ion-display-flex ion-flex-column ion-align-items-center auth-container"
-      style="width: 100%; gap: 36px"
-    >
-      <ion-text>
-        <p>Acessar</p>
-      </ion-text>
-      <ion-item class="custom-input" lines="none">
-        <ion-label position="stacked">Chave de acesso</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
-      <div style="width: 100%">
-        <ion-button shape="round" expand="full">Entrar</ion-button>
-      </div>
-    </div>
+    <ion-card class="ion-no-shadow">
+      <ion-card-header class="ion-p-24 ion-d-flex ion-align-items-center">
+        <ion-card-title>Acessar</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="ion-p-24">
+        <ion-input
+          [formControl]="keyAccess"
+          class="ion-m-bottom-24"
+          label="Chave de acesso"
+          label-placement="floating"
+          fill="outline"
+          type="text"
+        >
+        </ion-input>
+
+        <ion-button shape="round" expand="full" color="primary"
+          >Entrar</ion-button
+        >
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

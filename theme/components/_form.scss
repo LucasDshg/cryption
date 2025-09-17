@@ -14,6 +14,7 @@ ion-select,
   &.textarea-fill-outline.sc-ion-textarea-md-h {
     --padding-start: 1.875rem;
   }
+  --color: var(--ion-text-color) !important;
   --border-radius: 1.5rem !important;
   --padding-start: 1.875rem;
   --padding-end: 1rem;
@@ -21,16 +22,6 @@ ion-select,
   font-size: 14px !important;
 }
 
-ion-searchbar {
-  --border-radius: 30px !important;
-  --box-shadow: var(--shadow) !important;
-  padding: 16px 0 !important;
-
-  input {
-    font-size: 14px !important;
-  }
-}
-
 ion-select::part(text) {
-  color: var(--ion-color-dark) !important;
+  color: var(--ion-text-color) !important;
 }
