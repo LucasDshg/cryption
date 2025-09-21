@@ -5,16 +5,11 @@ import { ModalController } from '@ionic/angular/standalone';
 import { Chart } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { chartPieConfigs } from 'src/app/shared/chart/chart.configs';
-import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.component';
 import { CardErrorComponent } from 'src/app/shared/components/card-error/card-error.component';
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
-import { TradeListComponent } from 'src/app/shared/components/trade-list/trade-list.component';
+import { TradeItemComponent } from 'src/app/shared/components/trade-item/trade-item.component';
 import { MONTHS, MONTHS_DIC } from 'src/app/shared/constants/months.constants';
-import {
-  TRADE_DIRECTION_DIC,
-  TRADE_RESULT_DIC,
-} from 'src/app/shared/corretora/constants/trades.constants';
 import { ITradesData } from 'src/app/shared/corretora/interface/trades.interface';
 import { CorretoraService } from 'src/app/shared/corretora/service/corretor.service';
 import { EMonths } from 'src/app/shared/enums/months.enum';
@@ -32,7 +27,7 @@ Chart.register(ChartDataLabels);
     HeaderComponent,
     CardLoadingComponent,
     CardErrorComponent,
-    TradeListComponent,
+    TradeItemComponent,
   ],
   providers: [CorretoraService, ModalController],
 })

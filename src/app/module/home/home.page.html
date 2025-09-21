@@ -76,10 +76,10 @@
 
             <ion-card-content>
               @for (item of firstFiveTrades(); track item.id) {
-                <trade-list
+                <trade-item
                   class="ion-d-block ion-m-bottom-16"
                   [item]="item"
-                ></trade-list>
+                ></trade-item>
               }
             </ion-card-content>
           </ion-card>

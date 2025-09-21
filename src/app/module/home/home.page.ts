@@ -3,12 +3,8 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { PushNotificationsService } from 'src/app/core/service/pushNotification.service';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
-import { TradeListComponent } from 'src/app/shared/components/trade-list/trade-list.component';
+import { TradeItemComponent } from 'src/app/shared/components/trade-item/trade-item.component';
 import { MONTHS, MONTHS_DIC } from 'src/app/shared/constants/months.constants';
-import {
-  TRADE_DIRECTION_DIC,
-  TRADE_RESULT_DIC,
-} from 'src/app/shared/constants/trades.constants';
 import { CorretoraService } from 'src/app/shared/corretora/service/corretor.service';
 import { EMonths } from 'src/app/shared/enums/months.enum';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
@@ -21,7 +17,7 @@ import { RoboService } from 'src/app/shared/robo/service/robo.service';
     IonicComponentsModule,
     CommonModule,
     HeaderComponent,
-    TradeListComponent,
+    TradeItemComponent,
   ],
   providers: [CorretoraService, RoboService],
 })
