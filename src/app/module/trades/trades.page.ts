@@ -30,7 +30,7 @@ Chart.register(ChartDataLabels);
     CardErrorComponent,
     AppIconComponent,
   ],
-  providers: [],
+  providers: [CorretoraService],
 })
 export class TradesPage {
   private _corretora = inject(CorretoraService);

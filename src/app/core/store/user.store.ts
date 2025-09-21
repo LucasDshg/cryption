@@ -5,7 +5,7 @@ import { IUser } from '../interfaces/user.interface';
 export class UserStore {
   private _signal = signal<IUser | undefined>(this.localStorage);
 
-  store = this._signal.asReadonly();
+  readonly store = this._signal.asReadonly();
 
   get localStorage(): IUser | undefined {
     const local = localStorage.getItem('cryption');
@@ -18,7 +18,7 @@ export class UserStore {
     localStorage.setItem('cryption', JSON.stringify({ ...value }));
   }
 
-  update(value: Partial<IUser>) {
+  update(value: Partial<IUser>): void {
     this._signal.set({
       ...this.store()!,
       ...value,

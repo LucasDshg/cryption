@@ -6,9 +6,7 @@ import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ITrades } from '../interfaces/trades.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class CorretoraService {
   private _http = inject(HttpClient);
 

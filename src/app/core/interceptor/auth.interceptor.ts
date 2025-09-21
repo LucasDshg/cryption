@@ -34,7 +34,7 @@ export const authInterceptor: HttpInterceptorFn = (
         return throwError(() => new Error('Login expirado'));
       }
 
-      newReq = _setAcessToken(newReq, store!!.corretora);
+      newReq = _setAcessToken(newReq, store!.corretora);
     }
   } else if (req.url.includes(environment.bot)) {
     if (store?.bot) {
@@ -43,7 +43,7 @@ export const authInterceptor: HttpInterceptorFn = (
         return throwError(() => new Error('Login expirado'));
       }
 
-      newReq = _setAcessToken(newReq, store!!.bot);
+      newReq = _setAcessToken(newReq, store!.bot);
     }
   } else {
     auth.logout();
