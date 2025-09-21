@@ -14,11 +14,23 @@ export const TRADE_DIRECTION_DIC = new Map<
 
 TRADE_DIRECTION_DIC.set('SELL', {
   color: 'success',
-  name: 'Sell',
+  name: 'Venda',
   icon: 'trending-up',
 });
 TRADE_DIRECTION_DIC.set('BUY', {
   color: 'danger',
-  name: 'Buy',
+  name: 'Compra',
   icon: 'trending-down',
+});
+
+export const TRADE_ROBO_DIC = new Map<string, { name: string }>();
+
+TRADE_ROBO_DIC.set('AGRESSIVE', {
+  name: 'Agressivo',
+});
+TRADE_ROBO_DIC.set('MODERATE', {
+  name: 'Moderado',
+});
+TRADE_ROBO_DIC.set('CONSERVATIVE', {
+  name: 'Conservador',
 });
