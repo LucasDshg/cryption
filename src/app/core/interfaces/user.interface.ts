@@ -14,10 +14,7 @@ export interface IBot {
 
 export interface IUser {
   id?: string;
-  corretora: ICorretora;
-  bot: IBot;
-  tokens: {
-    corretora: string;
-    bot: string;
-  };
+  corretora: string;
+  bot: string;
+  botUserId: string;
 }

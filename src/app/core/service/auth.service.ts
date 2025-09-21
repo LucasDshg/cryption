@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IUser } from '../interfaces/user.interface';
+import { IBot, ICorretora, IUser } from '../interfaces/user.interface';
 import { UserStore } from '../store/user.store';
 
 @Injectable({
@@ -20,13 +20,32 @@ export class AuthService {
 
     if (!auth) return false;
     return (
-      !this.isTokenExpired(auth!.tokens.bot) ||
-      !this.isTokenExpired(auth!.tokens.corretora)
+      !this.isTokenExpired(auth!.bot) || !this.isTokenExpired(auth!.corretora)
     );
   }
 
-  login(key: string, code: string): Observable<IUser> {
-    return this._http.post<IUser>(`${environment.api}/login`, { key, code });
+  login(
+    key: string,
+    code: string,
+  ): Observable<{ corretora: ICorretora; bot: IBot }> {
+    return this._http.post<{ corretora: ICorretora; bot: IBot }>(
+      `${environment.api}/login`,
+      { key, code },
+    );
+  }
+
+  corretora(data: ICorretora): Observable<{ token: string }> {
+    return this._http.post<{ token: string }>(
+      `${environment.corretora}/auth/login`,
+      data,
+    );
+  }
+
+  robo(data: IBot): Observable<{ token: string }> {
+    return this._http.post<{ token: string }>(
+      `${environment.bot}/users/auth/login`,
+      data,
+    );
   }
 
   logout(): void {
