@@ -72,7 +72,7 @@ export const optionsCors = {
   credentials: false,
   methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
   origin: '*',
-  preflightContinue: false,
+  preflightContinue: true,
 };
 
 const app: express.Application = express();

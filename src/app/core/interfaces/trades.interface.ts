@@ -44,7 +44,7 @@ export interface ITradesData {
   closeTime: number;
   closePriceTime: number;
   attemptsToClose: number;
-  result: 'WON' | 'LOSS';
+  result: 'WON' | 'LOST' | 'DRAW';
   tenantFeeAmount: number;
   createdAt: string;
   updatedAt: string;

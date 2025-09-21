@@ -9,6 +9,7 @@
   >
     @for (month of months; track month.id) {
     <ion-chip
+      [outline]="true"
       class="ion-d-block ion-flex-1"
       [ngClass]="{ 'chip-selected': month.id === monthSelected() }"
       (click)="setMonth(month.id)"

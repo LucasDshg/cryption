@@ -67,7 +67,7 @@ export class MenuComponent implements OnInit {
     },
     {
       icon: 'reader',
-      path: 'reader',
+      path: 'trades',
     },
     {
       icon: 'wallet',
@@ -75,7 +75,7 @@ export class MenuComponent implements OnInit {
     },
     {
       icon: 'grid',
-      path: 'grid',
+      path: 'bots',
     },
   ]);
 

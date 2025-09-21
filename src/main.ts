@@ -48,10 +48,10 @@ bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'pt' },
-    { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: '$' },
     {
       provide: DATE_PIPE_DEFAULT_OPTIONS,
-      useValue: { timezone: 'pt-br', dateFormat: 'dd/MM/yyyy' },
+      useValue: { timezone: 'pt-br', dateFormat: 'dd/MM/yy HH:mm:ss' },
     },
     provideZonelessChangeDetection(),
     provideAnimationsAsync(),
