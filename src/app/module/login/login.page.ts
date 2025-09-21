@@ -13,7 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NavController } from '@ionic/angular/standalone';
-import { switchMap, tap } from 'rxjs';
+import { finalize, switchMap, tap } from 'rxjs';
 import { IBot, ICorretora } from 'src/app/core/interfaces/user.interface';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { UserStore } from 'src/app/core/store/user.store';
@@ -44,10 +44,12 @@ export class LoginPage {
   private _authService = inject(AuthService);
   private _store = inject(UserStore);
   private _router = inject(NavController);
-
   private _tempLogin = signal<{ corretora: ICorretora; bot: IBot } | undefined>(
     undefined,
   );
+
+  readonly loading = signal<boolean>(false);
+
   form = new FormGroup({
     key: new FormControl('', Validators.required),
     code: new FormControl('', [
@@ -62,6 +64,7 @@ export class LoginPage {
       this.form.markAllAsTouched();
       return;
     }
+    this.loading.set(true);
     this._authService
       .login(this.form.value.key!, this.form.value.code!)
       .pipe(
@@ -75,6 +78,7 @@ export class LoginPage {
         ),
         switchMap(() => this._authService.robo(this._tempLogin()!.bot)),
         tap((res) => this._store.update({ bot: res.token })),
+        finalize(() => this.loading.set(false)),
       )
       .subscribe(() => {
         this._tempLogin.set(undefined);
