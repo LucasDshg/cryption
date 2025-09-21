@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { PushNotificationsService } from 'src/app/core/service/pushNotification.service';
+import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { TradeItemComponent } from 'src/app/shared/components/trade-item/trade-item.component';
 import { MONTHS, MONTHS_DIC } from 'src/app/shared/constants/months.constants';
@@ -18,6 +19,7 @@ import { RoboService } from 'src/app/shared/robo/service/robo.service';
     CommonModule,
     HeaderComponent,
     TradeItemComponent,
+    CardLoadingComponent,
   ],
   providers: [CorretoraService, RoboService],
 })
