@@ -15,11 +15,9 @@ export class CorretoraService {
       return of(MOCK_TRADES as any).pipe(
         map((res: ITrades) => {
           const data = res.data.map((it) => {
-            return {
-              ...it,
-              amount:
-                it.fromBot && it.result === 'WON' ? it.amount / 2 : it.amount,
-            };
+            it.amount =
+              it.fromBot && it.result === 'WON' ? it.amount / 2 : it.amount;
+            return it;
           });
           return {
             ...res,
@@ -27,17 +25,31 @@ export class CorretoraService {
           };
         }),
       );
-    return this._http.get<ITrades>(`${environment.corretora}/trades`, {
-      params: {
-        page: 1,
-        pageSize: 200,
-        startDate: data.start.toISOString(),
-        endDate: data.end.toISOString(),
-        isDemo: false,
-        orderBy: 'closeTime',
-        orderDirection: 'DESC',
-      },
-    });
+    return this._http
+      .get<ITrades>(`${environment.corretora}/trades`, {
+        params: {
+          page: 1,
+          pageSize: 200,
+          startDate: data.start.toISOString(),
+          endDate: data.end.toISOString(),
+          isDemo: false,
+          orderBy: 'closeTime',
+          orderDirection: 'DESC',
+        },
+      })
+      .pipe(
+        map((res: ITrades) => {
+          const data = res.data.map((it) => {
+            it.amount =
+              it.fromBot && it.result === 'WON' ? it.amount / 2 : it.amount;
+            return it;
+          });
+          return {
+            ...res,
+            data,
+          };
+        }),
+      );
   }
 
   tradesInfo(data: { start: Date; end: Date }): Observable<any> {
