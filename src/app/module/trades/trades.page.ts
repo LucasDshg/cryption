@@ -53,14 +53,14 @@ export class TradesPage {
 
   readonly totalWin = computed(() => {
     const win = this.list.value()?.data.filter((it) => it.result !== 'LOST');
-    const price = win?.reduce((prev, curr) => curr.amount + prev, 0);
+    const price = win?.reduce((prev, curr) => curr.pnl + prev, 0);
     const quant = win?.length;
     return { price, quant };
   });
 
   readonly totalLoss = computed(() => {
     const loss = this.list.value()?.data.filter((it) => it.result === 'LOST');
-    const price = loss?.reduce((prev, cuur) => cuur.amount + prev, 0);
+    const price = loss?.reduce((prev, curr) => curr.pnl + prev, 0);
     const quant = loss?.length;
     return { price, quant };
   });

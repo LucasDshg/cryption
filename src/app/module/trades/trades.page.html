@@ -85,9 +85,9 @@
                   class="ion-fs-16"
                 >
                   @if (item.result === 'LOST') {
-                    {{ -item.amount | currency }}
+                    {{ -item.pnl | currency }}
                   } @else {
-                    {{ item.amount | currency }}
+                    {{ item.pnl | currency }}
                   }
                 </ion-label>
 
