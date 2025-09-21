@@ -28,4 +28,32 @@ export class RoboService {
       `${environment.bot}/users/setups?page=1&pageSize=100&orderBy=id&orderDirection=DESC&userId=${userId}&active=true`,
     );
   }
+
+  active(id: string): Observable<void> {
+    return this._http.get<void>(`${environment.bot}/users/setups/${id}/active`);
+  }
+  disabled(id: string): Observable<void> {
+    return this._http.get<void>(
+      `${environment.bot}/users/setups/${id}/inactive`,
+    );
+  }
+
+  transferBonus(data: {
+    amount: string;
+    walletDestinationId: string;
+    walletOriginId: string;
+  }): Observable<any> {
+    return this._http.post<void>(
+      `${environment.bot}/users/wallets/transfer`,
+      data,
+    );
+  }
+
+  tradesByInterval(
+    interval: 'WEEK' | 'MONTH' | 'YEAR',
+  ): Observable<{ date: string; total: number }[]> {
+    return this._http.get<{ date: string; total: number }[]>(
+      `${environment.bot}/performance/time-series?interval=${interval}&type=OPERATIONAL`,
+    );
+  }
 }
