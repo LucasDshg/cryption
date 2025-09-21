@@ -3,7 +3,7 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "serve": "npm run build && firebase emulators:start --import ./db --export-on-exit=db",
+    "serve": "npm run build && cd .. && firebase emulators:start --only functions,firestore --import=./db --export-on-exit",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions --project=cryption-81adb --debug",
