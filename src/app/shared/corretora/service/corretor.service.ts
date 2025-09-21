@@ -4,7 +4,7 @@ import { MOCK_TRADES_INFO } from 'mocks/trades-info.mocks';
 import { MOCK_TRADES } from 'mocks/trades.mock';
 import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ITrades } from '../interfaces/trades.interface';
+import { ITrades } from '../interface/trades.interface';
 
 @Injectable()
 export class CorretoraService {

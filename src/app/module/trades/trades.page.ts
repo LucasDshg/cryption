@@ -3,7 +3,6 @@ import { Component, computed, effect, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Chart } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { CorretoraService } from 'src/app/core/service/corretor.service';
 import { chartPieConfigs } from 'src/app/shared/chart/chart.configs';
 import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.component';
 import { CardErrorComponent } from 'src/app/shared/components/card-error/card-error.component';
@@ -14,6 +13,7 @@ import {
   TRADE_DIRECTION_DIC,
   TRADE_RESULT_DIC,
 } from 'src/app/shared/constants/trades.constants';
+import { CorretoraService } from 'src/app/shared/corretora/service/corretor.service';
 import { EMonths } from 'src/app/shared/enums/months.enum';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 
