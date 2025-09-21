@@ -58,7 +58,7 @@ export class LoginPage {
     code: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
-      Validators.minLength(7),
+      Validators.maxLength(7),
     ]),
   });
 
