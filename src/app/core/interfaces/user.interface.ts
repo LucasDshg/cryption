@@ -16,5 +16,9 @@ export interface IUser {
   id?: string;
   corretora: string;
   bot: string;
-  botUserId: string;
+  robo: {
+    id: string;
+    loginId: string;
+    tenantId: string;
+  };
 }
