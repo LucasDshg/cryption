@@ -1,11 +1,8 @@
-ion-modal.cart-modal {
-  --height: calc(100% - 50px);
-  --border-radius: 1rem;
-}
-
 ion-modal {
   --height: auto;
   --border-radius: 1rem;
+  --background: var(--ion-color-dark);
+  --box-shadow: var(--shadow-sm);
 }
 
 .modal-block {
