@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { IonicComponentsModule } from '../../ionic-components.module';
+import { ITradesData } from '../../corretora/interface/trades.interface';
+import { AppIconComponent } from '../app-icon/app-icon.component';
 import {
   TRADE_DIRECTION_DIC,
   TRADE_RESULT_DIC,
-} from '../../constants/trades.constants';
-import { ITradesData } from '../../corretora/interface/trades.interface';
-import { AppIconComponent } from '../app-icon/app-icon.component';
+} from '../../corretora/constants/trades.constants';
 
 @Component({
-  selector: 'trade-list',
+  selector: 'trade-item',
   template: `
     <ion-item>
       <ion-avatar slot="start">
@@ -55,7 +55,7 @@ import { AppIconComponent } from '../app-icon/app-icon.component';
   `,
   imports: [IonicComponentsModule, CommonModule, AppIconComponent],
 })
-export class TradeListComponent {
+export class TradeItemComponent {
   readonly item = input.required<ITradesData>();
   readonly resultDic = TRADE_RESULT_DIC;
   readonly directionDic = TRADE_DIRECTION_DIC;
