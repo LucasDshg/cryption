@@ -8,6 +8,7 @@ import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.co
 import { CardErrorComponent } from 'src/app/shared/components/card-error/card-error.component';
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { TradeListComponent } from 'src/app/shared/components/trade-list/trade-list.component';
 import { MONTHS, MONTHS_DIC } from 'src/app/shared/constants/months.constants';
 import {
   TRADE_DIRECTION_DIC,
@@ -28,7 +29,7 @@ Chart.register(ChartDataLabels);
     HeaderComponent,
     CardLoadingComponent,
     CardErrorComponent,
-    AppIconComponent,
+    TradeListComponent,
   ],
   providers: [CorretoraService],
 })
@@ -36,8 +37,6 @@ export class TradesPage {
   private _corretora = inject(CorretoraService);
 
   readonly months = MONTHS;
-  readonly resultDic = TRADE_RESULT_DIC;
-  readonly directionDic = TRADE_DIRECTION_DIC;
 
   readonly monthSelected = signal<EMonths>(EMonths.HOJE);
   readonly chart = signal<any | undefined>(undefined);
