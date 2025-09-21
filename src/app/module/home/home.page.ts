@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { ModalController } from '@ionic/angular/standalone';
 import { CorretoraService } from 'src/app/core/service/corretor.service';
-
 import { PushNotificationsService } from 'src/app/core/service/pushNotification.service';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { MONTHS, MONTHS_DIC } from 'src/app/shared/constants/months.constants';
@@ -14,13 +12,11 @@ import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
   selector: 'app-home',
   templateUrl: './home.page.html',
   imports: [IonicComponentsModule, CommonModule, HeaderComponent],
-  providers: [],
+  providers: [CorretoraService],
 })
 export class HomePage {
   private _push = inject(PushNotificationsService);
-  private _modalCtrl = inject(ModalController);
   private _corretora = inject(CorretoraService);
-  private _cdr = inject(ChangeDetectorRef);
 
   readonly months = MONTHS;
 
