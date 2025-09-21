@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { MOCK_TRADES_INFO } from 'mocks/trades-info.mocks';
-import { MOCK_TRADES } from 'mocks/trades.mock';
 import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ITrades } from '../interface/trades.interface';
+import { MOCK_TRADES } from 'mocks/trades.mocks';
 
 @Injectable()
 export class CorretoraService {
