@@ -67,7 +67,7 @@ export class TradesPage {
 
   constructor() {
     effect(() => {
-      if (this.list.hasValue()) {
+      if (this.list.value()) {
         setTimeout(() => {
           this._chartWinLoss();
         }, 500);
@@ -77,6 +77,7 @@ export class TradesPage {
 
   setMonth(id: EMonths): void {
     this.monthSelected.set(id);
+    this.list.reload();
   }
 
   private _chartWinLoss(): void {
