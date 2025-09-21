@@ -1,10 +1,14 @@
 <app-header title="Robôs"> </app-header>
 
 <ion-content>
-  @defer (when data()) {
+  @defer (when data.hasValue()) {
     <div class="ion-m-bottom-80">
-      @for (item of data()!.data; track item.id) {
-        <ion-card class="ion-no-shadow">
+      @for (item of data.value()!.data; track item.id) {
+        <ion-card
+          class="ion-no-shadow"
+          [button]="true"
+          (click)="toggleStatus(item.name, item.active, item.id)"
+        >
           <ion-card-header
             class="ion-d-flex ion-flex-row ion-align-items-center ion-justify-content-between"
           >
