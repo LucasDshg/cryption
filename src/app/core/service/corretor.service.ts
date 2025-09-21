@@ -5,20 +5,12 @@ import { MOCK_TRADES } from 'mocks/trades.mock';
 import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ITrades } from '../interfaces/trades.interface';
-import { ICorretora } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CorretoraService {
   private _http = inject(HttpClient);
-
-  login(data: ICorretora): Observable<{ token: string }> {
-    return this._http.post<{ token: string }>(
-      `${environment.corretora}/auth/login`,
-      data,
-    );
-  }
 
   trades(data: { start: Date; end: Date }): Observable<ITrades> {
     if (!environment.production)
