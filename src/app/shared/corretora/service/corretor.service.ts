@@ -11,22 +11,11 @@ export class CorretoraService {
   private _http = inject(HttpClient);
 
   trades(data: { start: Date; end: Date }): Observable<ITrades> {
-    if (!environment.production)
-      return of(MOCK_TRADES as any).pipe(
-        map((res: ITrades) => {
-          const data = res.data.map((it) => {
-            it.amount =
-              it.fromBot && it.result === 'WON' ? it.amount / 2 : it.amount;
-            return it;
-          });
-          return {
-            ...res,
-            data,
-          };
-        }),
-      );
-    return this._http
-      .get<ITrades>(`${environment.corretora}/trades`, {
+    let request: Observable<ITrades>;
+    if (!environment.production) {
+      request = of(MOCK_TRADES as any);
+    } else {
+      request = this._http.get<ITrades>(`${environment.corretora}/trades`, {
         params: {
           page: 1,
           pageSize: 200,
@@ -36,20 +25,30 @@ export class CorretoraService {
           orderBy: 'closeTime',
           orderDirection: 'DESC',
         },
-      })
-      .pipe(
-        map((res: ITrades) => {
-          const data = res.data.map((it) => {
-            it.amount =
-              it.fromBot && it.result === 'WON' ? it.amount / 2 : it.amount;
-            return it;
-          });
-          return {
-            ...res,
-            data,
-          };
-        }),
-      );
+      });
+    }
+
+    return request.pipe(
+      map((res: ITrades) => {
+        const data = res.data.map((it) => {
+          if (it.fromBot) {
+            switch (it.result) {
+              case 'DRAW':
+                it.pnl = it.amount;
+                break;
+              case 'WON':
+                it.pnl = it.pnl / 2;
+                break;
+            }
+          }
+          return it;
+        });
+        return {
+          ...res,
+          data,
+        };
+      }),
+    );
   }
 
   tradesInfo(data: { start: Date; end: Date }): Observable<any> {
