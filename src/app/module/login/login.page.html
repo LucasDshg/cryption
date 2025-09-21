@@ -38,7 +38,7 @@
           label="Chave de acesso"
           label-placement="floating"
           fill="outline"
-          type="text"
+          type="password"
         >
         </ion-input>
 
@@ -49,9 +49,11 @@
           [disabled]="this.loading()"
           (click)="submit()"
         >
-          @if(this.loading()){
-          <ion-spinner name="dots"></ion-spinner>
-          }@else { Entrar }
+          @if (this.loading()) {
+            <ion-spinner name="dots"></ion-spinner>
+          } @else {
+            Entrar
+          }
         </ion-button>
       </ion-card-content>
     </ion-card>
