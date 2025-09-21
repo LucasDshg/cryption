@@ -26,4 +26,16 @@ export const APP_ROUTES: Routes = [
       import('./module/trades/trades.routes').then((m) => m.TRADES_ROUTES),
     canActivate: [authGuard],
   },
+  {
+    path: 'bots',
+    loadChildren: () =>
+      import('./module/bots/bots.routes').then((m) => m.BOTS_ROUTES),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'wallet',
+    loadChildren: () =>
+      import('./module/wallets/wallets.routes').then((m) => m.WALLETS_ROUTES),
+    canActivate: [authGuard],
+  },
 ];
