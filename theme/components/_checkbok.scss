@@ -6,19 +6,20 @@ ion-checkbox {
 }
 
 ion-chip {
-  --background: var(--ion-background-color);
-  --color: var(--ion-text-color);
-  border: 1px solid var(--ion-color-medium);
+  background: var(--ion-color-primary);
+  color: var(--ion-black);
+  border: 1px solid var(--ion-color-gray);
   font-weight: 500;
   min-width: fit-content;
   text-align: center;
-  &.selected {
-    --background: var(--ion-color-dark);
-    border-color: var(--ion-color-primary);
-  }
-}
 
-.chip-selected {
-  --background: var(--ion-color-dark);
-  border-color: var(--ion-color-primary);
+  &.chip-outline {
+    background: var(--ion-background-color);
+    color: var(--ion-text-color);
+
+    &.chip-selected {
+      background: var(--ion-color-dark);
+      border-color: var(--ion-color-primary);
+    }
+  }
 }

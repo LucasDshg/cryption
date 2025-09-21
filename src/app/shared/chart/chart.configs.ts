@@ -1,7 +1,7 @@
 export const chartLineConfigs = {
   datasets: {
     borderWidth: 6,
-    borderColor: '#4cb33b',
+    borderColor: '#00b221',
     fill: true,
     tension: 0.4,
   },
@@ -44,8 +44,8 @@ export const chartBarConfigs = {
     borderRadius: Number.MAX_VALUE,
     borderSkipped: false,
     borderWidth: 0,
-    backgroundColor: '#4cb33b',
-    borderColor: '#4cb33b',
+    backgroundColor: '#00b221',
+    borderColor: '#00b221',
     maxBarThickness: 18,
   },
 
@@ -77,7 +77,8 @@ export const chartBarConfigs = {
 
 export const chartPieConfigs = {
   datasets: {
-    backgroundColor: ['#4cb33b', '#e77333'],
+    backgroundColor: ['#00b221', '#b50404'],
+    borderColor: 'transparent',
   },
 
   options: {

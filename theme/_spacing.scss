@@ -71,7 +71,14 @@ $prefix: 'ion';
   }
 }
 
+@mixin gap($name, $value, $prefix) {
+  .#{$prefix}-gap-#{$name} {
+    gap: $value !important;
+  }
+}
+
 @each $name, $value in $spacing {
   @include margin($name, $value, $prefix);
   @include padding($name, $value, $prefix);
+  @include gap($name, $value, $prefix);
 }

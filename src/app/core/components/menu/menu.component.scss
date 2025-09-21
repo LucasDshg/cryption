@@ -3,6 +3,7 @@
   background: var(--ion-color-dark);
   padding: 6px 32px 6px 32px;
   box-shadow: var(--shadow);
+  gap: 16px;
 }
 
 .footer-menu {
@@ -18,9 +19,11 @@
 }
 
 .menu-item {
-  margin-right: 14px;
   border-radius: 20rem;
   padding: 8px;
+  display: flex;
+  align-self: center;
+  justify-content: center;
   color: var(--ion-color-white);
   text-decoration: unset;
   transition: background 300ms ease-in-out;
