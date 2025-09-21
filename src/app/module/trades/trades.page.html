@@ -7,118 +7,118 @@
   id="div_month"
 >
   @for (month of months; track month.id) {
-  <ion-chip
-    [outline]="true"
-    class="ion-d-block ion-flex-1"
-    [ngClass]="{ 'chip-selected': month.id === monthSelected() }"
-    (click)="setMonth(month.id)"
-  >
-    {{ month.name }}
-  </ion-chip>
+    <ion-chip
+      [outline]="true"
+      class="ion-d-block ion-flex-1"
+      [ngClass]="{ 'chip-selected': month.id === monthSelected() }"
+      (click)="setMonth(month.id)"
+    >
+      {{ month.name }}
+    </ion-chip>
   }
 </div>
 <!-- ToDo[end]: precisa ser um component no shared -->
 <ion-content>
   @if (list.isLoading()) {
-  <app-card-loading type="titleAndSubtitle"></app-card-loading>
-  <app-card-loading type="titleAndSubtitle"></app-card-loading>
-  <app-card-loading type="titleAndSubtitle"></app-card-loading>
-  }@else if(list.error()){
-  <app-card-error
-    text="Ocorreu um erro ao tentar carregar os dados"
-    btn="Tentar novamente"
-    (btnEvent)="list.reload()"
-  ></app-card-error>
-  }@else if (list.hasValue()) {
-
-  <div class="ion-m-bottom-80">
-    <ion-card class="ion-no-shadow">
-      <ion-card-header>
-        <ion-card-title class="ion-fs-16">Win X Loss</ion-card-title>
-      </ion-card-header>
-      <ion-card-content class="ion-d-flex ion-justify-content-between">
-        <div style="height: 120px; width: 120px" class="ion-margin-bottom">
-          <canvas id="chart">{{ chart }}</canvas>
-        </div>
-        <div
-          class="ion-d-flex ion-align-items-center ion-justify-content-between ion-gap-24"
-        >
-          @if (totalWin()) {
-          <div>
-            <ion-text color="success">
-              <small>Win</small>
-            </ion-text>
-            <ion-text color="medium">
-              <p class="ion-m-0">{{ totalWin().price | currency }}</p>
-            </ion-text>
-            <ion-text color="gray">
-              <small>Total: {{ totalWin().quant }} </small>
-            </ion-text>
-          </div>
-          } @if (totalLoss()) {
-          <div>
-            <ion-text color="danger">
-              <small>Loss</small>
-            </ion-text>
-            <ion-text color="medium">
-              <p class="ion-m-0">{{ totalLoss().price | currency }}</p>
-            </ion-text>
-            <ion-text color="gray">
-              <small>Total: {{ totalLoss().quant }} </small>
-            </ion-text>
-          </div>
-          }
-        </div>
-      </ion-card-content>
-    </ion-card>
-
-    @for (item of list.value().data; track item.id) {
-    <ion-card>
-      <ion-card-content>
-        <ion-item>
-          <ion-avatar slot="start">
-            <img src="assets/symbol/ETHUSDT.svg" />
-          </ion-avatar>
-          <div>
-            <ion-label
-              [color]="resultDic.get(item.result)!.color"
-              class="ion-fs-16"
-            >
-              @if(item.result === 'LOST') {
-              {{ -item.amount | currency }}
-              }@else {
-              {{ item.amount | currency }}
-              }
-            </ion-label>
-
-            <ion-text color="medium">
-              <p class="ion-m-0">{{ item.symbol }}</p>
-            </ion-text>
+    <app-card-loading type="titleAndSubtitle"></app-card-loading>
+    <app-card-loading type="titleAndSubtitle"></app-card-loading>
+    <app-card-loading type="titleAndSubtitle"></app-card-loading>
+  } @else if (list.error()) {
+    <app-card-error
+      text="Ocorreu um erro ao tentar carregar os dados"
+      btn="Tentar novamente"
+      (btnEvent)="list.reload()"
+    ></app-card-error>
+  } @else if (list.hasValue()) {
+    <div class="ion-m-bottom-80">
+      <ion-card class="ion-no-shadow">
+        <ion-card-header>
+          <ion-card-title class="ion-fs-16">Win X Loss</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="ion-d-flex ion-justify-content-around">
+          <div style="height: 140px; width: 140px" class="ion-margin-bottom">
+            <canvas id="chart">{{ chart() }}</canvas>
           </div>
           <div
-            slot="end"
-            class="ion-d-flex ion-flex-column ion-align-items-end ion-justify-content-between ion-gap-4"
+            class="ion-d-flex ion-align-items-center ion-justify-content-between ion-gap-24"
           >
-            <div class="ion-align-items-center ion-d-flex ion-gap-8">
-              @if(item.fromBot){
-              <ion-text color="primary">
-                <small class="ion-fw-semiBold">Bot</small>
-              </ion-text>
-              }
-              <app-icon
-                size="small"
-                [name]="directionDic.get(item.direction)!.icon"
-                [color]="directionDic.get(item.direction)!.color"
-              ></app-icon>
-            </div>
-            <ion-text color="gray">
-              <small>{{ item.syncOpensearchAt | date }}</small>
-            </ion-text>
+            @if (totalWin()) {
+              <div>
+                <ion-text color="success">
+                  <small>Win</small>
+                </ion-text>
+                <ion-text color="medium">
+                  <p class="ion-m-0">{{ totalWin().price | currency }}</p>
+                </ion-text>
+                <ion-text color="gray">
+                  <small>Total: {{ totalWin().quant }} </small>
+                </ion-text>
+              </div>
+            }
+            @if (totalLoss()) {
+              <div>
+                <ion-text color="danger">
+                  <small>Loss</small>
+                </ion-text>
+                <ion-text color="medium">
+                  <p class="ion-m-0">{{ totalLoss().price | currency }}</p>
+                </ion-text>
+                <ion-text color="gray">
+                  <small>Total: {{ totalLoss().quant }} </small>
+                </ion-text>
+              </div>
+            }
           </div>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-    }
-  </div>
+        </ion-card-content>
+      </ion-card>
+
+      @for (item of list.value().data; track item.id) {
+        <ion-card>
+          <ion-card-content>
+            <ion-item>
+              <ion-avatar slot="start">
+                <img src="assets/symbol/ETHUSDT.svg" />
+              </ion-avatar>
+              <div>
+                <ion-label
+                  [color]="resultDic.get(item.result)!.color"
+                  class="ion-fs-16"
+                >
+                  @if (item.result === 'LOST') {
+                    {{ -item.amount | currency }}
+                  } @else {
+                    {{ item.amount | currency }}
+                  }
+                </ion-label>
+
+                <ion-text color="medium">
+                  <p class="ion-m-0">{{ item.symbol }}</p>
+                </ion-text>
+              </div>
+              <div
+                slot="end"
+                class="ion-d-flex ion-flex-column ion-align-items-end ion-justify-content-between ion-gap-4"
+              >
+                <div class="ion-align-items-center ion-d-flex ion-gap-8">
+                  @if (item.fromBot) {
+                    <ion-text color="primary">
+                      <small class="ion-fw-semiBold">Bot</small>
+                    </ion-text>
+                  }
+                  <app-icon
+                    size="small"
+                    [name]="directionDic.get(item.direction)!.icon"
+                    [color]="directionDic.get(item.direction)!.color"
+                  ></app-icon>
+                </div>
+                <ion-text color="gray">
+                  <small>{{ item.syncOpensearchAt | date }}</small>
+                </ion-text>
+              </div>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      }
+    </div>
   }
 </ion-content>

@@ -1,0 +1,34 @@
+<app-header title="Robôs"> </app-header>
+
+<ion-content>
+  @defer (when data()) {
+    <div class="ion-m-bottom-80">
+      @for (item of data()!.data; track item.id) {
+        <ion-card class="ion-no-shadow">
+          <ion-card-header
+            class="ion-d-flex ion-flex-row ion-align-items-center ion-justify-content-between"
+          >
+            <ion-card-title color="primary">{{ item.name }}</ion-card-title>
+            <app-icon
+              name="radio-button-on"
+              size="small"
+              [color]="item.active ? 'success' : 'danger'"
+            ></app-icon>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-text color="medium">
+              <p>Configurado: {{ item.brokerMaxBalanceToUse | currency }}</p>
+            </ion-text>
+            <ion-text color="medium">
+              <p>Ganhos: {{ item.profit | currency }}</p>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      }
+    </div>
+  } @placeholder {
+    <app-card-loading type="titleAndSubtitle"></app-card-loading>
+    <app-card-loading type="titleAndSubtitle"></app-card-loading>
+    <app-card-loading type="titleAndSubtitle"></app-card-loading>
+  }
+</ion-content>
