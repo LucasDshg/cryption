@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { ModalController } from '@ionic/angular/standalone';
 import { Chart } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { chartPieConfigs } from 'src/app/shared/chart/chart.configs';
@@ -12,10 +13,12 @@ import { MONTHS, MONTHS_DIC } from 'src/app/shared/constants/months.constants';
 import {
   TRADE_DIRECTION_DIC,
   TRADE_RESULT_DIC,
-} from 'src/app/shared/constants/trades.constants';
+} from 'src/app/shared/corretora/constants/trades.constants';
+import { ITradesData } from 'src/app/shared/corretora/interface/trades.interface';
 import { CorretoraService } from 'src/app/shared/corretora/service/corretor.service';
 import { EMonths } from 'src/app/shared/enums/months.enum';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
+import { ModalTradesDetailsComponent } from './modal-details/modal-details.component';
 
 Chart.register(ChartDataLabels);
 
@@ -30,10 +33,11 @@ Chart.register(ChartDataLabels);
     CardErrorComponent,
     AppIconComponent,
   ],
-  providers: [CorretoraService],
+  providers: [CorretoraService, ModalController],
 })
 export class TradesPage {
   private _corretora = inject(CorretoraService);
+  private _modalCtrl = inject(ModalController);
 
   readonly months = MONTHS;
   readonly resultDic = TRADE_RESULT_DIC;
@@ -80,6 +84,18 @@ export class TradesPage {
     this.list.reload();
   }
 
+  async details(data: ITradesData): Promise<void> {
+    const modal = await this._modalCtrl.create({
+      component: ModalTradesDetailsComponent,
+      componentProps: {
+        data,
+      },
+      initialBreakpoint: 1,
+      breakpoints: [0, 1],
+    });
+    await modal.present();
+  }
+
   private _chartWinLoss(): void {
     if (this.chart()) {
       this.chart().clear();
@@ -87,7 +103,7 @@ export class TradesPage {
     }
 
     const chart = new Chart('chart', {
-      type: 'pie',
+      type: 'doughnut',
       data: {
         labels: ['Win', 'Loss'],
         datasets: [
