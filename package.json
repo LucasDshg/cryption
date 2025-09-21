@@ -2,6 +2,7 @@
   "name": "cryption",
   "version": "0.0.1",
   "author": "Lucas Software",
+  "description": "An Ionic project",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --no-open --host=0.0.0.0 --port=8100 --configuration=development",
@@ -40,7 +41,12 @@
     "@maskito/kit": "^3.10.3",
     "chart.js": "^4.5.0",
     "chartjs-plugin-datalabels": "^2.2.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-testing-library": "^7.8.0",
+    "eslint-scope": "^8.4.0",
     "ionicons": "^7.4.0",
+    "prettier-eslint": "^16.4.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -72,6 +78,5 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.8.0"
-  },
-  "description": "An Ionic project"
+  }
 }
