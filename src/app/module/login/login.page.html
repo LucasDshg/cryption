@@ -46,9 +46,13 @@
           shape="round"
           expand="full"
           color="primary"
+          [disabled]="this.loading()"
           (click)="submit()"
-          >Entrar</ion-button
         >
+          @if(this.loading()){
+          <ion-spinner name="dots"></ion-spinner>
+          }@else { Entrar }
+        </ion-button>
       </ion-card-content>
     </ion-card>
   </div>
