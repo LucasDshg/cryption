@@ -1,9 +1,12 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'cryption.app',
   appName: 'cryption',
   webDir: 'www',
+  server: {
+    androidScheme: 'https',
+  },
   backgroundColor: '#000000ff',
   android: {
     adjustMarginsForEdgeToEdge: 'force',
@@ -17,7 +20,7 @@ const config: CapacitorConfig = {
       launchAutoHide: true,
       androidScaleType: 'CENTER_CROP',
       splashImmersive: true,
-      backgroundColor: '#e77333',
+      backgroundColor: '#000000ff',
     },
   },
 };
