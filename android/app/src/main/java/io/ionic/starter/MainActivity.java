@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package cryption.app;
 
 import com.getcapacitor.BridgeActivity;
 
