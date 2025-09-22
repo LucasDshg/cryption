@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { IonicComponentsModule } from '../../ionic-components.module';
-import { ITradesData } from '../../corretora/interface/trades.interface';
-import { AppIconComponent } from '../app-icon/app-icon.component';
 import {
   TRADE_DIRECTION_DIC,
   TRADE_RESULT_DIC,
 } from '../../corretora/constants/trades.constants';
+import { ITradesData } from '../../corretora/interface/trades.interface';
+import { IonicComponentsModule } from '../../ionic-components.module';
+import { AppIconComponent } from '../app-icon/app-icon.component';
 
 @Component({
-  selector: 'trade-item',
+  selector: 'app-trade-item',
   template: `
     <ion-item>
       <ion-avatar slot="start">
