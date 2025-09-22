@@ -1,24 +1,24 @@
 import { Injectable, signal } from '@angular/core';
-import { IUser } from '../interfaces/user.interface';
+import { IAuth } from '../interfaces/user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UserStore {
-  private _signal = signal<IUser | undefined>(this.localStorage);
+  private _signal = signal<IAuth | undefined>(this.localStorage);
 
   readonly store = this._signal.asReadonly();
 
-  get localStorage(): IUser | undefined {
+  get localStorage(): IAuth | undefined {
     const local = localStorage.getItem('cryption');
 
     if (local) return JSON.parse(local);
     return undefined;
   }
 
-  set localStorage(value: IUser) {
+  set localStorage(value: IAuth) {
     localStorage.setItem('cryption', JSON.stringify({ ...value }));
   }
 
-  update(value: Partial<IUser>): void {
+  update(value: Partial<IAuth>): void {
     this._signal.set({
       ...this.store()!,
       ...value,
@@ -26,7 +26,7 @@ export class UserStore {
     this.localStorage = this.store()!;
   }
 
-  init(value: IUser): void {
+  init(value: IAuth): void {
     this.localStorage = value;
     this._signal.set(value);
   }

@@ -12,10 +12,14 @@ export interface IBot {
   tenantId: string;
 }
 
-export interface IUser {
+export interface IAuth {
   id?: string;
-  corretora: string;
-  bot: string;
+  tokenCorretora: string;
+  tokenBot: string;
+  credential: {
+    corretora: ICorretora;
+    robo: IBot;
+  };
   robo: {
     id: string;
     loginId: string;
