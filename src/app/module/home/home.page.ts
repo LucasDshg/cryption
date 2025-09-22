@@ -83,5 +83,6 @@ export class HomePage {
 
   setMonth(id: EMonths): void {
     this.monthSelected.set(id);
+    this.data.reload();
   }
 }
