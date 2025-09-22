@@ -75,7 +75,7 @@
       @for (item of list.value().data; track item.id) {
         <ion-card [button]="true" (click)="details(item)">
           <ion-card-content>
-            <trade-item [item]="item"></trade-item>
+            <app-trade-item [item]="item"></app-trade-item>
           </ion-card-content>
         </ion-card>
       }
