@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, computed, model } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 
 @Component({
@@ -63,14 +63,14 @@ import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
   imports: [IonicComponentsModule, CurrencyPipe],
 })
 export class ChartForceBarComponent {
-  readonly total = model.required<number>();
-  readonly expenses = model.required<number>();
+  readonly total = input.required<number>();
+  readonly expenses = input.required<number>();
   readonly win = computed(() => {
     const totalValue = Math.abs(this.expenses()) + this.total();
-    console.log(totalValue);
-    return 100 - (this.total() * 100) / totalValue;
+    return (this.total() * 100) / totalValue;
   });
   readonly loss = computed(() => {
-    return (this.expenses() * 100) / this.total();
+    const totalValue = Math.abs(this.expenses()) + this.total();
+    return (Math.abs(this.expenses()) * 100) / totalValue;
   });
 }
