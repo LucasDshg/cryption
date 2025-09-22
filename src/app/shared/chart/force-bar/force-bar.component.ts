@@ -10,7 +10,8 @@ import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
         height: 30px;
         color: white;
         font-weight: 500;
-        padding: 4px 20px;
+        font-size: 12px;
+        padding: 6px 20px;
         position: relative;
         transition: width 300ms ease-in;
       }
