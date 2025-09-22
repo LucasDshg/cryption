@@ -22,6 +22,22 @@ function timeStamp(date: Date): Date {
   );
 }
 
+function formatterNumber(
+  value: number | string,
+  options: Intl.NumberFormatOptions = {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  },
+  locale: string = 'pt-BR',
+  symbol: string = '',
+): string {
+  if (value == undefined || value == null) {
+    return '-';
+  }
+
+  return `${value.toLocaleString(locale, options)}${symbol}`;
+}
+
 function payload(title: string, text: string): any {
   return {
     notification: {
@@ -39,6 +55,7 @@ export default {
   firestore: firestore,
   https: https,
   formatDate,
+  formatterNumber,
   stringToDate,
   timeStamp,
   payload,
