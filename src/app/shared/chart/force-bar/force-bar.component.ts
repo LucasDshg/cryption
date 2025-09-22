@@ -13,6 +13,8 @@ import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
         font-size: 12px;
         padding: 6px 20px;
         position: relative;
+        display: inline-block;
+        text-wrap: nowrap;
         transition: width 300ms ease-in;
       }
       .win {
@@ -45,21 +47,19 @@ import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
     `,
   ],
   template: `
-    @defer (when total() && expenses()) {
-      <div class="ion-w-100 ion-d-flex ion-m-bottom-16">
-        <span class="ion-d-block bar win" [style.width.%]="win()">
-          {{ win().toFixed(2) }}
-        </span>
-        <span class="ion-d-block bar loss" [style.width.%]="loss()">
-          {{ loss().toFixed(2) }}
-        </span>
-      </div>
-      <ion-text [color]="total() + expenses() > 0 ? 'success' : 'danger'">
-        <p class="ion-fw-medium ion-text-nowrap">
-          {{ total() + expenses() | currency }}
-        </p>
-      </ion-text>
-    }
+    <div class="ion-w-100 ion-d-flex ion-m-bottom-16">
+      <span class="bar win" [style.width.%]="win()">
+        {{ win().toFixed(2) }}
+      </span>
+      <span class="bar loss" [style.width.%]="loss()">
+        {{ loss().toFixed(2) }}
+      </span>
+    </div>
+    <ion-text [color]="total() + expenses() > 0 ? 'success' : 'danger'">
+      <p class="ion-fw-medium ion-text-nowrap">
+        {{ total() + expenses() | currency }}
+      </p>
+    </ion-text>
   `,
   imports: [IonicComponentsModule, CurrencyPipe],
 })
