@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
+import { IonicComponentsModule } from '../../ionic-components.module';
 import {
   TRADE_DIRECTION_DIC,
   TRADE_RESULT_DIC,
-} from '../../corretora/constants/trades.constants';
-import { ITradesData } from '../../corretora/interface/trades.interface';
-import { IonicComponentsModule } from '../../ionic-components.module';
+} from '../../services/corretora/constants/trades.constants';
+import { ITradesData } from '../../services/corretora/interface/trades.interface';
 import { AppIconComponent } from '../app-icon/app-icon.component';
 
 @Component({

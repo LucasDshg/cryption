@@ -7,7 +7,7 @@ import { CardLoadingComponent } from 'src/app/shared/components/card-loading/car
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { ConfirmAlert } from 'src/app/shared/components/modal-confirm/confirm-alert-decorator';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
-import { RoboService } from 'src/app/shared/robo/service/robo.service';
+import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
 
 @Component({
   selector: 'app-bots',

@@ -6,7 +6,7 @@ import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.co
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
-import { RoboService } from 'src/app/shared/robo/service/robo.service';
+import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
 
 @Component({
   selector: 'app-wallets',
