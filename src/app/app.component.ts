@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -8,6 +7,8 @@ import {
 } from '@angular/core';
 import { App } from '@capacitor/app';
 
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 import { NavController } from '@ionic/angular';
 import {
   AlertController,
@@ -16,9 +17,9 @@ import {
   ModalController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
+import { MenuComponent } from './core/components/menu/menu.component';
 import { PushNotificationsService } from './core/service/pushNotification.service';
 import { iconList } from './shared/icons';
-import { MenuComponent } from './core/components/menu/menu.component';
 
 @Component({
   selector: 'app-root',
@@ -47,5 +48,17 @@ export class AppComponent {
     });
 
     this._push.notificationReceived();
+    this._theme();
+  }
+
+  private async _theme(): Promise<void> {
+    await StatusBar.setOverlaysWebView({ overlay: true });
+    await StatusBar.setBackgroundColor({
+      color: '#000000',
+    });
+    await StatusBar.setStyle({ style: Style.Dark });
+    await EdgeToEdge.setBackgroundColor({
+      color: '#000000',
+    });
   }
 }
