@@ -1,23 +1,7 @@
 <app-header title="Operações"> </app-header>
 
-<!-- ToDo[start]: precisa ser um component no shared -->
-<div
-  class="ion-d-flex ion-overflow-auto ion-align-items-center ion-margin-horizontal"
-  style="scrollbar-width: none; scroll-snap-type: x mandatory"
-  id="div_month"
->
-  @for (month of months; track month.id) {
-    <ion-chip
-      [outline]="true"
-      class="ion-d-block ion-flex-1"
-      [ngClass]="{ 'chip-selected': month.id === monthSelected() }"
-      (click)="setMonth(month.id)"
-    >
-      {{ month.name }}
-    </ion-chip>
-  }
-</div>
-<!-- ToDo[end]: precisa ser um component no shared -->
+<month-select (monthChange)="updateData($event)"></month-select>
+
 <ion-content>
   @if (list.isLoading()) {
     <app-card-loading type="titleAndSubtitle"></app-card-loading>

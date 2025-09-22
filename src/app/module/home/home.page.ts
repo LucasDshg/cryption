@@ -5,8 +5,9 @@ import { PushNotificationsService } from 'src/app/core/service/pushNotification.
 import { ChartForceBarComponent } from 'src/app/shared/chart/force-bar/force-bar.component';
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { MonthSelectComponent } from 'src/app/shared/components/month-select/month-select.component';
 import { TradeItemComponent } from 'src/app/shared/components/trade-item/trade-item.component';
-import { MONTHS, MONTHS_DIC } from 'src/app/shared/constants/months.constants';
+import { MONTHS_DIC } from 'src/app/shared/constants/months.constants';
 import { CorretoraService } from 'src/app/shared/corretora/service/corretor.service';
 import { EMonths } from 'src/app/shared/enums/months.enum';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
@@ -22,6 +23,7 @@ import { RoboService } from 'src/app/shared/robo/service/robo.service';
     TradeItemComponent,
     CardLoadingComponent,
     ChartForceBarComponent,
+    MonthSelectComponent,
   ],
   providers: [CorretoraService, RoboService],
 })
@@ -30,15 +32,13 @@ export class HomePage {
   private _corretora = inject(CorretoraService);
   private _robo = inject(RoboService);
 
-  readonly months = MONTHS;
-
   readonly monthSelected = signal<EMonths>(EMonths.HOJE);
   readonly data = rxResource({
-    params: () => this.monthSelected,
+    params: this.monthSelected,
     stream: ({ params }) =>
       this._corretora.trades({
-        start: MONTHS_DIC.get(params())!.start!,
-        end: MONTHS_DIC.get(params())!.end!,
+        start: MONTHS_DIC.get(params)!.start!,
+        end: MONTHS_DIC.get(params)!.end!,
       }),
   });
 
@@ -81,8 +81,8 @@ export class HomePage {
     this._push.requestPermissions();
   }
 
-  setMonth(id: EMonths): void {
-    this.monthSelected.set(id);
+  updateData(month: EMonths): void {
+    this.monthSelected.set(month);
     this.data.reload();
   }
 }

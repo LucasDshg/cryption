@@ -9,12 +9,13 @@ import { CardErrorComponent } from 'src/app/shared/components/card-error/card-er
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { TradeItemComponent } from 'src/app/shared/components/trade-item/trade-item.component';
-import { MONTHS, MONTHS_DIC } from 'src/app/shared/constants/months.constants';
+import { MONTHS_DIC } from 'src/app/shared/constants/months.constants';
 import { ITradesData } from 'src/app/shared/corretora/interface/trades.interface';
 import { CorretoraService } from 'src/app/shared/corretora/service/corretor.service';
 import { EMonths } from 'src/app/shared/enums/months.enum';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 import { ModalTradesDetailsComponent } from './modal-details/modal-details.component';
+import { MonthSelectComponent } from 'src/app/shared/components/month-select/month-select.component';
 
 Chart.register(ChartDataLabels);
 
@@ -28,6 +29,7 @@ Chart.register(ChartDataLabels);
     CardLoadingComponent,
     CardErrorComponent,
     TradeItemComponent,
+    MonthSelectComponent,
   ],
   providers: [CorretoraService, ModalController],
 })
@@ -35,17 +37,15 @@ export class TradesPage {
   private _corretora = inject(CorretoraService);
   private _modalCtrl = inject(ModalController);
 
-  readonly months = MONTHS;
-
   readonly monthSelected = signal<EMonths>(EMonths.HOJE);
   readonly chart = signal<any | undefined>(undefined);
 
   readonly list = rxResource({
-    params: () => this.monthSelected,
+    params: this.monthSelected,
     stream: ({ params }) =>
       this._corretora.trades({
-        start: MONTHS_DIC.get(params())!.start!,
-        end: MONTHS_DIC.get(params())!.end!,
+        start: MONTHS_DIC.get(params)!.start!,
+        end: MONTHS_DIC.get(params)!.end!,
       }),
   });
 
@@ -71,6 +71,11 @@ export class TradesPage {
         }, 500);
       }
     });
+  }
+
+  updateData(month: EMonths): void {
+    this.monthSelected.set(month);
+    this.list.reload();
   }
 
   setMonth(id: EMonths): void {
