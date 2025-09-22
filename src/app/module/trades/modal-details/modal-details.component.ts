@@ -67,8 +67,10 @@ import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
           context: {
             text: 'Subtotal',
             value:
-              (data().result === 'WON' ? data().pnl * 2 : data().pnl)
-              | currency,
+              (data().result === 'WON' && data().fromBot
+                ? data().pnl * 2
+                : data().pnl
+              ) | currency,
           }
         "
       ></ng-container>
