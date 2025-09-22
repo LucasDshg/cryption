@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { App } from '@capacitor/app';
 
+import { Device } from '@capacitor/device';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 import { NavController } from '@ionic/angular';
@@ -52,6 +53,9 @@ export class AppComponent {
   }
 
   private async _theme(): Promise<void> {
+    const info = await Device.getInfo();
+    if (info.platform === 'web') return;
+
     await StatusBar.setOverlaysWebView({ overlay: true });
     await StatusBar.setBackgroundColor({
       color: '#000000',

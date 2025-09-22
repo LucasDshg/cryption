@@ -35,7 +35,7 @@ import { UserService } from 'src/app/shared/services/user/user.service';
     ChartForceBarComponent,
     MonthSelectComponent,
   ],
-  providers: [CorretoraService, RoboService],
+  providers: [CorretoraService, RoboService, UserService],
 })
 export class HomePage implements AfterViewInit {
   private _push = inject(PushNotificationsService);
