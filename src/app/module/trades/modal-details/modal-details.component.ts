@@ -1,13 +1,13 @@
 import { CurrencyPipe, DatePipe, NgTemplateOutlet } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
+import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 import {
   TRADE_DIRECTION_DIC,
   TRADE_RESULT_DIC,
   TRADE_ROBO_DIC,
-} from 'src/app/shared/corretora/constants/trades.constants';
-import { ITradesData } from 'src/app/shared/corretora/interface/trades.interface';
-import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
+} from 'src/app/shared/services/corretora/constants/trades.constants';
+import { ITradesData } from 'src/app/shared/services/corretora/interface/trades.interface';
 
 @Component({
   selector: 'app-modal-details',

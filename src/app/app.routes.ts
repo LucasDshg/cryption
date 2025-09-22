@@ -7,7 +7,7 @@ import { LoginPage } from './module/login/login.page';
 export const APP_ROUTES: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {

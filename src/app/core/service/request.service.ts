@@ -19,7 +19,7 @@ import {
 } from '@angular/fire/firestore';
 
 import { catchError, from, map, Observable, of, shareReplay, tap } from 'rxjs';
-import { ToastService } from 'src/app/shared/toast/toast.service';
+import { ToastService } from 'src/app/shared/components/toast/toast.service';
 
 @Injectable({
   providedIn: 'root',
