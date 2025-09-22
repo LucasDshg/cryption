@@ -28,22 +28,22 @@ export const authInterceptor: HttpInterceptorFn = (
   }
 
   if (req.url.includes(environment.corretora)) {
-    if (store?.corretora) {
-      if (auth.isTokenExpired(store!.corretora!)) {
+    if (store?.tokenCorretora) {
+      if (auth.isTokenExpired(store!.tokenCorretora!)) {
         auth.logout();
         return throwError(() => new Error('Login expirado'));
       }
 
-      newReq = _setAcessToken(newReq, store!.corretora);
+      newReq = _setAcessToken(newReq, store!.tokenCorretora);
     }
   } else if (req.url.includes(environment.bot)) {
-    if (store?.bot) {
-      if (auth.isTokenExpired(store!.bot!)) {
+    if (store?.tokenBot) {
+      if (auth.isTokenExpired(store!.tokenBot!)) {
         auth.logout();
         return throwError(() => new Error('Login expirado'));
       }
 
-      newReq = _setAcessToken(newReq, store!.bot);
+      newReq = _setAcessToken(newReq, store!.tokenBot);
     }
   } else {
     auth.logout();
