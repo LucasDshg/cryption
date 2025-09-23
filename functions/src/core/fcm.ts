@@ -9,16 +9,11 @@ type TFcmToken = {
 };
 
 async function getTokenUserById(id: string): Promise<TFcmToken | undefined> {
-  const user = await adm
-    .firestore()
-    .collection('fcm')
-    .where('idUser', '==', id)
-    .limit(1)
-    .get();
+  const user = await adm.firestore().collection('fcm').doc(id).get();
 
-  if (user.empty) return undefined;
+  if (!user.exists) return undefined;
 
-  return user.docs[0].data() as TFcmToken;
+  return user.data() as TFcmToken;
 }
 
 export default {
