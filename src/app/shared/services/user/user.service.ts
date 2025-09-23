@@ -13,7 +13,11 @@ export class UserService extends RequestService<IUser> {
     return this.getById(id);
   }
 
-  updateToken(id: string, token: string): Observable<void> {
-    return this.updateData(id, { token });
+  updateToken(
+    id: string,
+    bot: string | null = null,
+    corretora: string | null = null,
+  ): Observable<void> {
+    return this.updateData(id, { bot, corretora });
   }
 }

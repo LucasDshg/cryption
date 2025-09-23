@@ -35,7 +35,7 @@ const checkWallet = utils.firestore
       functions.logger.debug('start verification wallet');
       const users = await user.getAll();
       users.forEach(async (user) => {
-        const saldo = await getSaldo(user.token);
+        const saldo = await getSaldo(user.bot);
         if (user.alertSaldo && saldo[0].balance < user.alertSaldo) {
           const userFcm = await fcm.getTokenUserById(user.id);
           if (userFcm) {

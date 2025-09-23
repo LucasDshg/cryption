@@ -1,6 +1,7 @@
 export interface IUser {
   id: string;
   privateKey: string;
-  token: string;
+  bot: string;
+  corretora: string;
   alertSaldo: number | null;
 }

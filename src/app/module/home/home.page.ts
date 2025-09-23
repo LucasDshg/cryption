@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
-import { switchMap } from 'rxjs';
+import { combineLatest, switchMap, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { PushNotificationsService } from 'src/app/core/service/pushNotification.service';
 import { UserStore } from 'src/app/core/store/user.store';
@@ -43,7 +43,7 @@ export class HomePage implements AfterViewInit {
   private _robo = inject(RoboService);
   private _auth = inject(AuthService);
   private _userService = inject(UserService);
-  private _store = inject(UserStore).store;
+  private _store = inject(UserStore);
 
   readonly monthSelected = signal<EMonths>(EMonths.HOJE);
   readonly updatedToken = signal<boolean>(false);
@@ -106,11 +106,24 @@ export class HomePage implements AfterViewInit {
 
   private _renoveTokens(): void {
     if (this.updatedToken()) return;
-    this._auth
-      .robo(this._store()!.credential.robo)
+
+    combineLatest([
+      this._auth.robo(this._store.store()!.credential.robo),
+      this._auth.corretora(this._store.store()!.credential.corretora),
+    ])
       .pipe(
+        tap((res) => {
+          this._store.update({
+            tokenBot: res[0].token,
+            tokenCorretora: res[1].token,
+          });
+        }),
         switchMap((res) =>
-          this._userService.updateToken(this._store()!.id!, res.token),
+          this._userService.updateToken(
+            this._store.store()!.id!,
+            res[0].token,
+            res[1].token,
+          ),
         ),
       )
       .subscribe(() => this.updatedToken.set(true));
