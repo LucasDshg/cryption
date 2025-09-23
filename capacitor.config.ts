@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'cryption',
   webDir: 'www',
   server: {
-    androidScheme: 'https',
+    androidScheme: 'http',
   },
   backgroundColor: '#000000ff',
   android: {
