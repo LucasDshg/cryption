@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { where } from '@angular/fire/firestore';
 import { Capacitor } from '@capacitor/core';
 import {
   ActionPerformed,
@@ -7,8 +6,8 @@ import {
   PushNotificationSchema,
   Token,
 } from '@capacitor/push-notifications';
-import { NavController } from '@ionic/angular/standalone';
-import { firstValueFrom, Observable } from 'rxjs';
+import { AlertController, NavController } from '@ionic/angular/standalone';
+import { firstValueFrom } from 'rxjs';
 import { IFCM } from '../interfaces/fcm.interface';
 import { UserStore } from '../store/user.store';
 import { RequestService } from './request.service';
@@ -18,24 +17,13 @@ import { RequestService } from './request.service';
 })
 export class PushNotificationsService extends RequestService<IFCM> {
   private _navCtrl = inject(NavController);
+  private _alert = inject(AlertController);
   private _store = inject(UserStore).store;
 
   constructor() {
     super();
     this.collectionName = 'fcm';
   }
-
-  fetch(): Observable<IFCM[]> {
-    this.collectionName = 'fcm';
-    return this.get({
-      queryConstraints: [where('idUser', '==', this._store()!.id)],
-    });
-  }
-
-  remove = (id: string): Observable<void> => {
-    this.collectionName = 'fcm';
-    return this.removeData(id);
-  };
 
   requestPermissions(): void {
     const isPushNotificationsAvailable =
@@ -45,28 +33,23 @@ export class PushNotificationsService extends RequestService<IFCM> {
       PushNotifications.requestPermissions().then((result) => {
         if (result.receive === 'granted') {
           PushNotifications.register();
-          this._saveRegistration();
+          this.saveRegistration();
         }
       });
     }
   }
 
-  private _saveRegistration(): void {
+  saveRegistration(): void {
     PushNotifications.addListener('registration', async (token: Token) => {
-      this.collectionName = 'fcm';
-      const fcmList = await firstValueFrom(this.fetch());
-
-      if (fcmList.length > 0) {
-        fcmList.forEach(async (it) => {
-          await this.remove(it.id!);
-        });
-      }
-
-      this.addData<IFCM>({
-        token: token.value,
-        idUser: this._store()!.id!,
-        createAt: new Date(),
-      }).subscribe();
+      await firstValueFrom(
+        this.addData<IFCM>(
+          {
+            token: token.value,
+            createAt: null as any,
+          },
+          { id: this._store()!.id! },
+        ),
+      );
     });
   }
 

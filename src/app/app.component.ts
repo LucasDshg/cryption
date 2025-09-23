@@ -47,7 +47,6 @@ export class AppComponent {
         App.exitApp();
       }
     });
-
     this._push.notificationReceived();
     this._theme();
   }
