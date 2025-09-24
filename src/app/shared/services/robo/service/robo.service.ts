@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { MOCK_BOT_TYPE } from 'mocks/bots-type.mocks';
 import { MOCK_ME } from 'mocks/me.mocks';
 import { MOCK_STEUP } from 'mocks/steup.mocks';
 import { MOCK_WALLETS } from 'mocks/wallets.mocks';
 import { delay, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { IBotsType } from '../interface/bots-type.interface';
 import { IMe } from '../interface/me.interface';
 import { ISetup } from '../interface/steup.interface';
 import { IWallets } from '../interface/wallets.interface';
@@ -29,7 +31,27 @@ export class RoboService {
       `${environment.bot}/users/setups?page=1&pageSize=100&orderBy=id&orderDirection=DESC&userId=${userId}&active=true`,
     );
   }
+  addBot(data: {
+    name: string;
+    value: number;
+    botId: string;
+    brokerToken: string;
+  }): Observable<void> {
+    return this._http.post<void>(`${environment.bot}/users/setups`, {
+      name: data.name,
+      brokerProfileId: data.botId,
+      brokerToken: data.brokerToken,
+      description: '',
+      brokerMaxBalanceToUse: data.value,
+    });
+  }
 
+  fetchTypeBots(): Observable<IBotsType> {
+    if (!environment.production) return of(MOCK_BOT_TYPE as any);
+    return this._http.get<IBotsType>(
+      `${environment.bot}/users/profile-type?page=1&pageSize=100&brokerId=01JFGCZ9SJ579HFCC9WTJBE21B&orderDirection=DESC&active=true`,
+    );
+  }
   active(id: string): Observable<void> {
     return this._http.get<void>(`${environment.bot}/users/setups/${id}/active`);
   }
