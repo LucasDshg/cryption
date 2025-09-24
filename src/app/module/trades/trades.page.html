@@ -1,8 +1,7 @@
 <app-header title="Operações"> </app-header>
 
-<app-month-select (monthChange)="updateData($event)"></app-month-select>
-
 <ion-content>
+  <app-month-select (monthChange)="updateData($event)"></app-month-select>
   @if (list.isLoading()) {
     <app-card-loading type="titleAndSubtitle"></app-card-loading>
     <app-card-loading type="titleAndSubtitle"></app-card-loading>

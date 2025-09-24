@@ -34,3 +34,30 @@ TRADE_ROBO_DIC.set('MODERATE', {
 TRADE_ROBO_DIC.set('CONSERVATIVE', {
   name: 'Conservador',
 });
+
+export const TRADE_SYMBOLS_DIC = new Map<
+  string,
+  { name: string; icon: string }
+>();
+
+TRADE_SYMBOLS_DIC.set('ADAUSDT', {
+  icon: 'assets/symbol/adausdt.png',
+  name: 'ADA',
+});
+
+TRADE_SYMBOLS_DIC.set('XRPUSDT', {
+  icon: 'assets/symbol/XRPUSDT.png',
+  name: 'XRP',
+});
+TRADE_SYMBOLS_DIC.set('ETHUSDT', {
+  icon: 'assets/symbol/ETHUSDT.png',
+  name: 'Ethereum',
+});
+TRADE_SYMBOLS_DIC.set('SOLUSDT', {
+  icon: 'assets/symbol/solusdt.png',
+  name: 'SOL',
+});
+TRADE_SYMBOLS_DIC.set('BTCUSDT', {
+  icon: 'assets/symbol/BTCUSDT.png',
+  name: 'Bitcoin',
+});

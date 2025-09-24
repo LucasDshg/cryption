@@ -4,6 +4,7 @@ import { IonicComponentsModule } from '../../ionic-components.module';
 import {
   TRADE_DIRECTION_DIC,
   TRADE_RESULT_DIC,
+  TRADE_SYMBOLS_DIC,
 } from '../../services/corretora/constants/trades.constants';
 import { ITradesData } from '../../services/corretora/interface/trades.interface';
 import { AppIconComponent } from '../app-icon/app-icon.component';
@@ -13,7 +14,7 @@ import { AppIconComponent } from '../app-icon/app-icon.component';
   template: `
     <ion-item>
       <ion-avatar slot="start">
-        <img src="assets/symbol/ETHUSDT.svg" />
+        <img [src]="symbolsDic.get(item().symbol)?.icon" />
       </ion-avatar>
       <div>
         <ion-label
@@ -28,7 +29,7 @@ import { AppIconComponent } from '../app-icon/app-icon.component';
         </ion-label>
 
         <ion-text color="medium">
-          <p class="ion-m-0">{{ item().symbol }}</p>
+          <p class="ion-m-0">{{ symbolsDic.get(item().symbol)?.name }}</p>
         </ion-text>
       </div>
       <div
@@ -59,4 +60,5 @@ export class TradeItemComponent {
   readonly item = input.required<ITradesData>();
   readonly resultDic = TRADE_RESULT_DIC;
   readonly directionDic = TRADE_DIRECTION_DIC;
+  readonly symbolsDic = TRADE_SYMBOLS_DIC;
 }
