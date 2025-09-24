@@ -2,22 +2,62 @@
 
 <ion-content>
   <div class="ion-m-bottom-80">
-    <ion-card class="ion-no-shadow" [button]="true">
-      <ion-card-header
-        class="ion-d-flex ion-flex-row ion-align-items-center ion-justify-content-between"
-      >
-        <ion-card-title color="primary">Alerta de saldo</ion-card-title>
-        <app-icon
-          name="radio-button-on"
-          size="small"
-          [color]="'success'"
-        ></app-icon>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-text color="medium">
-          <p>Valor: {{ 50 | currency }}</p>
-        </ion-text>
-      </ion-card-content>
-    </ion-card>
+    @defer (when tradeInfo()) {
+      <ion-card class="ion-no-shadow">
+        <ion-card-header>
+          <ion-card-title color="primary">
+            {{ tradeInfo()!.totalBalance | currency }}</ion-card-title
+          >
+          <ion-card-subtitle color="medium">Saldo Corretora</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    } @placeholder {
+      <app-card-loading type="titleAndSubtitle"></app-card-loading>
+    }
+    @defer (when roboWallet()) {
+      <ion-card class="ion-no-shadow">
+        <ion-card-header>
+          <ion-card-title color="primary">
+            {{ roboWallet()![0].balance | currency }}</ion-card-title
+          >
+          <ion-card-subtitle color="medium">Saldo Robô</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    } @placeholder {
+      <app-card-loading type="titleAndSubtitle"></app-card-loading>
+    }
+    @defer (when roboWallet()) {
+      <ion-card class="ion-no-shadow">
+        <ion-card-header>
+          <ion-card-title color="primary"> Transferir Bônus </ion-card-title>
+          <ion-card-subtitle color="medium">
+            Disponível: {{ roboWallet()![1].balance | currency }}
+          </ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    } @placeholder {
+      <app-card-loading type="titleAndSubtitle"></app-card-loading>
+    }
+    @defer (when user()) {
+      <ion-card class="ion-no-shadow" [button]="true" (click)="goToAlert()">
+        <ion-card-header
+          class="ion-d-flex ion-flex-row ion-align-items-center ion-justify-content-between"
+        >
+          <ion-card-title color="primary">Alerta de saldo</ion-card-title>
+          <app-icon
+            name="radio-button-on"
+            size="small"
+            [color]="user()!.alertSaldo ? 'success' : 'danger'"
+          ></app-icon>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-text color="medium">
+            <p>Valor: {{ user()!.alertSaldo | currency }}</p>
+          </ion-text>
+        </ion-card-content>
+      </ion-card>
+    } @placeholder {
+      <app-card-loading type="titleAndSubtitle"></app-card-loading>
+    }
   </div>
 </ion-content>
