@@ -7,4 +7,12 @@ export const WALLETS_ROUTES: Routes = [
     component: WalletsPage,
     data: { showTab: true },
   },
+  {
+    path: 'alert',
+    loadComponent: () =>
+      import('./alert-wallets/alert-wallets.page').then(
+        (m) => m.AlertWalletsPage,
+      ),
+    data: { showTab: false },
+  },
 ];
