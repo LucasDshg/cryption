@@ -77,12 +77,6 @@ export class HomePage implements AfterViewInit {
     return { price, quant };
   });
 
-  readonly wallet = computed(() => {
-    const list = this.roboWallet();
-    if (!list) return null;
-    return list[0];
-  });
-
   readonly tradeInfo = toSignal(
     this._corretora.tradesInfo({
       start: MONTHS_DIC.get(EMonths.HOJE)!.start!,
