@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, output, signal } from '@angular/core';
+import { Component, model, OnInit, output } from '@angular/core';
 import { MONTHS } from '../../constants/months.constants';
 import { EMonths } from '../../enums/months.enum';
 import { IonicComponentsModule } from '../../ionic-components.module';
@@ -29,8 +29,7 @@ import { IonicComponentsModule } from '../../ionic-components.module';
 export class MonthSelectComponent implements OnInit {
   readonly months = MONTHS;
   readonly monthChange = output<EMonths>();
-
-  readonly monthSelected = signal<EMonths>(EMonths.HOJE);
+  readonly monthSelected = model<EMonths>(EMonths.HOJE);
 
   ngOnInit(): void {
     this.monthChange.emit(EMonths.HOJE);

@@ -57,13 +57,9 @@ export class HomePage implements AfterViewInit {
       }),
   });
 
-  readonly firstFiveTrades = computed(() => {
-    const list = this.data.value()?.data;
-    if (!list) return [];
-    return list.slice(0, 5);
-  });
-
   readonly totalWin = computed(() => {
+    if (this.data.isLoading()) return undefined;
+
     const win = this.data.value()?.data.filter((it) => it.result !== 'LOST');
     const price = win?.reduce((prev, curr) => curr.pnl + prev, 0);
     const quant = win?.length;
@@ -71,6 +67,7 @@ export class HomePage implements AfterViewInit {
   });
 
   readonly totalLoss = computed(() => {
+    if (this.data.isLoading()) return undefined;
     const loss = this.data.value()?.data.filter((it) => it.result === 'LOST');
     const price = loss?.reduce((prev, curr) => curr.pnl + prev, 0);
     const quant = loss?.length;
@@ -95,7 +92,6 @@ export class HomePage implements AfterViewInit {
 
   updateData(month: EMonths): void {
     this.monthSelected.set(month);
-    this.data.reload();
   }
 
   private _renoveTokens(): void {
