@@ -46,10 +46,10 @@
           shape="round"
           expand="full"
           color="primary"
-          [disabled]="this.loading()"
+          [disabled]="loading()"
           (click)="submit()"
         >
-          @if (this.loading()) {
+          @if (loading()) {
             <ion-spinner name="dots"></ion-spinner>
           } @else {
             Entrar
