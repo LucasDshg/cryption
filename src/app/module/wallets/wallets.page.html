@@ -1,3 +1,23 @@
 <app-header title="Carteira"> </app-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <div class="ion-m-bottom-80">
+    <ion-card class="ion-no-shadow" [button]="true">
+      <ion-card-header
+        class="ion-d-flex ion-flex-row ion-align-items-center ion-justify-content-between"
+      >
+        <ion-card-title color="primary">Alerta de saldo</ion-card-title>
+        <app-icon
+          name="radio-button-on"
+          size="small"
+          [color]="'success'"
+        ></app-icon>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-text color="medium">
+          <p>Valor: {{ 50 | currency }}</p>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
