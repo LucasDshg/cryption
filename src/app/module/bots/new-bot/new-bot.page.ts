@@ -1,49 +1,43 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { Component, inject, signal } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavController } from '@ionic/angular/standalone';
+import { MaskitoDirective } from '@maskito/angular';
 import { UserStore } from 'src/app/core/store/user.store';
 import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.component';
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
-import { ConfirmAlert } from 'src/app/shared/components/modal-confirm/confirm-alert-decorator';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
+import { mask } from 'src/app/utils/mask.utils';
 
 @Component({
-  selector: 'app-bots',
-  templateUrl: './bots.page.html',
+  selector: 'app-new-bot',
+  templateUrl: './new-bot.page.html',
   imports: [
     IonicComponentsModule,
     CommonModule,
     HeaderComponent,
     CardLoadingComponent,
     AppIconComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    MaskitoDirective,
   ],
   providers: [RoboService, NavController],
 })
-export class BotsPage {
-  private _roboService = inject(RoboService);
+export class NewBotPage {
   private _store = inject(UserStore);
   private _router = inject(NavController);
 
-  readonly data = rxResource({
-    stream: () => this._roboService.setups(this._store.store()!.robo.id),
-  });
+  readonly masks = mask;
+  readonly loading = signal<boolean>(false);
 
-  @ConfirmAlert({
-    title: 'Deseja desligar o bot',
-    keyArgs: 'name',
-  })
-  toggleStatus(name: string, active: boolean, id: string): void {
-    if (active) {
-      this._roboService.disabled(id).subscribe(() => this.data.reload());
-    } else {
-      this._roboService.active(id).subscribe(() => this.data.reload());
-    }
-  }
+  ionViewDidEnter(): void {}
 
-  goToNewBot(): void {
-    this._router.navigateForward(['/bots', 'new']);
+  submit(): void {}
+
+  private _back(): void {
+    this._router.navigateBack('/wallet');
   }
 }

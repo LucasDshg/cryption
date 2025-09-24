@@ -3,6 +3,21 @@
 <ion-content>
   @defer (when data.hasValue()) {
     <div class="ion-m-bottom-80">
+      @if (data.value()!.count < 3) {
+        <ion-card class="ion-no-shadow" [button]="true" (click)="goToNewBot()">
+          <ion-card-header
+            class="ion-d-flex ion-flex-row ion-align-items-center ion-justify-content-between"
+          >
+            <ion-card-title color="primary">Adicionar Novo Robô</ion-card-title>
+            <app-icon
+              name="chevron-forward"
+              size="small"
+              color="medium"
+            ></app-icon>
+          </ion-card-header>
+        </ion-card>
+      }
+
       @for (item of data.value()!.data; track item.id) {
         <ion-card
           class="ion-no-shadow"
@@ -16,7 +31,7 @@
             <app-icon
               name="radio-button-on"
               size="small"
-              [color]="item.active ? 'success' : 'danger'"
+              color="success"
             ></app-icon>
           </ion-card-header>
           <ion-card-content>

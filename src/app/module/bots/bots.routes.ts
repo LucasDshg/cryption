@@ -7,4 +7,10 @@ export const BOTS_ROUTES: Routes = [
     component: BotsPage,
     data: { showTab: true },
   },
+  {
+    path: 'new',
+    loadComponent: () =>
+      import('./new-bot/new-bot.page').then((m) => m.NewBotPage),
+    data: { showTab: false },
+  },
 ];
