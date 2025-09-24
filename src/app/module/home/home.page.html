@@ -1,12 +1,12 @@
 <app-header title="Resumo"> </app-header>
 
 <ion-content>
-  <month-select (monthChange)="updateData($event)"></month-select>
+  <app-month-select (monthChange)="updateData($event)"></app-month-select>
 
-  @defer (when tradeInfo() && roboWallet()) {
-    <ion-grid>
-      <ion-row>
-        <ion-col size="6" class="ion-p-start-0">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" class="ion-p-start-0">
+        @defer (when tradeInfo()) {
           <ion-card class="ion-no-shadow ion-m-vertical-0">
             <ion-card-header>
               <ion-card-title color="primary">
@@ -19,42 +19,54 @@
               >
             </ion-card-header>
           </ion-card>
-        </ion-col>
-        <ion-col size="6" class="ion-p-end-0">
+        } @placeholder {
+          <app-card-loading type="titleAndSubtitle"></app-card-loading>
+        }
+      </ion-col>
+      <ion-col size="6" class="ion-p-end-0">
+        @defer (when roboWallet()) {
           <ion-card class="ion-no-shadow ion-m-vertical-0">
             <ion-card-header>
               <ion-card-title color="primary">
-                {{ wallet()?.balance | currency }}</ion-card-title
+                {{ roboWallet()![0].balance | currency }}</ion-card-title
               >
               <ion-card-subtitle color="medium">Saldo MK</ion-card-subtitle>
             </ion-card-header>
           </ion-card>
-        </ion-col>
-        <ion-col size="12" class="ion-p-horizontal-0">
+        } @placeholder {
+          <app-card-loading type="titleAndSubtitle"></app-card-loading>
+        }
+      </ion-col>
+      <ion-col size="12" class="ion-p-horizontal-0">
+        @defer (when roboWallet()) {
           <ion-card class="ion-no-shadow ion-m-vertical-0">
             <ion-card-header>
               <ion-card-title class="ion-fs-16">Win X Loss</ion-card-title>
             </ion-card-header>
           </ion-card>
-        </ion-col>
-        <ion-col size="12" class="ion-p-horizontal-0">
-          @defer (when totalLoss() && totalWin()) {
-            <ion-card class="ion-no-shadow ion-m-vertical-0">
-              <ion-card-header>
-                <ion-card-title class="ion-fs-16">Lucro Liquido</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <app-chart-force-bar
-                  [expenses]="totalLoss().price!"
-                  [total]="totalWin().price!"
-                ></app-chart-force-bar>
-              </ion-card-content>
-            </ion-card>
-          } @placeholder {
-            <app-card-loading type="twoText"></app-card-loading>
-          }
-        </ion-col>
-        <ion-col size="12" class="ion-p-horizontal-0">
+        } @placeholder {
+          <app-card-loading type="titleAndSubtitle"></app-card-loading>
+        }
+      </ion-col>
+      <ion-col size="12" class="ion-p-horizontal-0">
+        @defer (when totalLoss().price && totalWin().price) {
+          <ion-card class="ion-no-shadow ion-m-vertical-0">
+            <ion-card-header>
+              <ion-card-title class="ion-fs-16">Lucro Liquido</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <app-chart-force-bar
+                [expenses]="totalLoss().price!"
+                [total]="totalWin().price!"
+              ></app-chart-force-bar>
+            </ion-card-content>
+          </ion-card>
+        } @placeholder {
+          <app-card-loading type="twoText"></app-card-loading>
+        }
+      </ion-col>
+      <ion-col size="12" class="ion-p-horizontal-0">
+        @defer (when firstFiveTrades().length > 0) {
           <ion-card class="ion-no-shadow ion-m-vertical-0">
             <ion-card-header>
               <ion-card-title
@@ -76,12 +88,10 @@
               }
             </ion-card-content>
           </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  } @placeholder {
-    <app-card-loading type="titleAndSubtitle"></app-card-loading>
-    <app-card-loading type="titleAndSubtitle"></app-card-loading>
-    <app-card-loading type="titleAndSubtitle"></app-card-loading>
-  }
+        } @placeholder {
+          <app-card-loading type="threeText"></app-card-loading>
+        }
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
