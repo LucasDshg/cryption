@@ -13,7 +13,12 @@ import { AppIconComponent } from '../app-icon/app-icon.component';
   selector: 'app-trade-item',
   template: `
     <ion-item>
-      <ion-avatar slot="start">
+      <ion-avatar
+        slot="start"
+        class="ion-m-0 ion-m-end-16"
+        [style.width.px]="50"
+        [style.height.px]="50"
+      >
         <img [src]="symbolsDic.get(item().symbol)?.icon" />
       </ion-avatar>
       <div>
