@@ -13,6 +13,14 @@ export class UserService extends RequestService<IUser> {
     return this.getById(id);
   }
 
+  updateAlertValue(
+    id: string,
+    alertSaldo: number | null,
+    toastText: string = 'Valor atualizado!',
+  ): Observable<void> {
+    return this.updateData(id, { alertSaldo }, { toastText });
+  }
+
   updateToken(
     id: string,
     bot: string | null = null,
