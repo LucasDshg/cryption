@@ -4,7 +4,9 @@ import { MOCK_TRADES_INFO } from 'mocks/trades-info.mocks';
 import { MOCK_TRADES } from 'mocks/trades.mocks';
 import { delay, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ITradeInfo } from '../interface/trade-info.interface';
 import { ITrades } from '../interface/trades.interface';
+import { IUserToken } from '../interface/user-token.interface';
 
 @Injectable()
 export class CorretoraService {
@@ -52,17 +54,22 @@ export class CorretoraService {
     );
   }
 
-  tradesInfo(data: { start: Date; end: Date }): Observable<any> {
+  tradesInfo(data: { start: Date; end: Date }): Observable<ITradeInfo> {
     if (!environment.production)
       return of(MOCK_TRADES_INFO as any).pipe(delay(4000));
-    return this._http.get<{ token: string }>(
-      `${environment.corretora}/trades/info`,
-      {
-        params: {
-          startDate: data.start.toISOString(),
-          endDate: data.end.toISOString(),
-        },
+    return this._http.get<ITradeInfo>(`${environment.corretora}/trades/info`, {
+      params: {
+        startDate: data.start.toISOString(),
+        endDate: data.end.toISOString(),
       },
+    });
+  }
+
+  userTokes(): Observable<IUserToken> {
+    if (!environment.production)
+      return of(MOCK_TRADES_INFO as any).pipe(delay(4000));
+    return this._http.get<IUserToken>(
+      `${environment.corretora}/user-api-tokens?page=1&pageSize=10&orderBy=id&orderDirection=DESC`,
     );
   }
 }
