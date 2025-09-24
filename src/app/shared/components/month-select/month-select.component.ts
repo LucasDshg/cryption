@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, output, signal } from '@angular/core';
-import { IonicComponentsModule } from '../../ionic-components.module';
-import { MONTHS, MONTHS_DIC } from '../../constants/months.constants';
+import { MONTHS } from '../../constants/months.constants';
 import { EMonths } from '../../enums/months.enum';
+import { IonicComponentsModule } from '../../ionic-components.module';
 
 @Component({
-  selector: 'month-select',
+  selector: 'app-month-select',
   template: `
     <div
       class="ion-d-flex ion-overflow-auto ion-align-items-center"

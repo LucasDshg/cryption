@@ -11,28 +11,38 @@ MONTHS_DIC.set(EMonths.HOJE, {
   end: getDate(0, 'end'),
 });
 MONTHS_DIC.set(EMonths.D_MENOS_1, {
-  name: 'D-1',
+  name: dateFormated(getDate(1, 'start')),
   start: getDate(1, 'start'),
   end: getDate(1, 'end'),
 });
 MONTHS_DIC.set(EMonths.D_MENOS_2, {
-  name: 'D-2',
+  name: dateFormated(getDate(2, 'start')),
   start: getDate(2, 'start'),
   end: getDate(2, 'end'),
 });
 MONTHS_DIC.set(EMonths.D_MENOS_3, {
-  name: 'D-3',
+  name: dateFormated(getDate(3, 'start')),
   start: getDate(3, 'start'),
   end: getDate(3, 'end'),
 });
-MONTHS_DIC.set(EMonths.SEMANA, { name: 'Semana', start: null, end: null });
-MONTHS_DIC.set(EMonths.MES, { name: 'Mês', start: null, end: null });
+MONTHS_DIC.set(EMonths.D_MENOS_4, {
+  name: dateFormated(getDate(4, 'start')),
+  start: getDate(3, 'start'),
+  end: getDate(3, 'end'),
+});
 
 export const MONTHS = Array.from(MONTHS_DIC).map(([key, value]) => ({
   id: key,
   name: value.name,
 }));
 
+function dateFormated(date: Date): string {
+  return date.toLocaleDateString('pt-br', {
+    timeZone: 'America/Sao_Paulo',
+    day: '2-digit',
+    month: '2-digit',
+  });
+}
 function getDate(day: number, type: 'start' | 'end'): Date {
   if (type === 'start') {
     return new Date(

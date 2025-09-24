@@ -3,6 +3,6 @@ export enum EMonths {
   D_MENOS_1 = 2,
   D_MENOS_2 = 3,
   D_MENOS_3 = 4,
-  SEMANA = 5,
-  MES = 6,
+  D_MENOS_4 = 5,
+  D_MENOS_5 = 6,
 }
