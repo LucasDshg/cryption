@@ -87,6 +87,8 @@
                 <app-trade-item
                   class="ion-d-block ion-m-bottom-16"
                   [item]="item"
+                  [isButton]="true"
+                  (click)="detailsTrade(item)"
                 ></app-trade-item>
               }
             </ion-card-content>

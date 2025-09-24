@@ -7,6 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
+import { ModalController } from '@ionic/angular/standalone';
 import { combineLatest, switchMap, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { PushNotificationsService } from 'src/app/core/service/pushNotification.service';
@@ -19,9 +20,11 @@ import { TradeItemComponent } from 'src/app/shared/components/trade-item/trade-i
 import { MONTHS_DIC } from 'src/app/shared/constants/months.constants';
 import { EMonths } from 'src/app/shared/enums/months.enum';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
+import { ITradesData } from 'src/app/shared/services/corretora/interface/trades.interface';
 import { CorretoraService } from 'src/app/shared/services/corretora/service/corretor.service';
 import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
+import { ModalTradesDetailsComponent } from '../../shared/components/modal-details-trade/modal-details-trades.component';
 
 @Component({
   selector: 'app-home',
@@ -35,9 +38,11 @@ import { UserService } from 'src/app/shared/services/user/user.service';
     ChartForceBarComponent,
     MonthSelectComponent,
   ],
-  providers: [CorretoraService, RoboService, UserService],
+  providers: [CorretoraService, RoboService, UserService, ModalController],
 })
 export class HomePage implements AfterViewInit {
+  private _modalCtrl = inject(ModalController);
+
   private _push = inject(PushNotificationsService);
   private _corretora = inject(CorretoraService);
   private _robo = inject(RoboService);
@@ -92,6 +97,17 @@ export class HomePage implements AfterViewInit {
 
   updateData(month: EMonths): void {
     this.monthSelected.set(month);
+  }
+  async detailsTrade(data: ITradesData): Promise<void> {
+    const modal = await this._modalCtrl.create({
+      component: ModalTradesDetailsComponent,
+      componentProps: {
+        data,
+      },
+      initialBreakpoint: 1,
+      breakpoints: [0, 1],
+    });
+    await modal.present();
   }
 
   private _renoveTokens(): void {

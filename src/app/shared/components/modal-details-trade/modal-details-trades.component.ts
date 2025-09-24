@@ -10,7 +10,7 @@ import {
 import { ITradesData } from 'src/app/shared/services/corretora/interface/trades.interface';
 
 @Component({
-  selector: 'app-modal-details',
+  selector: 'app-modal-details-trades',
   template: ` <div class="wrapper ion-padding">
     <ion-text>
       <h2>Resumo da Operação</h2>

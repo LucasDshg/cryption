@@ -12,7 +12,7 @@ import { AppIconComponent } from '../app-icon/app-icon.component';
 @Component({
   selector: 'app-trade-item',
   template: `
-    <ion-item>
+    <ion-item [button]="isButton()">
       <ion-avatar
         slot="start"
         class="ion-m-0 ion-m-end-16"
@@ -63,6 +63,7 @@ import { AppIconComponent } from '../app-icon/app-icon.component';
 })
 export class TradeItemComponent {
   readonly item = input.required<ITradesData>();
+  readonly isButton = input<boolean>();
   readonly resultDic = TRADE_RESULT_DIC;
   readonly directionDic = TRADE_DIRECTION_DIC;
   readonly symbolsDic = TRADE_SYMBOLS_DIC;

@@ -15,7 +15,7 @@ import { EMonths } from 'src/app/shared/enums/months.enum';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 import { ITradesData } from 'src/app/shared/services/corretora/interface/trades.interface';
 import { CorretoraService } from 'src/app/shared/services/corretora/service/corretor.service';
-import { ModalTradesDetailsComponent } from './modal-details/modal-details.component';
+import { ModalTradesDetailsComponent } from '../../shared/components/modal-details-trade/modal-details-trades.component';
 
 Chart.register(ChartDataLabels);
 
