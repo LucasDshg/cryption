@@ -24,13 +24,13 @@ async function getSaldo(token: string): Promise<IWallets[]> {
   return request.data;
 }
 
-const checkWallet = utils.firestore
-  .document('user/{id}')
-  .onUpdate(async (snapshot: any) => {
-    // .region('southamerica-east1')
-    // .pubsub.schedule('every 4 hours from 07:00 to 23:00')
-    // .timeZone('America/Sao_Paulo')
-    // .onRun(async () => {
+const checkWallet = functions
+  // .document('user/{id}')
+  // .onUpdate(async (snapshot: any) => {
+  .region('southamerica-east1')
+  .pubsub.schedule('every 4 hours from 07:00 to 23:00')
+  .timeZone('America/Sao_Paulo')
+  .onRun(async () => {
     try {
       functions.logger.debug('start verification wallet');
       const users = await user.getAll();
