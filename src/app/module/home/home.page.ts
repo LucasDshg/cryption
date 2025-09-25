@@ -3,16 +3,19 @@ import {
   AfterViewInit,
   Component,
   computed,
+  effect,
   inject,
   signal,
 } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { ModalController } from '@ionic/angular/standalone';
+import { Chart } from 'chart.js';
 import { combineLatest, switchMap, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { PushNotificationsService } from 'src/app/core/service/pushNotification.service';
 import { UserStore } from 'src/app/core/store/user.store';
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
+import { chartPieConfigs } from 'src/app/shared/components/chart/chart.configs';
 import { ChartForceBarComponent } from 'src/app/shared/components/chart/force-bar/force-bar.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { MonthSelectComponent } from 'src/app/shared/components/month-select/month-select.component';
@@ -52,6 +55,7 @@ export class HomePage implements AfterViewInit {
 
   readonly monthSelected = signal<EMonths>(EMonths.HOJE);
   readonly updatedToken = signal<boolean>(false);
+  readonly chart = signal<any | undefined>(undefined);
 
   readonly data = rxResource({
     params: this.monthSelected,
@@ -90,6 +94,13 @@ export class HomePage implements AfterViewInit {
 
   constructor() {
     this._push.requestPermissions();
+    effect(() => {
+      if (this.data.value()) {
+        setTimeout(() => {
+          this._chartWinLoss();
+        }, 500);
+      }
+    });
   }
   ngAfterViewInit(): void {
     this._renoveTokens();
@@ -133,5 +144,27 @@ export class HomePage implements AfterViewInit {
         ),
       )
       .subscribe(() => this.updatedToken.set(true));
+  }
+
+  private _chartWinLoss(): void {
+    if (this.chart()) {
+      this.chart().clear();
+      this.chart().destroy();
+    }
+
+    const chart = new Chart('chart', {
+      type: 'doughnut',
+      data: {
+        labels: ['Win', 'Loss'],
+        datasets: [
+          {
+            data: [this.totalWin()!.price, this.totalLoss()!.price],
+            ...chartPieConfigs.datasets,
+          },
+        ],
+      },
+      options: chartPieConfigs.options as any,
+    });
+    this.chart.set(chart);
   }
 }
