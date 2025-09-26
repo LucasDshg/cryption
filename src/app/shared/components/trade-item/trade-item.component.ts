@@ -26,11 +26,7 @@ import { AppIconComponent } from '../app-icon/app-icon.component';
           [color]="resultDic.get(item().result)!.color"
           class="ion-fs-16"
         >
-          @if (item().result === 'LOST') {
-            {{ -item().pnl | currency }}
-          } @else {
-            {{ item().pnl | currency }}
-          }
+          {{ item().pnl | currency }}
         </ion-label>
 
         <ion-text color="medium">
