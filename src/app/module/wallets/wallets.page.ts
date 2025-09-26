@@ -46,7 +46,10 @@ export class WalletsPage {
 
   goToAlert(): void {
     this._router.navigateForward(['/wallet', 'alert'], {
-      state: { balance: this.roboWallet()![0].balance },
+      state: {
+        balance: this.roboWallet()![0].balance,
+        alertSaldo: this.user()!.alertSaldo,
+      },
     });
   }
 }

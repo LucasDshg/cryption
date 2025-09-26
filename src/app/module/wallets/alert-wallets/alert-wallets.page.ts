@@ -45,7 +45,10 @@ export class AlertWalletsPage {
   readonly user = toSignal(
     this._userService.fetchById(this._store.store()!.id!),
   );
-  readonly state = inject(Location).getState() as { balance: number };
+  readonly state = inject(Location).getState() as {
+    balance: number;
+    alertSaldo: number;
+  };
   readonly loading = signal<boolean>(false);
 
   controlValue = new FormControl<number>(0, [
@@ -54,6 +57,7 @@ export class AlertWalletsPage {
   ]);
 
   ionViewDidEnter(): void {
+    this.controlValue.setValue(this.state.alertSaldo);
     this.controlValue.addValidators(Validators.max(this.state.balance));
   }
 
