@@ -2,10 +2,12 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavController } from '@ionic/angular/standalone';
+import { switchMap } from 'rxjs';
 import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 import { ISetupData } from 'src/app/shared/services/robo/interface/steup.interface';
+import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
 import { UserBotsService } from 'src/app/shared/services/user-bots.service';
 
 @Component({
@@ -19,22 +21,33 @@ import { UserBotsService } from 'src/app/shared/services/user-bots.service';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [UserBotsService, NavController],
+  providers: [UserBotsService, NavController, RoboService],
 })
 export class BotDetailsPage {
   private _router = inject(NavController);
   private _userBotService = inject(UserBotsService);
+  private _roboService = inject(RoboService);
   readonly state = inject(Location).getState() as { item: ISetupData };
   readonly loading = signal<boolean>(false);
 
   toggle(): void {
     if (this.state.item.active) {
-      this._userBotService
-        .toggleStatus(this.state.item.id, false)
+      this._roboService
+        .disabled(this.state.item.id)
+        .pipe(
+          switchMap(() =>
+            this._userBotService.toggleStatus(this.state.item.id, false),
+          ),
+        )
         .subscribe(() => this._back());
     } else {
-      this._userBotService
-        .toggleStatus(this.state.item.id, false)
+      this._roboService
+        .active(this.state.item.id)
+        .pipe(
+          switchMap(() =>
+            this._userBotService.toggleStatus(this.state.item.id, true),
+          ),
+        )
         .subscribe(() => this._back());
     }
   }

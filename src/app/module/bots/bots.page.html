@@ -31,7 +31,7 @@
             <app-icon
               name="radio-button-on"
               size="small"
-              color="success"
+              [color]="item.active ? 'success' : 'danger'"
             ></app-icon>
           </ion-card-header>
           <ion-card-content>
