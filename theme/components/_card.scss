@@ -6,6 +6,10 @@ ion-card {
   margin-bottom: 1rem;
   border-radius: 1rem;
 
+  &.card-disabled {
+    opacity: 0.7;
+  }
+
   &.select-card {
     border: 2px solid var(--ion-color-primary);
   }
