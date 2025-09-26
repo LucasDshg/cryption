@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, input, signal } from '@angular/core';
+import { Chart } from 'chart.js';
 import { IonicComponentsModule } from '../../ionic-components.module';
 import { CardLoadingComponent } from '../card-loading/card-loading.component';
-import { Chart } from 'chart.js';
 import { chartPieConfigs } from '../chart/chart.configs';
 
 @Component({
   selector: 'app-trades-graph',
   template: `
     @if (totalLoss() && totalWin()) {
-      <ion-card class="ion-no-shadow">
+      <ion-card class="ion-no-shadow ion-m-0">
         <ion-card-header>
           <ion-card-title class="ion-fs-16">Win X Loss</ion-card-title>
         </ion-card-header>
