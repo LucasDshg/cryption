@@ -12,12 +12,12 @@ export const TRADE_DIRECTION_DIC = new Map<
   { color: string; name: string; icon: string }
 >();
 
-TRADE_DIRECTION_DIC.set('SELL', {
+TRADE_DIRECTION_DIC.set('BUY', {
   color: 'success',
   name: 'Venda',
   icon: 'trending-up',
 });
-TRADE_DIRECTION_DIC.set('BUY', {
+TRADE_DIRECTION_DIC.set('SELL', {
   color: 'danger',
   name: 'Compra',
   icon: 'trending-down',
