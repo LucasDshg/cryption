@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ModalController } from '@ionic/angular/standalone';
 import { Chart } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { CardErrorComponent } from 'src/app/shared/components/card-error/card-error.component';
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
-import { chartPieConfigs } from 'src/app/shared/components/chart/chart.configs';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { MonthSelectComponent } from 'src/app/shared/components/month-select/month-select.component';
 import { TradeItemComponent } from 'src/app/shared/components/trade-item/trade-item.component';
@@ -16,6 +15,7 @@ import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 import { ITradesData } from 'src/app/shared/services/corretora/interface/trades.interface';
 import { CorretoraService } from 'src/app/shared/services/corretora/service/corretor.service';
 import { ModalTradesDetailsComponent } from '../../shared/components/modal-details-trade/modal-details-trades.component';
+import { TradesGraphComponent } from 'src/app/shared/components/trades-graph/trades-graph.component';
 
 Chart.register(ChartDataLabels);
 
@@ -30,6 +30,7 @@ Chart.register(ChartDataLabels);
     CardErrorComponent,
     TradeItemComponent,
     MonthSelectComponent,
+    TradesGraphComponent,
   ],
   providers: [CorretoraService, ModalController],
 })
@@ -38,7 +39,6 @@ export class TradesPage {
   private _modalCtrl = inject(ModalController);
 
   readonly monthSelected = signal<EMonths>(EMonths.HOJE);
-  readonly chart = signal<any | undefined>(undefined);
 
   readonly list = rxResource({
     params: this.monthSelected,
@@ -63,16 +63,6 @@ export class TradesPage {
     return { price, quant };
   });
 
-  constructor() {
-    effect(() => {
-      if (this.list.value()) {
-        setTimeout(() => {
-          this._chartWinLoss();
-        }, 500);
-      }
-    });
-  }
-
   updateData(month: EMonths): void {
     this.monthSelected.set(month);
     this.list.reload();
@@ -93,27 +83,5 @@ export class TradesPage {
       breakpoints: [0, 1],
     });
     await modal.present();
-  }
-
-  private _chartWinLoss(): void {
-    if (this.chart()) {
-      this.chart().clear();
-      this.chart().destroy();
-    }
-
-    const chart = new Chart('chart', {
-      type: 'doughnut',
-      data: {
-        labels: ['Win', 'Loss'],
-        datasets: [
-          {
-            data: [this.totalWin().price, this.totalLoss().price],
-            ...chartPieConfigs.datasets,
-          },
-        ],
-      },
-      options: chartPieConfigs.options as any,
-    });
-    this.chart.set(chart);
   }
 }

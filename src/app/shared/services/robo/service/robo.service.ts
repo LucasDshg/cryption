@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { MOCK_BOT_TYPE } from 'mocks/bots-type.mocks';
 import { MOCK_ME } from 'mocks/me.mocks';
 import { MOCK_STEUP } from 'mocks/steup.mocks';
 import { MOCK_WALLETS } from 'mocks/wallets.mocks';
@@ -10,6 +9,7 @@ import { IBotsType } from '../interface/bots-type.interface';
 import { IMe } from '../interface/me.interface';
 import { ISetup } from '../interface/steup.interface';
 import { IWallets } from '../interface/wallets.interface';
+import { MOCK_BOT_TYPE } from 'mocks/bots-type.mocks';
 
 @Injectable()
 export class RoboService {
