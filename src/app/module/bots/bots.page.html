@@ -1,9 +1,9 @@
 <app-header title="Robôs"> </app-header>
 
 <ion-content>
-  @defer (when data.hasValue()) {
+  @defer (when data()) {
     <div class="ion-m-bottom-80">
-      @if (data.value()!.count < 3) {
+      @if (data()!.length < 3) {
         <ion-card class="ion-no-shadow" [button]="true" (click)="goToNewBot()">
           <ion-card-header
             class="ion-d-flex ion-flex-row ion-align-items-center ion-justify-content-between"
@@ -18,11 +18,11 @@
         </ion-card>
       }
 
-      @for (item of data.value()!.data; track item.id) {
+      @for (item of data()!; track item.id) {
         <ion-card
           class="ion-no-shadow"
           [button]="true"
-          (click)="toggleStatus(item.name, item.active, item.id)"
+          (click)="goToDetails(item)"
         >
           <ion-card-header
             class="ion-d-flex ion-flex-row ion-align-items-center ion-justify-content-between"
@@ -40,6 +40,9 @@
             </ion-text>
             <ion-text color="medium">
               <p>Ganhos: {{ item.profit | currency }}</p>
+            </ion-text>
+            <ion-text color="medium">
+              <p>{{ item.description }}</p>
             </ion-text>
           </ion-card-content>
         </ion-card>

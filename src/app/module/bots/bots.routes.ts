@@ -13,4 +13,10 @@ export const BOTS_ROUTES: Routes = [
       import('./new-bot/new-bot.page').then((m) => m.NewBotPage),
     data: { showTab: false },
   },
+  {
+    path: 'details',
+    loadComponent: () =>
+      import('./bot-details/bot-details.page').then((m) => m.BotDetailsPage),
+    data: { showTab: false },
+  },
 ];

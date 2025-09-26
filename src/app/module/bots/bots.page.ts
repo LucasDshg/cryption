@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { Component, inject, signal } from '@angular/core';
 import { NavController } from '@ionic/angular/standalone';
+import { map, of, switchMap } from 'rxjs';
 import { UserStore } from 'src/app/core/store/user.store';
 import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.component';
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
-import { ConfirmAlert } from 'src/app/shared/components/modal-confirm/confirm-alert-decorator';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
+import { ISetupData } from 'src/app/shared/services/robo/interface/steup.interface';
 import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
+import { UserBotsService } from 'src/app/shared/services/user-bots.service';
 
 @Component({
   selector: 'app-bots',
@@ -20,30 +21,54 @@ import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
     CardLoadingComponent,
     AppIconComponent,
   ],
-  providers: [RoboService, NavController],
+  providers: [RoboService, NavController, UserBotsService],
 })
 export class BotsPage {
   private _roboService = inject(RoboService);
+  private _userBotService = inject(UserBotsService);
+
   private _store = inject(UserStore);
   private _router = inject(NavController);
 
-  readonly data = rxResource({
-    stream: () => this._roboService.setups(this._store.store()!.robo.id),
-  });
+  readonly data = signal<ISetupData[] | undefined>(undefined);
 
-  @ConfirmAlert({
-    title: 'Deseja desligar o bot',
-    keyArgs: 'name',
-  })
-  toggleStatus(name: string, active: boolean, id: string): void {
-    if (active) {
-      this._roboService.disabled(id).subscribe(() => this.data.reload());
-    } else {
-      this._roboService.active(id).subscribe(() => this.data.reload());
-    }
+  ionViewDidEnter(): void {
+    this._getData();
   }
 
+  goToDetails(item: ISetupData): void {
+    this._router.navigateForward(['/bots', 'details'], { state: { item } });
+  }
   goToNewBot(): void {
     this._router.navigateForward(['/bots', 'new']);
+  }
+
+  private _getData(): void {
+    this._userBotService
+      .fetch()
+      .pipe(
+        switchMap((userBots) => {
+          if (userBots.length === 3) {
+            return of(userBots);
+          } else if (userBots.length > 0 && userBots.length < 3) {
+            return this._roboService.setups(this._store.store()!.robo.id).pipe(
+              map((bots) => {
+                const data = bots.data.filter(
+                  (val) => !userBots.map((val2) => val2.id).includes(val.id),
+                );
+                data.push(...userBots);
+                return data;
+              }),
+            );
+          }
+
+          return this._roboService
+            .setups(this._store.store()!.robo.id)
+            .pipe(map((it) => it.data));
+        }),
+      )
+      .subscribe((res: ISetupData[]) => {
+        this.data.set(res);
+      });
   }
 }

@@ -1,0 +1,98 @@
+<app-header title="Robô"> </app-header>
+
+<ion-content>
+  <ion-card class="ion-no-shadow">
+    <ion-card-header
+      class="ion-d-flex ion-flex-row ion-align-items-center ion-justify-content-between"
+    >
+      <ion-card-title color="primary">{{ state.item.name }}</ion-card-title>
+      <app-icon name="radio-button-on" size="small" color="success"></app-icon>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-text color="medium">
+        <p>Configurado: {{ state.item.brokerMaxBalanceToUse | currency }}</p>
+      </ion-text>
+      <ion-text color="medium">
+        <p>Ganhos: {{ state.item.profit | currency }}</p>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card
+    class="ion-no-shadow"
+    [disabled]="state.item.description !== 'Salvo no banco'"
+    [button]="true"
+    (click)="toggle()"
+  >
+    <ion-card-header
+      class="ion-d-flex ion-flex-row ion-align-items-center ion-justify-content-between"
+    >
+      <ion-card-title
+        >Status {{ state.item.active ? 'On' : 'Off' }}</ion-card-title
+      >
+      <app-icon
+        name="radio-button-on"
+        size="small"
+        [color]="state.item.active ? 'success' : 'danger'"
+      ></app-icon>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card class="ion-no-shadow">
+    <ion-card-header>
+      <ion-card-title>Banco Dados</ion-card-title>
+      <ion-card-subtitle color="medium">
+        <small>
+          @if (
+            state.item.active && state.item.description !== 'Salvo no banco'
+          ) {
+            Salve o robô no banco de dados para poder ligar e desligar.
+          } @else {
+            Remova o robô no banco de dados caso tenha excluído da plataforma.
+          }
+        </small>
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      @if (state.item.active && state.item.description !== 'Salvo no banco') {
+        <ion-button
+          shape="round"
+          expand="full"
+          color="primary"
+          fill="clear"
+          [disabled]="loading()"
+          (click)="save()"
+        >
+          @if (loading()) {
+            <ion-spinner name="dots"></ion-spinner>
+          } @else {
+            Salvar
+          }
+        </ion-button>
+      } @else {
+        <ion-button
+          shape="round"
+          expand="full"
+          color="danger"
+          fill="clear"
+          [disabled]="loading()"
+          (click)="remove()"
+        >
+          @if (loading()) {
+            <ion-spinner name="dots"></ion-spinner>
+          } @else {
+            Excluir
+          }
+        </ion-button>
+      }
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button shape="round" expand="full" color="primary" (click)="back()">
+      Voltar
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
