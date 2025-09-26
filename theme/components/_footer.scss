@@ -1,4 +1,7 @@
 ion-footer {
   box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.16) !important;
   border-radius: 1rem 1rem 0 0 !important;
+  ion-toolbar {
+    --background: var(--ion-color-dark);
+  }
 }
