@@ -66,7 +66,7 @@ export class RoboService {
   }
 
   transferBonus(data: {
-    amount: string;
+    amount: string | number;
     walletDestinationId: string;
     walletOriginId: string;
   }): Observable<any> {

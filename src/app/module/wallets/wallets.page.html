@@ -27,7 +27,7 @@
       <app-card-loading type="titleAndSubtitle"></app-card-loading>
     }
     @defer (when roboWallet()) {
-      <ion-card class="ion-no-shadow">
+      <ion-card class="ion-no-shadow" [button]="true" (click)="goToBonus()">
         <ion-card-header>
           <ion-card-title color="primary"> Transferir Bônus </ion-card-title>
           <ion-card-subtitle color="medium">

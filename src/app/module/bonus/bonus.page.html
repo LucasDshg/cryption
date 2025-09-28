@@ -1,0 +1,62 @@
+<app-header title="Transferir Bônus"> </app-header>
+
+<ion-content>
+  <div class="ion-m-bottom-80">
+    @defer (when state) {
+      <ion-card class="ion-no-shadow ion-m-vertical-0">
+        <ion-card-header>
+          <ion-card-title color="primary">
+            {{ state.bonus | currency }}
+          </ion-card-title>
+          <ion-card-subtitle color="medium">Valor Disponível</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    } @placeholder {
+      <app-card-loading type="titleAndSubtitle"></app-card-loading>
+    }
+
+    <ion-card class="ion-no-shadow" [button]="true">
+      <ion-card-header>
+        <ion-card-title color="primary"> Informe o valor </ion-card-title>
+        <ion-card-subtitle color="medium">
+          <small
+            >Transfira o valores de bônus por indicação para o credito do
+            robô.</small
+          >
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input
+          [formControl]="controlValue"
+          label="Valor"
+          label-placement="floating"
+          fill="outline"
+          type="tel"
+          class="ion-m-top-16"
+          [maskito]="masks.number"
+          [maskitoElement]="masks.predicate"
+        >
+          <ion-text slot="start">$: </ion-text>
+        </ion-input>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button
+      shape="round"
+      expand="full"
+      color="primary"
+      [disabled]="loading()"
+      (click)="submit()"
+    >
+      @if (loading()) {
+        <ion-spinner name="dots"></ion-spinner>
+      } @else {
+        Transferir
+      }
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

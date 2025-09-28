@@ -38,4 +38,10 @@ export const APP_ROUTES: Routes = [
       import('./module/wallets/wallets.routes').then((m) => m.WALLETS_ROUTES),
     canActivate: [authGuard],
   },
+  {
+    path: 'bonus',
+    loadChildren: () =>
+      import('./module/bonus/bonus.routes').then((m) => m.BONUS_ROUTES),
+    canActivate: [authGuard],
+  },
 ];

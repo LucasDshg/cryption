@@ -52,4 +52,12 @@ export class WalletsPage {
       },
     });
   }
+
+  goToBonus(): void {
+    this._router.navigateForward(['/bonus'], {
+      state: {
+        bonus: this.roboWallet()![1].balance,
+      },
+    });
+  }
 }
