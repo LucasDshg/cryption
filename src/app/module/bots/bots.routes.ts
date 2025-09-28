@@ -19,4 +19,10 @@ export const BOTS_ROUTES: Routes = [
       import('./bot-details/bot-details.page').then((m) => m.BotDetailsPage),
     data: { showTab: false },
   },
+  {
+    path: 'deposit',
+    loadComponent: () =>
+      import('./bot-deposit/bot-deposit.page').then((m) => m.BotDepositPage),
+    data: { showTab: false },
+  },
 ];
