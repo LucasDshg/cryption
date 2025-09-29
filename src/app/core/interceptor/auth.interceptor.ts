@@ -17,8 +17,9 @@ export const authInterceptor: HttpInterceptorFn = (
   const store = auth['_store'].store();
   let newReq: HttpRequest<any> = req.clone({
     setHeaders: {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'x-timestamp': '1757455588508',
+      'Content-Type': 'application/json',
+      'x-timestamp': '1759153385882',
+      'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
     },
     body: JSON.stringify(req.body),
   });
