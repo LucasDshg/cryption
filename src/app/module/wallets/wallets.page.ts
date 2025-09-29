@@ -53,6 +53,10 @@ export class WalletsPage {
     });
   }
 
+  goToDepositRobo(): void {
+    this._router.navigateForward(['/bots', 'deposit']);
+  }
+
   goToBonus(): void {
     this._router.navigateForward(['/bonus'], {
       state: {

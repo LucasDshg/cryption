@@ -15,7 +15,11 @@
       <app-card-loading type="titleAndSubtitle"></app-card-loading>
     }
     @defer (when roboWallet()) {
-      <ion-card class="ion-no-shadow">
+      <ion-card
+        class="ion-no-shadow"
+        [button]="true"
+        (click)="goToDepositRobo()"
+      >
         <ion-card-header>
           <ion-card-title color="primary">
             {{ roboWallet()![0].balance | currency }}</ion-card-title

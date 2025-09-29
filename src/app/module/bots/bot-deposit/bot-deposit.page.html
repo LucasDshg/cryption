@@ -24,6 +24,9 @@
     @case ('DEPOSIT') {
       <ng-container *ngTemplateOutlet="depositTemplate"></ng-container>
     }
+    @case ('EXTRATO') {
+      <ng-container *ngTemplateOutlet="extratoTemplate"></ng-container>
+    }
   }
 </ion-content>
 
@@ -34,6 +37,46 @@
     </ion-button>
   </ion-toolbar>
 </ion-footer>
+
+<ng-template #extratoTemplate>
+  @defer (when data()) {
+    @for (item of data()?.data; track item.id) {
+      <ion-card class="ion-no-shadow">
+        <ion-card-content>
+          <div
+            class="ion-d-flex ion-justify-content-between ion-align-content-center"
+          >
+            <ion-text color="primary">
+              <p class="ion-m-bottom-0 ion-fw-medium">
+                {{ item.amount | currency }}
+              </p>
+            </ion-text>
+            <app-icon
+              size="small"
+              [name]="
+                directionDic.get(item.type === 'deposit' ? 'BUY' : 'SELL')!.icon
+              "
+              [color]="
+                directionDic.get(item.type === 'deposit' ? 'BUY' : 'SELL')!
+                  .color
+              "
+            ></app-icon>
+          </div>
+          <div
+            class="ion-d-flex ion-justify-content-between ion-align-content-center"
+          >
+            <ion-text color="medium">
+              <p class="ion-m-bottom-0">{{ item.description }}</p>
+            </ion-text>
+            <ion-text color="medium">
+              <small class="ion-m-bottom-0">{{ item.createdAt | date }}</small>
+            </ion-text>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    }
+  }
+</ng-template>
 
 <ng-template #depositTemplate>
   <ion-card class="ion-no-shadow">
@@ -47,9 +90,17 @@
     </ion-card-header>
     <ion-card-content>
       @if (linkCreated()) {
-        <div class="" (click)="copy()">
-          <small>link</small>
-        </div>
+        <ion-card
+          style="--ion-card-background: #000"
+          [button]="true"
+          class="ion-no-shadow"
+          (click)="copy()"
+        >
+          <ion-card-content>
+            <small class="ion-d-block">{{ linkCreated()?.qrCodeString }}</small>
+          </ion-card-content>
+        </ion-card>
+
         <ion-button
           shape="round"
           expand="full"
@@ -60,27 +111,38 @@
           Gerar novo link
         </ion-button>
       } @else {
-        <ion-input
-          [formControl]="controlValue"
-          label="Valor"
-          label-placement="floating"
-          fill="outline"
-          type="tel"
-          class="ion-m-top-16"
-          [maskito]="masks.number"
-          [maskitoElement]="masks.predicate"
-        >
-          <ion-text slot="start">$: </ion-text>
-        </ion-input>
-        <ion-button
-          shape="round"
-          expand="full"
-          color="primary"
-          fill="clear"
-          (click)="createLink()"
-        >
-          Gerar link
-        </ion-button>
+        <form [formGroup]="form">
+          <ion-input
+            formControlName="amout"
+            label="Valor"
+            label-placement="floating"
+            fill="outline"
+            type="tel"
+            class="ion-m-bottom-16"
+            [maskito]="masks.number"
+            [maskitoElement]="masks.predicate"
+          >
+            <ion-text slot="start">$: </ion-text>
+          </ion-input>
+          <ion-input
+            formControlName="doc"
+            label="Documento"
+            label-placement="floating"
+            fill="outline"
+            type="tel"
+            class="ion-m-bottom-16"
+          >
+          </ion-input>
+          <ion-button
+            shape="round"
+            expand="full"
+            color="primary"
+            fill="clear"
+            (click)="createLink()"
+          >
+            Gerar link
+          </ion-button>
+        </form>
       }
     </ion-card-content>
   </ion-card>

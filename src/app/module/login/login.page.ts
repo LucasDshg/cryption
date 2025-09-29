@@ -16,14 +16,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { IonContent, NavController } from '@ionic/angular/standalone';
-import { finalize, Observable, switchMap, tap } from 'rxjs';
+import { combineLatest, finalize, Observable, switchMap, tap } from 'rxjs';
 import { IBot, ICorretora } from 'src/app/core/interfaces/user.interface';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { KeyboadService } from 'src/app/core/service/keyboard.service';
 import { UserStore } from 'src/app/core/store/user.store';
 
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
-import { IMe } from 'src/app/shared/services/robo/interface/me.interface';
 import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
 
 @Component({
@@ -119,14 +118,15 @@ export class LoginPage implements OnInit, OnDestroy {
     );
   }
 
-  private _getUserFromRobo(): Observable<IMe> {
-    return this._robo.me().pipe(
+  private _getUserFromRobo(): Observable<any> {
+    return combineLatest([this._robo.me(), this._robo.wallets()]).pipe(
       tap((res) => {
         this._store.update({
           robo: {
-            id: res.id,
-            loginId: res.loginId,
-            tenantId: res.tenantId,
+            id: res[0].id,
+            loginId: res[0].loginId,
+            tenantId: res[0].tenantId,
+            walletsId: res[1][0].id,
           },
         });
       }),

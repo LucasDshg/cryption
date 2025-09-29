@@ -24,5 +24,6 @@ export interface IAuth {
     id: string;
     loginId: string;
     tenantId: string;
+    walletsId: string;
   };
 }
