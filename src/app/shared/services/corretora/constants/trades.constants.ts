@@ -1,3 +1,15 @@
+export const WITHDRAWALS_STATUS_DIC = new Map<
+  string,
+  { color: string; name: string }
+>();
+
+WITHDRAWALS_STATUS_DIC.set('FINISHED', {
+  color: 'success',
+  name: 'Finalizado',
+});
+WITHDRAWALS_STATUS_DIC.set('REJECTED', { color: 'danger', name: 'Rejeitado' });
+WITHDRAWALS_STATUS_DIC.set('PEDDING', { color: 'warning', name: 'Pendente' });
+
 export const TRADE_RESULT_DIC = new Map<
   string,
   { color: string; name: string; symbol: string }

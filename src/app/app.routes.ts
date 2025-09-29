@@ -44,4 +44,12 @@ export const APP_ROUTES: Routes = [
       import('./module/bonus/bonus.routes').then((m) => m.BONUS_ROUTES),
     canActivate: [authGuard],
   },
+  {
+    path: 'corretora',
+    loadChildren: () =>
+      import('./module/corretora/corretora.routes').then(
+        (m) => m.CORRETORA_ROUTES,
+      ),
+    canActivate: [authGuard],
+  },
 ];
