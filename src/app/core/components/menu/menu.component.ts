@@ -70,12 +70,12 @@ export class MenuComponent implements OnInit {
       path: 'trades',
     },
     {
-      icon: 'wallet',
-      path: 'wallet',
-    },
-    {
       icon: 'grid',
       path: 'bots',
+    },
+    {
+      icon: 'wallet',
+      path: 'wallet',
     },
   ]);
 
