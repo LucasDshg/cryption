@@ -44,9 +44,8 @@ export class CorretoraService {
                 break;
             }
           }
-          it.syncOpensearchAt = new Date(
-            (it.syncOpensearchAt as string).split('.')[0],
-          );
+          const date = new Date(it.syncOpensearchAt as string);
+          it.syncOpensearchAt = date;
           return { ...it, pnl };
         });
         return {
