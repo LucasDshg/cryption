@@ -76,7 +76,7 @@ import { IWithdrawalsItem } from 'src/app/shared/services/corretora/interface/wi
     </ion-list>
 
     @if (data().status === 'REJECTED') {
-      <ion-badge color="danger" class="ion-w-100 ion-p-8 ion-d-block">
+      <ion-badge color="warning" class="ion-w-100 ion-p-8 ion-d-block">
         {{ data().rejectionReason }}
       </ion-badge>
     }
