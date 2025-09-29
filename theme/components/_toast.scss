@@ -2,7 +2,7 @@ ion-toast {
   &.toast {
     --box-shadow: var(--shadow);
     font-weight: 500;
-    --border-radius: 16px;
+    --border-radius: 0.5rem;
 
     &.success {
       --color: #ffff;

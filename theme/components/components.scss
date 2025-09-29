@@ -1,7 +1,6 @@
 @use './badge';
 @use './button';
 @use './card';
-@use './checkbok';
 @use './footer';
 @use './form';
 @use './header';
@@ -10,10 +9,11 @@
 @use './progress';
 @use './root';
 @use './skeleton';
-@use './tab';
 @use './text';
 @use './toast';
 @use './toolbar';
 @use './date';
 @use './grid';
 @use './icon';
+@use './loading';
+@use './chip';
