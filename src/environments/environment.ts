@@ -13,4 +13,5 @@ export const environment = {
   corretora: import.meta.env.NG_APP_CORRETORA,
   bot: import.meta.env.NG_APP_BOT,
   api: import.meta.env.NG_APP_API,
+  delay: 2000,
 };

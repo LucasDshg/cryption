@@ -20,16 +20,18 @@ export class RoboService {
 
   wallets(): Observable<IWallets[]> {
     if (!environment.production)
-      return of(MOCK_WALLETS as any).pipe(delay(2000));
+      return of(MOCK_WALLETS).pipe(delay(environment.delay));
     return this._http.get<IWallets[]>(`${environment.bot}/users/wallets`);
   }
 
   me(): Observable<IMe> {
-    if (!environment.production) return of(MOCK_ME as any).pipe(delay(2000));
+    if (!environment.production)
+      return of(MOCK_ME).pipe(delay(environment.delay));
     return this._http.get<IMe>(`${environment.bot}/users/auth/me`);
   }
   setups(userId: string): Observable<ISetup> {
-    if (!environment.production) return of(MOCK_STEUP as any).pipe(delay(2000));
+    if (!environment.production)
+      return of(MOCK_STEUP).pipe(delay(environment.delay));
     return this._http.get<ISetup>(
       `${environment.bot}/users/setups?page=1&pageSize=100&orderBy=id&orderDirection=DESC&userId=${userId}&active=true`,
     );
@@ -37,7 +39,7 @@ export class RoboService {
 
   transactions(userId: string, walletId: string): Observable<ITransactions> {
     if (!environment.production)
-      return of(MOCCK_TRANSACTIONS as any).pipe(delay(2000));
+      return of(MOCCK_TRANSACTIONS).pipe(delay(environment.delay));
     return this._http.get<ITransactions>(
       `${environment.bot}/users/transactions?page=1&pageSize=10&userId=${userId}&orderBy=id&walletId=${walletId}&orderDirection=DESC`,
     );
@@ -58,7 +60,7 @@ export class RoboService {
   }
 
   fetchTypeBots(): Observable<IBotsType> {
-    if (!environment.production) return of(MOCK_BOT_TYPE as any);
+    if (!environment.production) return of(MOCK_BOT_TYPE);
     return this._http.get<IBotsType>(
       `${environment.bot}/users/profile-type?page=1&pageSize=100&brokerId=01JFGCZ9SJ579HFCC9WTJBE21B&orderDirection=DESC&active=true`,
     );
