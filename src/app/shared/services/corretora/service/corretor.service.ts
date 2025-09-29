@@ -15,7 +15,7 @@ export class CorretoraService {
   trades(data: { start: Date; end: Date }): Observable<ITrades> {
     let request: Observable<ITrades>;
     if (!environment.production) {
-      request = of(MOCK_TRADES as any).pipe(delay(4000));
+      request = of(MOCK_TRADES as any).pipe(delay(2000));
     } else {
       request = this._http.get<ITrades>(`${environment.corretora}/trades`, {
         params: {
@@ -56,7 +56,7 @@ export class CorretoraService {
 
   tradesInfo(data: { start: Date; end: Date }): Observable<ITradeInfo> {
     if (!environment.production)
-      return of(MOCK_TRADES_INFO as any).pipe(delay(4000));
+      return of(MOCK_TRADES_INFO as any).pipe(delay(2000));
     return this._http.get<ITradeInfo>(`${environment.corretora}/trades/info`, {
       params: {
         startDate: data.start.toISOString(),
@@ -67,7 +67,7 @@ export class CorretoraService {
 
   userTokes(): Observable<IUserToken> {
     if (!environment.production)
-      return of(MOCK_TRADES_INFO as any).pipe(delay(4000));
+      return of(MOCK_TRADES_INFO as any).pipe(delay(2000));
     return this._http.get<IUserToken>(
       `${environment.corretora}/user-api-tokens?page=1&pageSize=10&orderBy=id&orderDirection=DESC`,
     );
