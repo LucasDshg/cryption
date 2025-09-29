@@ -28,7 +28,7 @@ const checkWallet = functions
   // .document('user/{id}')
   // .onUpdate(async (snapshot: any) => {
   .region('southamerica-east1')
-  .pubsub.schedule('every 4 hours from 07:00 to 23:00')
+  .pubsub.schedule('every 2 hours from 07:00 to 23:00')
   .timeZone('America/Sao_Paulo')
   .onRun(async () => {
     try {
