@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe, NgTemplateOutlet } from '@angular/common';
-import { Component, inject, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 import { WITHDRAWALS_STATUS_DIC } from 'src/app/shared/services/corretora/constants/trades.constants';
@@ -96,28 +96,12 @@ import { IWithdrawalsItem } from 'src/app/shared/services/corretora/interface/wi
         </ion-text>
       </li>
     </ng-template>
-
-    <ion-button
-      expand="block"
-      fill="clear"
-      color="primary"
-      shape="round"
-      (click)="close()"
-    >
-      Fechar
-    </ion-button>
   </div>`,
   imports: [IonicComponentsModule, DatePipe, CurrencyPipe, NgTemplateOutlet],
   providers: [ModalController],
 })
 export class ModalWithdrawalsDetailsComponent {
-  private _modalCtrl = inject(ModalController);
-
   readonly withdrawalsDic = WITHDRAWALS_STATUS_DIC;
 
   readonly data = input.required<IWithdrawalsItem>();
-
-  close(): void {
-    this._modalCtrl.dismiss();
-  }
 }

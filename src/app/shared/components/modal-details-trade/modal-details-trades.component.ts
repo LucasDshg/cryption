@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe, NgTemplateOutlet } from '@angular/common';
-import { Component, inject, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
 import {
@@ -112,30 +112,14 @@ import { ITradesData } from 'src/app/shared/services/corretora/interface/trades.
         </ion-text>
       </li>
     </ng-template>
-
-    <ion-button
-      expand="block"
-      fill="clear"
-      color="primary"
-      shape="round"
-      (click)="close()"
-    >
-      Fechar
-    </ion-button>
   </div>`,
   imports: [IonicComponentsModule, DatePipe, CurrencyPipe, NgTemplateOutlet],
   providers: [ModalController],
 })
 export class ModalTradesDetailsComponent {
-  private _modalCtrl = inject(ModalController);
-
   readonly resultDic = TRADE_RESULT_DIC;
   readonly directionDic = TRADE_DIRECTION_DIC;
   readonly tradeRoboDic = TRADE_ROBO_DIC;
 
   readonly data = input.required<ITradesData>();
-
-  close(): void {
-    this._modalCtrl.dismiss();
-  }
 }
