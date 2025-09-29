@@ -48,7 +48,7 @@ export interface ITradesData {
   tenantFeeAmount: number;
   createdAt: string;
   updatedAt: string;
-  syncOpensearchAt: string;
+  syncOpensearchAt: string | Date;
   needSync: boolean;
   copyTrade: {
     id: string;
