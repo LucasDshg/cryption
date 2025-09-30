@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 
-import { authGuard } from './core/guards/auth.guard';
+import { authGuard } from './core/auth/guards/auth.guard';
+import { AUTH_ROUTES } from './core/auth/pages/auth.routes';
 import { HOME_ROUTES } from './module/home/home.routes';
-import { LoginPage } from './module/login/login.page';
 
 export const APP_ROUTES: Routes = [
   {
@@ -11,9 +11,8 @@ export const APP_ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'login',
-    component: LoginPage,
-    data: { showTab: false },
+    path: 'auth',
+    children: AUTH_ROUTES,
   },
   {
     path: 'home',

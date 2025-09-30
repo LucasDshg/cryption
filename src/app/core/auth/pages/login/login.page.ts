@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  CUSTOM_ELEMENTS_SCHEMA,
   inject,
   OnDestroy,
   OnInit,
@@ -17,8 +16,8 @@ import {
 } from '@angular/forms';
 import { IonContent, NavController } from '@ionic/angular/standalone';
 import { combineLatest, finalize, Observable, switchMap, tap } from 'rxjs';
+import { AuthService } from 'src/app/core/auth/service/auth.service';
 import { IBot, ICorretora } from 'src/app/core/interfaces/user.interface';
-import { AuthService } from 'src/app/core/service/auth.service';
 import { KeyboadService } from 'src/app/core/service/keyboard.service';
 import { UserStore } from 'src/app/core/store/user.store';
 
@@ -43,7 +42,6 @@ import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
     ReactiveFormsModule,
   ],
   providers: [NavController, RoboService],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LoginPage implements OnInit, OnDestroy {
   private _authService = inject(AuthService);

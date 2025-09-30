@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavController } from '@ionic/angular/standalone';
-import { AuthService } from 'src/app/core/service/auth.service';
+import { AuthService } from 'src/app/core/auth/service/auth.service';
 import { UserStore } from 'src/app/core/store/user.store';
 import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.component';
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';

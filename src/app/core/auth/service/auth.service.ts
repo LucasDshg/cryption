@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { from, Observable, switchMap, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IAuth, IBot, ICorretora } from '../interfaces/user.interface';
-import { UserStore } from '../store/user.store';
+import { IAuth, IBot, ICorretora } from '../../interfaces/user.interface';
+import { UserStore } from '../../store/user.store';
 
 @Injectable({
   providedIn: 'root',
@@ -86,7 +86,7 @@ export class AuthService {
 
   logout(): void {
     this._store.clear();
-    this._router.navigateByUrl('/login');
+    this._router.navigateByUrl('/auth/login');
   }
 
   account(data: IAuth): Observable<{ key: string }> {
