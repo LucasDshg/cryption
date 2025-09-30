@@ -1,27 +1,17 @@
 import { CommonModule } from '@angular/common';
-import {
-  afterRenderEffect,
-  Component,
-  computed,
-  effect,
-  ElementRef,
-  inject,
-  signal,
-  untracked,
-  ViewChild,
-} from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { Chart } from 'chart.js';
-import { IonicComponentsModule } from '../../ionic-components.module';
-import { CardLoadingComponent } from '../card-loading/card-loading.component';
-import { chartPieConfigs } from '../chart/chart.configs';
 import {
   PERFORMANCE_ARRAY,
   PERFORMANCE_DIC,
 } from '../../constants/performance.constants';
-import { rxResource } from '@angular/core/rxjs-interop';
-import { CorretoraService } from '../../services/corretora/service/corretor.service';
+import { IonicComponentsModule } from '../../ionic-components.module';
 import { ITradeInfo } from '../../services/corretora/interface/trade-info.interface';
 import { ITrades } from '../../services/corretora/interface/trades.interface';
+import { CorretoraService } from '../../services/corretora/service/corretor.service';
+import { CardLoadingComponent } from '../card-loading/card-loading.component';
+import { chartPieConfigs } from '../chart/chart.configs';
 
 @Component({
   selector: 'app-performance-graph',
@@ -41,13 +31,15 @@ import { ITrades } from '../../services/corretora/interface/trades.interface';
               @for (item of performanceArray; track item.name) {
                 <ion-chip
                   [outline]="true"
-                  class="ion-d-block ion-flex-1"
+                  class="ion-d-block ion-flex-1 ion-p-vertical-4"
                   [ngClass]="{
                     'chip-selected': item.name === performanceSelected(),
                   }"
                   (click)="setPerformance(item.name)"
                 >
-                  {{ item.name }}
+                  <small>
+                    {{ item.name }}
+                  </small>
                 </ion-chip>
               }
             </div>
