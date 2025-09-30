@@ -34,6 +34,7 @@ export class BotDetailsPage {
   async toggle(): Promise<void> {
     if (this.state.item.active) {
       const loadingComp = await this._showLoading('Desligando o robô...');
+      loadingComp.present();
       this._roboService
         .disabled(this.state.item.id)
         .pipe(
@@ -45,6 +46,7 @@ export class BotDetailsPage {
         .subscribe(() => this._back());
     } else {
       const loadingComp = await this._showLoading('Ligando o robô...');
+      loadingComp.present();
       this._roboService
         .active(this.state.item.id)
         .pipe(
