@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { NavController } from '@ionic/angular/standalone';
-import { map, of, switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { UserStore } from 'src/app/core/store/user.store';
 import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.component';
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
@@ -48,23 +48,21 @@ export class BotsPage {
       .fetch()
       .pipe(
         switchMap((userBots) => {
-          if (userBots.length === 3) {
-            return of(userBots);
-          } else if (userBots.length > 0 && userBots.length < 3) {
-            return this._roboService.setups(this._store.store()!.robo.id).pipe(
-              map((bots) => {
-                const data = bots.data.filter(
-                  (val) => !userBots.map((val2) => val2.id).includes(val.id),
-                );
-                data.push(...userBots);
-                return data;
-              }),
-            );
-          }
+          return this._roboService.setups(this._store.store()!.robo.id).pipe(
+            map((bots) => {
+              if (userBots.length > 0) {
+                userBots.forEach((it) => {
+                  const findById = bots.data.find((val) => val.id === it.id);
+                  if (findById) {
+                    it.profit = findById.profit;
+                  }
+                });
 
-          return this._roboService
-            .setups(this._store.store()!.robo.id)
-            .pipe(map((it) => it.data));
+                return userBots;
+              }
+              return bots.data;
+            }),
+          );
         }),
       )
       .subscribe((res: ISetupData[]) => {
