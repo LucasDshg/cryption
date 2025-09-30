@@ -26,6 +26,7 @@ import { CorretoraService } from 'src/app/shared/services/corretora/service/corr
 import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { ModalTradesDetailsComponent } from '../../shared/components/modal-details-trade/modal-details-trades.component';
+import { PerformanceGraphComponent } from 'src/app/shared/components/performance-graph/performance-graph.component';
 
 @Component({
   selector: 'app-home',
@@ -39,6 +40,7 @@ import { ModalTradesDetailsComponent } from '../../shared/components/modal-detai
     ChartForceBarComponent,
     MonthSelectComponent,
     TradesGraphComponent,
+    PerformanceGraphComponent,
   ],
   providers: [CorretoraService, RoboService, UserService, ModalController],
 })

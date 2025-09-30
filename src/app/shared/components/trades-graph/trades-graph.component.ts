@@ -14,7 +14,7 @@ import { chartPieConfigs } from '../chart/chart.configs';
           <ion-card-title class="ion-fs-16">Win X Loss</ion-card-title>
         </ion-card-header>
         <ion-card-content class="ion-d-flex ion-justify-content-around">
-          <div style="height: 140px; width: 140px" class="ion-margin-bottom">
+          <div style="height: 100px; width: 100px" class="ion-margin-bottom">
             <canvas id="chart">{{ chart() }}</canvas>
           </div>
           <div

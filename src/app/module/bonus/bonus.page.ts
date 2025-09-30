@@ -49,7 +49,6 @@ export class BonusPage {
   ]);
 
   ionViewDidEnter(): void {
-    this.controlValue.setValue(this.state.bonus);
     this.controlValue.addValidators(Validators.max(this.state.bonus));
   }
 
