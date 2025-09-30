@@ -61,6 +61,46 @@
           <app-card-loading type="twoText"></app-card-loading>
         }
       </ion-col>
+
+      <ion-col size="12" class="ion-p-horizontal-0">
+        @if (!performance.isLoading()) {
+          <ion-card class="ion-no-shadow ion-m-vertical-0">
+            <ion-card-header>
+              <div
+                class="ion-display-flex ion-flex-row ion-justify-content-between ion-align-items-center"
+              >
+                <ion-card-title class="ion-fs-16">Desempenho</ion-card-title>
+                <div
+                  class="ion-d-flex ion-overflow-auto ion-align-items-center"
+                  style="scrollbar-width: none; scroll-snap-type: x mandatory"
+                  id="div_month"
+                >
+                  @for (item of performanceArray; track item.name) {
+                    <ion-chip
+                      [outline]="true"
+                      class="ion-d-block ion-flex-1"
+                      [ngClass]="{
+                        'chip-selected': item.name === performanceSelected(),
+                      }"
+                      (click)="setPerformance(item.name)"
+                    >
+                      {{ item.name }}
+                    </ion-chip>
+                  }
+                </div>
+              </div>
+            </ion-card-header>
+            <ion-card-content>
+              <app-performance-graph
+                [graphType]="performanceSelected()"
+              ></app-performance-graph>
+            </ion-card-content>
+          </ion-card>
+        } @else {
+          <app-card-loading type="twoText"></app-card-loading>
+        }
+      </ion-col>
+
       <ion-col size="12" class="ion-p-horizontal-0">
         @if (!data.isLoading()) {
           <ion-card class="ion-no-shadow ion-m-vertical-0">

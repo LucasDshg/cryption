@@ -3,7 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { MOCK_BOT_TYPE } from 'mocks/bots-type.mocks';
 import { MOCK_ME } from 'mocks/me.mocks';
 import { MOCK_STEUP } from 'mocks/steup.mocks';
-import { MOCCK_TRANSACTIONS } from 'mocks/transactions.mocks';
 import { MOCK_WALLETS } from 'mocks/wallets.mocks';
 import { delay, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -13,6 +12,7 @@ import { IMe } from '../interface/me.interface';
 import { ISetup } from '../interface/steup.interface';
 import { ITransactions } from '../interface/transactions.interface';
 import { IWallets } from '../interface/wallets.interface';
+import { MOCK_TRANSACTIONS } from 'mocks/transactions.mocks';
 
 @Injectable()
 export class RoboService {
@@ -37,7 +37,7 @@ export class RoboService {
 
   transactions(userId: string, walletId: string): Observable<ITransactions> {
     if (!environment.production)
-      return of(MOCCK_TRANSACTIONS as any).pipe(delay(4000));
+      return of(MOCK_TRANSACTIONS as any).pipe(delay(4000));
     return this._http.get<ITransactions>(
       `${environment.bot}/users/transactions?page=1&pageSize=10&userId=${userId}&orderBy=id&walletId=${walletId}&orderDirection=DESC`,
     );
