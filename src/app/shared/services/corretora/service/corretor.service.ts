@@ -2,11 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { MOCK_TRADES_INFO } from 'mocks/trades-info.mocks';
 import { MOCK_TRADES } from 'mocks/trades.mocks';
+import { MOCK_WITHDRAWALS } from 'mocks/withdrawals.mocks';
 import { delay, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ITradeInfo } from '../interface/trade-info.interface';
 import { ITrades } from '../interface/trades.interface';
 import { IUserToken } from '../interface/user-token.interface';
+import { IWithdrawals } from '../interface/withdrawals.interface';
 
 @Injectable()
 export class CorretoraService {
@@ -15,7 +17,7 @@ export class CorretoraService {
   trades(data: { start: Date; end: Date }): Observable<ITrades> {
     let request: Observable<ITrades>;
     if (!environment.production) {
-      request = of(MOCK_TRADES as any).pipe(delay(4000));
+      request = of(MOCK_TRADES).pipe(delay(environment.delay));
     } else {
       request = this._http.get<ITrades>(`${environment.corretora}/trades`, {
         params: {
@@ -44,6 +46,8 @@ export class CorretoraService {
                 break;
             }
           }
+          const date = new Date(it.syncOpensearchAt as string);
+          it.syncOpensearchAt = date;
           return { ...it, pnl };
         });
         return {
@@ -56,7 +60,7 @@ export class CorretoraService {
 
   tradesInfo(data: { start: Date; end: Date }): Observable<ITradeInfo> {
     if (!environment.production)
-      return of(MOCK_TRADES_INFO as any).pipe(delay(4000));
+      return of(MOCK_TRADES_INFO).pipe(delay(environment.delay));
     return this._http.get<ITradeInfo>(`${environment.corretora}/trades/info`, {
       params: {
         startDate: data.start.toISOString(),
@@ -67,9 +71,17 @@ export class CorretoraService {
 
   userTokes(): Observable<IUserToken> {
     if (!environment.production)
-      return of(MOCK_TRADES_INFO as any).pipe(delay(4000));
+      return of(MOCK_TRADES_INFO).pipe(delay(environment.delay));
     return this._http.get<IUserToken>(
       `${environment.corretora}/user-api-tokens?page=1&pageSize=10&orderBy=id&orderDirection=DESC`,
+    );
+  }
+
+  withdrawals(): Observable<IWithdrawals> {
+    if (!environment.production)
+      return of(MOCK_WITHDRAWALS).pipe(delay(environment.delay));
+    return this._http.get<IWithdrawals>(
+      `${environment.corretora}/withdrawals?page=1&pageSize=10&orderBy=id&orderDirection=DESC`,
     );
   }
 }

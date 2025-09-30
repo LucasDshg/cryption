@@ -35,7 +35,7 @@ import {
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
 import { APP_ROUTES } from './app/app.routes';
-import { authInterceptor } from './app/core/interceptor/auth.interceptor';
+import { authInterceptor } from './app/core/auth/interceptor/auth.interceptor';
 import { environment } from './environments/environment';
 
 if (environment.production) {

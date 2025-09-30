@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavController } from '@ionic/angular/standalone';
+import { AuthService } from 'src/app/core/auth/service/auth.service';
 import { UserStore } from 'src/app/core/store/user.store';
 import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.component';
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
@@ -31,6 +32,7 @@ export class WalletsPage {
   private _store = inject(UserStore);
   private _router = inject(NavController);
   private _corretora = inject(CorretoraService);
+  private _auth = inject(AuthService);
 
   readonly tradeInfo = toSignal(
     this._corretora.tradesInfo({
@@ -53,8 +55,16 @@ export class WalletsPage {
     });
   }
 
+  logout(): void {
+    this._auth.logout();
+  }
+
   goToDepositRobo(): void {
     this._router.navigateForward(['/bots', 'deposit']);
+  }
+
+  goToCorretora(): void {
+    this._router.navigateForward(['/corretora']);
   }
 
   goToBonus(): void {

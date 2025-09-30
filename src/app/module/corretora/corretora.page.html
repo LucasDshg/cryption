@@ -1,0 +1,22 @@
+<app-header title="Corretora"> </app-header>
+
+<ion-content>
+  <app-tabs (tabSelectedEvent)="toggleTab($event)"></app-tabs>
+
+  @switch (tabSelected()) {
+    @case ('DEPOSIT') {
+      <app-tab-deposit></app-tab-deposit>
+    }
+    @case ('SAQUES') {
+      <app-tab-saque></app-tab-saque>
+    }
+  }
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button shape="round" expand="full" color="primary" (click)="back()">
+      Voltar
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

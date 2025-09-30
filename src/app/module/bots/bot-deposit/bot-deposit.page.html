@@ -75,6 +75,10 @@
         </ion-card-content>
       </ion-card>
     }
+  } @placeholder {
+    <app-card-loading type="titleAndSubtitle"></app-card-loading>
+    <app-card-loading type="titleAndSubtitle"></app-card-loading>
+    <app-card-loading type="titleAndSubtitle"></app-card-loading>
   }
 </ng-template>
 
@@ -138,9 +142,14 @@
             expand="full"
             color="primary"
             fill="clear"
+            [disabled]="loading()"
             (click)="createLink()"
           >
-            Gerar link
+            @if (loading()) {
+              <ion-spinner name="dots"></ion-spinner>
+            } @else {
+              Gerar link
+            }
           </ion-button>
         </form>
       }

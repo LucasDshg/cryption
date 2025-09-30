@@ -9,7 +9,7 @@ import {
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { ModalController } from '@ionic/angular/standalone';
 import { combineLatest, switchMap, tap } from 'rxjs';
-import { AuthService } from 'src/app/core/service/auth.service';
+import { AuthService } from 'src/app/core/auth/service/auth.service';
 import { PushNotificationsService } from 'src/app/core/service/pushNotification.service';
 import { UserStore } from 'src/app/core/store/user.store';
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
@@ -17,6 +17,7 @@ import { ChartForceBarComponent } from 'src/app/shared/components/chart/force-ba
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { MonthSelectComponent } from 'src/app/shared/components/month-select/month-select.component';
 import { TradeItemComponent } from 'src/app/shared/components/trade-item/trade-item.component';
+import { TradesGraphComponent } from 'src/app/shared/components/trades-graph/trades-graph.component';
 import { MONTHS_DIC } from 'src/app/shared/constants/months.constants';
 import { EMonths } from 'src/app/shared/enums/months.enum';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
@@ -25,7 +26,6 @@ import { CorretoraService } from 'src/app/shared/services/corretora/service/corr
 import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { ModalTradesDetailsComponent } from '../../shared/components/modal-details-trade/modal-details-trades.component';
-import { TradesGraphComponent } from 'src/app/shared/components/trades-graph/trades-graph.component';
 import {
   PERFORMANCE_ARRAY,
   PERFORMANCE_DIC,

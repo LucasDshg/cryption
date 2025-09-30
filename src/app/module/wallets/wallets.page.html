@@ -3,7 +3,7 @@
 <ion-content>
   <div class="ion-m-bottom-80">
     @defer (when tradeInfo()) {
-      <ion-card class="ion-no-shadow">
+      <ion-card class="ion-no-shadow" [button]="true" (click)="goToCorretora()">
         <ion-card-header>
           <ion-card-title color="primary">
             {{ tradeInfo()!.totalBalance | currency }}</ion-card-title
@@ -63,5 +63,15 @@
     } @placeholder {
       <app-card-loading type="titleAndSubtitle"></app-card-loading>
     }
+    <ion-button
+      (click)="logout()"
+      expand="block"
+      fill="clear"
+      shape="round"
+      color="medium"
+      class="ion-m-top-16"
+    >
+      Sair
+    </ion-button>
   </div>
 </ion-content>

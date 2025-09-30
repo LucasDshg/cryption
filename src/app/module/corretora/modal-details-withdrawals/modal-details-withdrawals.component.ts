@@ -2,24 +2,20 @@ import { CurrencyPipe, DatePipe, NgTemplateOutlet } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
-import {
-  TRADE_DIRECTION_DIC,
-  TRADE_RESULT_DIC,
-  TRADE_ROBO_DIC,
-} from 'src/app/shared/services/corretora/constants/trades.constants';
-import { ITradesData } from 'src/app/shared/services/corretora/interface/trades.interface';
+import { WITHDRAWALS_STATUS_DIC } from 'src/app/shared/services/corretora/constants/trades.constants';
+import { IWithdrawalsItem } from 'src/app/shared/services/corretora/interface/withdrawals.interface';
 
 @Component({
-  selector: 'app-modal-details-trades',
+  selector: 'app-modal-details-withdrawals',
   template: ` <div class="wrapper ion-padding">
     <ion-text>
-      <h2>Resumo da Operação</h2>
+      <h2>Detalhes</h2>
     </ion-text>
     <ion-list>
       <ng-container
         *ngTemplateOutlet="
           template;
-          context: { text: 'Ativo', value: data().symbol }
+          context: { text: 'Documento', value: data()!.params.documentNumber }
         "
       ></ng-container>
       <ng-container
@@ -27,7 +23,7 @@ import { ITradesData } from 'src/app/shared/services/corretora/interface/trades.
           template;
           context: {
             text: 'Tipo',
-            value: resultDic.get(data().result)?.name,
+            value: data()!.method,
           }
         "
       ></ng-container>
@@ -35,8 +31,8 @@ import { ITradesData } from 'src/app/shared/services/corretora/interface/trades.
         *ngTemplateOutlet="
           template;
           context: {
-            text: 'Operação',
-            value: directionDic.get(data().direction)!.name,
+            text: 'Valor',
+            value: data().amount | currency,
           }
         "
       ></ng-container>
@@ -44,58 +40,46 @@ import { ITradesData } from 'src/app/shared/services/corretora/interface/trades.
         *ngTemplateOutlet="
           template;
           context: {
-            text: 'Data',
-            value: data().syncOpensearchAt | date,
+            text: 'Taxa',
+            value: data().feeAmount | currency,
           }
         "
       ></ng-container>
-
-      @if (data().fromBot) {
-        <ng-container
-          *ngTemplateOutlet="
-            template;
-            context: {
-              text: 'Robô',
-              value: tradeRoboDic.get(data().copyTrade.trader.nickname)?.name,
-            }
-          "
-        ></ng-container>
-      }
       <ng-container
         *ngTemplateOutlet="
           template;
           context: {
-            text: 'Subtotal',
-            value:
-              (data().result === 'WON' && data().fromBot
-                ? data().pnl * 2
-                : data().pnl
-              ) | currency,
+            text: 'Solicitado em',
+            value: data().createdAt | date,
+          }
+        "
+      ></ng-container>
+      <ng-container
+        *ngTemplateOutlet="
+          template;
+          context: {
+            text: 'Atualizado em',
+            value: data().updatedAt | date,
           }
         "
       ></ng-container>
 
-      @if (data().fromBot) {
-        <ng-container
-          *ngTemplateOutlet="
-            template;
-            context: {
-              text: 'Desconto',
-              value: '50%',
-            }
-          "
-        ></ng-container>
-      }
       <ng-container
         *ngTemplateOutlet="
           template;
           context: {
-            text: 'Total',
-            value: data().pnl | currency,
+            text: 'Status',
+            value: withdrawalsDic.get(data().status)?.name,
           }
         "
       ></ng-container>
     </ion-list>
+
+    @if (data().status === 'REJECTED') {
+      <ion-badge color="warning" class="ion-w-100 ion-p-8 ion-d-block">
+        {{ data().rejectionReason }}
+      </ion-badge>
+    }
 
     <ng-template #template let-text="text" let-value="value">
       <li
@@ -116,10 +100,8 @@ import { ITradesData } from 'src/app/shared/services/corretora/interface/trades.
   imports: [IonicComponentsModule, DatePipe, CurrencyPipe, NgTemplateOutlet],
   providers: [ModalController],
 })
-export class ModalTradesDetailsComponent {
-  readonly resultDic = TRADE_RESULT_DIC;
-  readonly directionDic = TRADE_DIRECTION_DIC;
-  readonly tradeRoboDic = TRADE_ROBO_DIC;
+export class ModalWithdrawalsDetailsComponent {
+  readonly withdrawalsDic = WITHDRAWALS_STATUS_DIC;
 
-  readonly data = input.required<ITradesData>();
+  readonly data = input.required<IWithdrawalsItem>();
 }

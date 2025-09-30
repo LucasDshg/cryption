@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 
-import { authGuard } from './core/guards/auth.guard';
+import { authGuard } from './core/auth/guards/auth.guard';
+import { AUTH_ROUTES } from './core/auth/pages/auth.routes';
 import { HOME_ROUTES } from './module/home/home.routes';
-import { LoginPage } from './module/login/login.page';
 
 export const APP_ROUTES: Routes = [
   {
@@ -11,9 +11,8 @@ export const APP_ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'login',
-    component: LoginPage,
-    data: { showTab: false },
+    path: 'auth',
+    children: AUTH_ROUTES,
   },
   {
     path: 'home',
@@ -42,6 +41,14 @@ export const APP_ROUTES: Routes = [
     path: 'bonus',
     loadChildren: () =>
       import('./module/bonus/bonus.routes').then((m) => m.BONUS_ROUTES),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'corretora',
+    loadChildren: () =>
+      import('./module/corretora/corretora.routes').then(
+        (m) => m.CORRETORA_ROUTES,
+      ),
     canActivate: [authGuard],
   },
 ];

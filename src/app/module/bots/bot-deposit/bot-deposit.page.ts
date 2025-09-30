@@ -14,6 +14,7 @@ import { MaskitoDirective } from '@maskito/angular';
 import { finalize } from 'rxjs';
 import { UserStore } from 'src/app/core/store/user.store';
 import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.component';
+import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { ToastService } from 'src/app/shared/components/toast/toast.service';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
@@ -33,6 +34,7 @@ import { mask } from 'src/app/utils/mask.utils';
     ReactiveFormsModule,
     MaskitoDirective,
     AppIconComponent,
+    CardLoadingComponent,
   ],
   providers: [RoboService, NavController],
 })
