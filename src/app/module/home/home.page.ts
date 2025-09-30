@@ -26,10 +26,6 @@ import { CorretoraService } from 'src/app/shared/services/corretora/service/corr
 import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { ModalTradesDetailsComponent } from '../../shared/components/modal-details-trade/modal-details-trades.component';
-import {
-  PERFORMANCE_ARRAY,
-  PERFORMANCE_DIC,
-} from 'src/app/shared/constants/performance.constants';
 import { PerformanceGraphComponent } from 'src/app/shared/components/performance-graph/performance-graph.component';
 
 @Component({
@@ -96,17 +92,6 @@ export class HomePage implements AfterViewInit {
 
   readonly roboWallet = toSignal(this._robo.wallets());
 
-  readonly performanceSelected = signal<'SEMANA' | 'MES'>('SEMANA');
-  readonly performanceArray = PERFORMANCE_ARRAY;
-  readonly performance = rxResource({
-    params: this.performanceSelected,
-    stream: ({ params }) =>
-      this._corretora.trades({
-        start: PERFORMANCE_DIC.get(params)!.start!,
-        end: PERFORMANCE_DIC.get(params)!.end!,
-      }),
-  });
-
   constructor() {
     this._push.requestPermissions();
   }
@@ -152,9 +137,5 @@ export class HomePage implements AfterViewInit {
         ),
       )
       .subscribe(() => this.updatedToken.set(true));
-  }
-
-  setPerformance(name: 'SEMANA' | 'MES'): void {
-    this.performanceSelected.set(name);
   }
 }

@@ -1,130 +1,336 @@
 import { CommonModule } from '@angular/common';
 import {
+  afterRenderEffect,
   Component,
+  computed,
   effect,
   ElementRef,
-  input,
+  inject,
   signal,
+  untracked,
   ViewChild,
 } from '@angular/core';
 import { Chart } from 'chart.js';
 import { IonicComponentsModule } from '../../ionic-components.module';
 import { CardLoadingComponent } from '../card-loading/card-loading.component';
-import { chartBarConfigs, chartLineConfigs } from '../chart/chart.configs';
+import { chartPieConfigs } from '../chart/chart.configs';
+import {
+  PERFORMANCE_ARRAY,
+  PERFORMANCE_DIC,
+} from '../../constants/performance.constants';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { CorretoraService } from '../../services/corretora/service/corretor.service';
+import { ITradeInfo } from '../../services/corretora/interface/trade-info.interface';
+import { ITrades } from '../../services/corretora/interface/trades.interface';
 
 @Component({
   selector: 'app-performance-graph',
   template: `
-    <div style="height: 140px;" class="ion-margin-bottom">
-      <canvas #lineChartCanvas>{{ chart() }}</canvas>
-    </div>
+    @if (!performance.isLoading()) {
+      <ion-card class="ion-no-shadow ion-m-0">
+        <ion-card-header>
+          <div
+            class="ion-display-flex ion-flex-row ion-justify-content-between ion-align-items-center"
+          >
+            <ion-card-title class="ion-fs-16">Desempenho</ion-card-title>
+            <div
+              class="ion-d-flex ion-overflow-auto ion-align-items-center"
+              style="scrollbar-width: none; scroll-snap-type: x mandatory"
+              id="div_month"
+            >
+              @for (item of performanceArray; track item.name) {
+                <ion-chip
+                  [outline]="true"
+                  class="ion-d-block ion-flex-1"
+                  [ngClass]="{
+                    'chip-selected': item.name === performanceSelected(),
+                  }"
+                  (click)="setPerformance(item.name)"
+                >
+                  {{ item.name }}
+                </ion-chip>
+              }
+            </div>
+          </div>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-row>
+            <ion-col class="ion-d-flex ion-p-0" size="12">
+              <div
+                style="height: 100px; width: 100px"
+                class="ion-margin-bottom ion-m-end-16"
+              >
+                <canvas id="chart2">{{ chart() }}</canvas>
+              </div>
+              <div
+                class="ion-d-flex ion-align-items-center ion-justify-content-between ion-gap-60"
+              >
+                @if (totalWin()) {
+                  <div class="ion-text-center">
+                    <ion-text color="success">
+                      <p class="ion-m-0">{{ totalWin()?.quant }}</p>
+                    </ion-text>
+                    <ion-text color="medium">
+                      <small>Win - {{ totalWin()?.percent }}%</small>
+                    </ion-text>
+                  </div>
+                }
+                @if (totalLoss()) {
+                  <div class="ion-text-center">
+                    <ion-text color="danger">
+                      <p class="ion-m-0">{{ totalLoss()?.quant }}</p>
+                    </ion-text>
+                    <ion-text color="medium">
+                      <small>Loss - {{ totalLoss()?.percent }}%</small>
+                    </ion-text>
+                  </div>
+                }
+              </div>
+            </ion-col>
+            <ion-col
+              class="ion-d-flex ion-p-0 ion-justify-content-between"
+              size="12"
+            >
+              @if (totalProfit()) {
+                <div class="ion-text-center">
+                  <ion-text [color]="getColor(totalProfit())">
+                    <p class="ion-m-0">{{ totalProfit() | currency }}</p>
+                  </ion-text>
+                  <ion-text color="medium">
+                    <small>Lucro Total</small>
+                  </ion-text>
+                </div>
+              }
+              @if (higherOperation()) {
+                <div class="ion-text-center">
+                  <ion-text color="success">
+                    <p class="ion-m-0">{{ higherOperation() | currency }}</p>
+                  </ion-text>
+                  <ion-text color="medium">
+                    <small>Maior Operação</small>
+                  </ion-text>
+                </div>
+              }
+              @if (lowestOperation()) {
+                <div class="ion-text-center">
+                  <ion-text color="danger">
+                    <p class="ion-m-0">{{ lowestOperation() | currency }}</p>
+                  </ion-text>
+                  <ion-text color="medium">
+                    <small>Menor Operação</small>
+                  </ion-text>
+                </div>
+              }
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    } @else {
+      <app-card-loading type="titleAndSubtitle"></app-card-loading>
+    }
   `,
   imports: [IonicComponentsModule, CommonModule, CardLoadingComponent],
 })
 export class PerformanceGraphComponent {
-  @ViewChild('lineChartCanvas')
-  private _chartCanvas!: ElementRef<HTMLCanvasElement>;
+  private _corretora = inject(CorretoraService);
 
-  readonly graphType = input.required<'SEMANA' | 'MES'>();
-  // readonly totalWin = input.required<
-  //   | {
-  //       price: number | undefined;
-  //       quant: number | undefined;
-  //     }
-  //   | undefined
-  // >();
-  // readonly totalLoss = input.required<
-  //   | {
-  //       price: number | undefined;
-  //       quant: number | undefined;
-  //     }
-  //   | undefined
-  // >();
+  readonly totalWin = computed(() => {
+    if (this.performance.isLoading()) return undefined;
+
+    const value = this.performance.value();
+    const selected = this.performanceSelected();
+
+    if (!value) return { quant: 0, percent: 0 };
+
+    if (selected === 'MES') {
+      const info = value as ITradeInfo;
+      const quant = info.totalWon ?? 0;
+      const totalLength = info.totalTradesCount ?? 0;
+
+      const percent = totalLength > 0 ? (quant / totalLength) * 100 : 0;
+      return { quant, percent: parseFloat(percent.toFixed(2)) };
+    } else {
+      const allData = (value as ITrades).data ?? [];
+      const totalLength = allData.length;
+      if (totalLength === 0) return { quant: 0, percent: 0 };
+
+      const quant = allData.filter((it) => it.result !== 'LOST').length;
+      const percent = (quant / totalLength) * 100;
+      return { quant, percent: parseFloat(percent.toFixed(2)) };
+    }
+  });
+
+  readonly totalLoss = computed(() => {
+    if (this.performance.isLoading()) return undefined;
+
+    const value = this.performance.value();
+    const selected = this.performanceSelected();
+
+    if (!value) return { quant: 0, percent: 0 };
+
+    if (selected === 'MES') {
+      const info = value as ITradeInfo;
+      const quant = info.totalLost ?? 0;
+      const totalLength = info.totalTradesCount ?? 0;
+
+      const percent = totalLength > 0 ? (quant / totalLength) * 100 : 0;
+      return { quant, percent: parseFloat(percent.toFixed(2)) };
+    } else {
+      const allData = (value as ITrades).data ?? [];
+      const totalLength = allData.length;
+      if (totalLength === 0) return { quant: 0, percent: 0 };
+
+      const quant = allData.filter((it) => it.result === 'LOST').length;
+      const percent = (quant / totalLength) * 100;
+      return { quant, percent: parseFloat(percent.toFixed(2)) };
+    }
+  });
+
+  readonly totalProfit = computed(() => {
+    if (this.performance.isLoading()) return undefined;
+
+    const value = this.performance.value();
+    const selected = this.performanceSelected();
+
+    if (!value) return 0;
+
+    if (selected === 'MES') {
+      const info = value as ITradeInfo;
+      const total = info.totalProfit ?? 0;
+      return parseFloat(total.toFixed(2));
+    } else {
+      const tradeList = (value as ITrades).data ?? [];
+      if (tradeList.length === 0) return 0;
+
+      const total = tradeList.reduce((sum, item) => sum + item.pnl, 0);
+      return parseFloat(total.toFixed(2));
+    }
+  });
+
+  readonly higherOperation = computed(() => {
+    if (this.performance.isLoading()) return undefined;
+
+    const value = this.performance.value();
+    const selected = this.performanceSelected();
+
+    if (!value) return 0;
+
+    if (selected === 'MES') {
+      const info = value as ITradeInfo;
+      const maxPnl = info.maxProfit ?? 0;
+      return parseFloat(maxPnl.toFixed(2));
+    } else {
+      const allData = (value as ITrades).data ?? [];
+      if (allData.length === 0) return 0;
+
+      const profits = allData.filter((item) => item.pnl > 0);
+      if (profits.length === 0) return 0;
+
+      const highestProfitOperation = profits.reduce((maxItem, currentItem) => {
+        return currentItem.pnl > maxItem.pnl ? currentItem : maxItem;
+      }, profits[0]);
+
+      return parseFloat(highestProfitOperation.pnl.toFixed(2));
+    }
+  });
+
+  readonly lowestOperation = computed(() => {
+    if (this.performance.isLoading()) return undefined;
+
+    const value = this.performance.value();
+    const selected = this.performanceSelected();
+
+    if (!value) return 0;
+
+    if (selected === 'MES') {
+      const info = value as ITradeInfo;
+      const minPnl = info.minProfit ?? 0;
+      return parseFloat(minPnl.toFixed(2));
+    } else {
+      const allData = (value as ITrades).data ?? [];
+      if (allData.length === 0) return 0;
+
+      const losses = allData.filter((item) => item.pnl < 0);
+      if (losses.length === 0) return 0;
+
+      const highestLossOperation = losses.reduce((minItem, currentItem) => {
+        return currentItem.pnl < minItem.pnl ? currentItem : minItem;
+      }, losses[0]);
+
+      return parseFloat(highestLossOperation.pnl.toFixed(2));
+    }
+  });
+
   readonly chart = signal<any | undefined>(undefined);
+
+  readonly performanceSelected = signal<'SEMANA' | 'MES'>('SEMANA');
+  readonly performanceArray = PERFORMANCE_ARRAY;
+  readonly performance = rxResource<ITrades | ITradeInfo, 'SEMANA' | 'MES'>({
+    params: this.performanceSelected,
+    stream: ({ params }) => {
+      const timeRange = PERFORMANCE_DIC.get(params)!;
+
+      if (params === 'MES') {
+        return this._corretora.tradesInfo({
+          start: timeRange.start!,
+          end: timeRange.end!,
+        });
+      } else {
+        return this._corretora.trades({
+          start: timeRange.start!,
+          end: timeRange.end!,
+        });
+      }
+    },
+  });
 
   constructor() {
     effect(() => {
-      setTimeout(() => {
-        this._chart();
-      }, 500);
-      // if (this.totalLoss() && this.totalWin()) {
-      // }
+      if (this.totalLoss() && this.totalWin()) {
+        setTimeout(() => {
+          this._createChart();
+        }, 500);
+      }
     });
   }
 
-  private _chart(): void {
+  private _createChart(): void {
     if (this.chart()) {
       this.chart().clear();
       this.chart().destroy();
     }
 
-    const canvas = this._chartCanvas.nativeElement;
+    const chart = new Chart('chart2', {
+      type: 'doughnut',
+      data: {
+        labels: ['Win', 'Loss'],
+        datasets: [
+          {
+            data: [this.totalWin()!.quant, this.totalLoss()!.quant],
+            ...chartPieConfigs.datasets,
+          },
+        ],
+      },
+      options: chartPieConfigs.options as any,
+    });
+    this.chart.set(chart);
+  }
 
-    if (this.graphType() === 'SEMANA') {
-      const ctx = canvas.getContext('2d');
-      const gradient = ctx!.createLinearGradient(0, 0, 0, canvas.offsetHeight);
-      gradient.addColorStop(0, 'rgba(34, 197, 94, 0.6)'); // Cor do topo do gradiente (verde com 60% de opacidade)
-      gradient.addColorStop(1, 'rgba(34, 197, 94, 0)'); // Cor da base do gradiente (transparente)
-      const data = {
-        labels: ['Seg', 'Ter', 'Qua', 'Qui'],
-        datasets: [
-          {
-            data: [35, 95, 25, 80], // Valores de exemplo para os pontos no gráfico
-            fill: true, // Habilita o preenchimento da área abaixo da linha
-            backgroundColor: gradient, // Aplica o gradiente criado
-            borderColor: '#22c55e', // Cor da linha (verde sólido)
-            borderWidth: 3, // Espessura da linha
-            tension: 0.4, // Deixa a linha curvada (suavizada)
-            pointBackgroundColor: '#22c55e', // Cor dos pontos
-            pointBorderColor: '#fff', // Borda branca para os pontos (opcional, para destaque)
-            pointBorderWidth: 2, // Espessura da borda do ponto (opcional)
-            pointRadius: 5, // Tamanho dos pontos
-            pointHoverRadius: 7, // Tamanho dos pontos ao passar o mouse
-          },
-        ],
-      };
-      const chart = new Chart(canvas, {
-        type: 'line', // Tipo do gráfico
-        data: data,
-        options: chartLineConfigs.options,
-      });
-      this.chart.set(chart);
+  setPerformance(name: 'SEMANA' | 'MES'): void {
+    this.performanceSelected.set(name);
+  }
+
+  getColor(value: number | undefined): 'success' | 'danger' | 'medium' {
+    if (value === undefined || value === null) {
+      return 'medium';
+    }
+
+    if (value > 0) {
+      return 'success';
+    } else if (value < 0) {
+      return 'danger';
     } else {
-      const data = {
-        labels: [
-          'D1',
-          'D2',
-          'D3',
-          'D4',
-          'D5',
-          'D6',
-          'D7',
-          'D8',
-          'D9',
-          'D10',
-          'D11',
-          'D12',
-        ],
-        datasets: [
-          {
-            label: 'Vendas', // Oculto, mas útil para contexto
-            data: [75, 95, 80, 40, 100, 65, 85, 88, 82, 35, 98, 70], // Valores de exemplo
-            backgroundColor: '#22c55e', // Cor verde sólida para as barras
-            borderColor: '#22c55e',
-            borderWidth: 1,
-            borderRadius: 6, // Arredonda os cantos das barras
-            borderSkipped: false, // Garante que o raio seja aplicado em todas as bordas
-            barPercentage: 0.6, // Deixa as barras um pouco mais finas
-            categoryPercentage: 0.8, // Controla o espaçamento entre as categorias
-          },
-        ],
-      };
-      const chart = new Chart(canvas, {
-        type: 'bar', // Tipo do gráfico
-        data: data,
-        options: chartBarConfigs.options,
-      });
-      this.chart.set(chart);
+      return 'medium';
     }
   }
 }
