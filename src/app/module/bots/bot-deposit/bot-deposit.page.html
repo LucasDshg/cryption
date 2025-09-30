@@ -5,19 +5,18 @@
     <ion-chip
       [outline]="true"
       class="ion-d-block ion-flex-1"
-      [ngClass]="{ 'chip-selected': 'EXTRATO' === tabSelected() }"
-      (click)="toggleTab('EXTRATO')"
-    >
-      Extrato
-    </ion-chip>
-
-    <ion-chip
-      [outline]="true"
-      class="ion-d-block ion-flex-1"
       [ngClass]="{ 'chip-selected': 'DEPOSIT' === tabSelected() }"
       (click)="toggleTab('DEPOSIT')"
     >
       Depositar
+    </ion-chip>
+    <ion-chip
+      [outline]="true"
+      class="ion-d-block ion-flex-1"
+      [ngClass]="{ 'chip-selected': 'EXTRATO' === tabSelected() }"
+      (click)="toggleTab('EXTRATO')"
+    >
+      Extrato
     </ion-chip>
   </div>
   @switch (tabSelected()) {
