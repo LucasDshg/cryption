@@ -13,42 +13,49 @@ import { chartPieConfigs } from '../chart/chart.configs';
         <ion-card-header>
           <ion-card-title class="ion-fs-16">Win X Loss</ion-card-title>
         </ion-card-header>
-        <ion-card-content class="ion-d-flex ion-justify-content-around">
-          <div style="height: 100px; width: 100px" class="ion-margin-bottom">
-            <canvas id="chart">{{ chart() }}</canvas>
-          </div>
-          <div
-            class="ion-d-flex ion-align-items-center ion-justify-content-between ion-gap-24"
-          >
-            @if (totalWin()) {
-              <div>
-                <ion-text color="success">
-                  <small>Win</small>
-                </ion-text>
-                <ion-text color="medium">
-                  <p class="ion-m-0">
-                    {{ totalWin()?.price | currency }}
-                  </p>
-                </ion-text>
-                <ion-text color="gray">
-                  <small>Total: {{ totalWin()!.quant }} </small>
-                </ion-text>
+        <ion-card-content>
+          <ion-row>
+            <ion-col class="ion-d-flex ion-p-0" size="12">
+              <div
+                style="height: 100px; width: 100px"
+                class="ion-margin-bottom ion-m-end-16"
+              >
+                <canvas id="chart">{{ chart() }}</canvas>
               </div>
-            }
-            @if (totalLoss()) {
-              <div>
-                <ion-text color="danger">
-                  <small>Loss</small>
-                </ion-text>
-                <ion-text color="medium">
-                  <p class="ion-m-0">{{ totalLoss()!.price | currency }}</p>
-                </ion-text>
-                <ion-text color="gray">
-                  <small>Total: {{ totalLoss()!.quant }} </small>
-                </ion-text>
+              <div
+                class="ion-d-flex ion-align-items-center ion-justify-content-around ion-w-100"
+              >
+                @if (totalWin()) {
+                  <div>
+                    <ion-text color="success">
+                      <small>Win</small>
+                    </ion-text>
+                    <ion-text color="medium">
+                      <p class="ion-m-0">
+                        {{ totalWin()?.price | currency }}
+                      </p>
+                    </ion-text>
+                    <ion-text color="gray">
+                      <small>Total: {{ totalWin()!.quant }} </small>
+                    </ion-text>
+                  </div>
+                }
+                @if (totalLoss()) {
+                  <div>
+                    <ion-text color="danger">
+                      <small>Loss</small>
+                    </ion-text>
+                    <ion-text color="medium">
+                      <p class="ion-m-0">{{ totalLoss()!.price | currency }}</p>
+                    </ion-text>
+                    <ion-text color="gray">
+                      <small>Total: {{ totalLoss()!.quant }} </small>
+                    </ion-text>
+                  </div>
+                }
               </div>
-            }
-          </div>
+            </ion-col>
+          </ion-row>
         </ion-card-content>
       </ion-card>
     } @else {

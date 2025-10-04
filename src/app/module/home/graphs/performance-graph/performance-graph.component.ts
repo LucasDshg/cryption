@@ -5,13 +5,13 @@ import { Chart } from 'chart.js';
 import {
   PERFORMANCE_ARRAY,
   PERFORMANCE_DIC,
-} from '../../constants/performance.constants';
-import { IonicComponentsModule } from '../../ionic-components.module';
-import { ITradeInfo } from '../../services/corretora/interface/trade-info.interface';
-import { ITrades } from '../../services/corretora/interface/trades.interface';
-import { CorretoraService } from '../../services/corretora/service/corretor.service';
-import { CardLoadingComponent } from '../card-loading/card-loading.component';
-import { chartPieConfigs } from '../chart/chart.configs';
+} from '../../../../shared/constants/performance.constants';
+import { IonicComponentsModule } from '../../../../shared/ionic-components.module';
+import { ITradeInfo } from '../../../../shared/services/corretora/interface/trade-info.interface';
+import { ITrades } from '../../../../shared/services/corretora/interface/trades.interface';
+import { CorretoraService } from '../../../../shared/services/corretora/service/corretor.service';
+import { CardLoadingComponent } from '../../../../shared/components/card-loading/card-loading.component';
+import { chartPieConfigs } from '../../../../shared/components/chart/chart.configs';
 
 @Component({
   selector: 'app-performance-graph',
@@ -55,25 +55,31 @@ import { chartPieConfigs } from '../chart/chart.configs';
                 <canvas id="chart2">{{ chart() }}</canvas>
               </div>
               <div
-                class="ion-d-flex ion-align-items-center ion-justify-content-between ion-gap-60"
+                class="ion-d-flex ion-align-items-center ion-justify-content-around ion-w-100"
               >
                 @if (totalWin()) {
-                  <div class="ion-text-center">
+                  <div class="ion-d-flex ion-flex-column ion-text-center">
                     <ion-text color="success">
                       <p class="ion-m-0">{{ totalWin()?.quant }}</p>
                     </ion-text>
                     <ion-text color="medium">
-                      <small>Win - {{ totalWin()?.percent }}%</small>
+                      <small>{{ totalWin()?.percent }}%</small>
+                    </ion-text>
+                    <ion-text color="medium">
+                      <small>Win</small>
                     </ion-text>
                   </div>
                 }
                 @if (totalLoss()) {
-                  <div class="ion-text-center">
+                  <div class="ion-d-flex ion-flex-column ion-text-center">
                     <ion-text color="danger">
                       <p class="ion-m-0">{{ totalLoss()?.quant }}</p>
                     </ion-text>
                     <ion-text color="medium">
-                      <small>Loss - {{ totalLoss()?.percent }}%</small>
+                      <small>{{ totalLoss()?.percent }}%</small>
+                    </ion-text>
+                    <ion-text color="medium">
+                      <small>Loss</small>
                     </ion-text>
                   </div>
                 }
@@ -89,7 +95,7 @@ import { chartPieConfigs } from '../chart/chart.configs';
                     <p class="ion-m-0">{{ totalProfit() | currency }}</p>
                   </ion-text>
                   <ion-text color="medium">
-                    <small>Lucro Total</small>
+                    <small>Lucro</small>
                   </ion-text>
                 </div>
               }
@@ -99,7 +105,7 @@ import { chartPieConfigs } from '../chart/chart.configs';
                     <p class="ion-m-0">{{ higherOperation() | currency }}</p>
                   </ion-text>
                   <ion-text color="medium">
-                    <small>Maior Operação</small>
+                    <small>Maior Ganho</small>
                   </ion-text>
                 </div>
               }
@@ -109,7 +115,7 @@ import { chartPieConfigs } from '../chart/chart.configs';
                     <p class="ion-m-0">{{ lowestOperation() | currency }}</p>
                   </ion-text>
                   <ion-text color="medium">
-                    <small>Menor Operação</small>
+                    <small>Maior Perda</small>
                   </ion-text>
                 </div>
               }
