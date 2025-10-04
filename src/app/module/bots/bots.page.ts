@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { NavController } from '@ionic/angular/standalone';
-import { map, switchMap } from 'rxjs';
+import { combineLatest, map } from 'rxjs';
 import { UserStore } from 'src/app/core/store/user.store';
 import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.component';
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
@@ -44,29 +44,22 @@ export class BotsPage {
   }
 
   private _getData(): void {
-    this._userBotService
-      .fetch()
+    combineLatest([
+      this._userBotService.fetch(),
+      this._roboService.setups(this._store.store()!.robo.id),
+    ])
       .pipe(
-        switchMap((userBots) => {
-          return this._roboService.setups(this._store.store()!.robo.id).pipe(
-            map((bots) => {
-              if (userBots.length > 0) {
-                userBots.forEach((it) => {
-                  const findById = bots.data.find((val) => val.id === it.id);
-                  if (findById) {
-                    it.profit = findById.profit;
-                  }
-                });
-
-                return userBots;
-              }
-              return bots.data;
-            }),
-          );
+        map((res) => {
+          const bots = res[1];
+          const dbBot = res[0];
+          return bots.data.map((it) => {
+            return {
+              ...it,
+              description: dbBot.find((db) => db.id === it.id)?.description,
+            } as ISetupData;
+          });
         }),
       )
-      .subscribe((res: ISetupData[]) => {
-        this.data.set(res);
-      });
+      .subscribe((res) => this.data.set(res));
   }
 }
