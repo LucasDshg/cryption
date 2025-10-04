@@ -39,12 +39,6 @@
         }
       </ion-col>
       <ion-col size="12" class="ion-p-horizontal-0">
-        <app-trades-graph
-          [totalLoss]="totalLoss()"
-          [totalWin]="totalWin()"
-        ></app-trades-graph>
-      </ion-col>
-      <ion-col size="12" class="ion-p-horizontal-0">
         @if (totalLoss() && totalWin()) {
           <ion-card class="ion-no-shadow ion-m-vertical-0">
             <ion-card-header>
@@ -60,6 +54,20 @@
         } @else {
           <app-card-loading type="twoText"></app-card-loading>
         }
+      </ion-col>
+
+      <ion-col size="12" class="ion-p-horizontal-0">
+        <app-trades-graph
+          [totalLoss]="totalLoss()"
+          [totalWin]="totalWin()"
+        ></app-trades-graph>
+      </ion-col>
+
+      <ion-col size="12" class="ion-p-horizontal-0">
+        <app-bot-x-manual-graph
+          [totalBot]="totalBot()"
+          [totalManual]="totalManual()"
+        ></app-bot-x-manual-graph>
       </ion-col>
 
       <ion-col size="12" class="ion-p-horizontal-0">
