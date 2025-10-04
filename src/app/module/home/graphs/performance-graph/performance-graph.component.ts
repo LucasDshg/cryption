@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Chart } from 'chart.js';
+import { CardLoadingComponent } from '../../../../shared/components/card-loading/card-loading.component';
+import { chartPieConfigs } from '../../../../shared/components/chart/chart.configs';
 import {
   PERFORMANCE_ARRAY,
   PERFORMANCE_DIC,
@@ -10,8 +12,6 @@ import { IonicComponentsModule } from '../../../../shared/ionic-components.modul
 import { ITradeInfo } from '../../../../shared/services/corretora/interface/trade-info.interface';
 import { ITrades } from '../../../../shared/services/corretora/interface/trades.interface';
 import { CorretoraService } from '../../../../shared/services/corretora/service/corretor.service';
-import { CardLoadingComponent } from '../../../../shared/components/card-loading/card-loading.component';
-import { chartPieConfigs } from '../../../../shared/components/chart/chart.configs';
 
 @Component({
   selector: 'app-performance-graph',
@@ -63,9 +63,6 @@ import { chartPieConfigs } from '../../../../shared/components/chart/chart.confi
                       <p class="ion-m-0">{{ totalWin()?.quant }}</p>
                     </ion-text>
                     <ion-text color="medium">
-                      <small>{{ totalWin()?.percent }}%</small>
-                    </ion-text>
-                    <ion-text color="medium">
                       <small>Win</small>
                     </ion-text>
                   </div>
@@ -76,20 +73,14 @@ import { chartPieConfigs } from '../../../../shared/components/chart/chart.confi
                       <p class="ion-m-0">{{ totalLoss()?.quant }}</p>
                     </ion-text>
                     <ion-text color="medium">
-                      <small>{{ totalLoss()?.percent }}%</small>
-                    </ion-text>
-                    <ion-text color="medium">
                       <small>Loss</small>
                     </ion-text>
                   </div>
                 }
               </div>
             </ion-col>
-            <ion-col
-              class="ion-d-flex ion-p-0 ion-justify-content-between"
-              size="12"
-            >
-              @if (totalProfit()) {
+            <ion-col size="4">
+              @defer (when totalProfit()) {
                 <div class="ion-text-center">
                   <ion-text [color]="getColor(totalProfit())">
                     <p class="ion-m-0">{{ totalProfit() | currency }}</p>
@@ -99,7 +90,9 @@ import { chartPieConfigs } from '../../../../shared/components/chart/chart.confi
                   </ion-text>
                 </div>
               }
-              @if (higherOperation()) {
+            </ion-col>
+            <ion-col size="4">
+              @defer (when higherOperation()) {
                 <div class="ion-text-center">
                   <ion-text color="success">
                     <p class="ion-m-0">{{ higherOperation() | currency }}</p>
@@ -109,7 +102,9 @@ import { chartPieConfigs } from '../../../../shared/components/chart/chart.confi
                   </ion-text>
                 </div>
               }
-              @if (lowestOperation()) {
+            </ion-col>
+            <ion-col size="4">
+              @defer (when lowestOperation()) {
                 <div class="ion-text-center">
                   <ion-text color="danger">
                     <p class="ion-m-0">{{ lowestOperation() | currency }}</p>
@@ -304,12 +299,24 @@ export class PerformanceGraphComponent {
         labels: ['Win', 'Loss'],
         datasets: [
           {
-            data: [this.totalWin()!.quant, this.totalLoss()!.quant],
+            data: [this.totalWin()!.percent, this.totalLoss()!.percent],
             ...chartPieConfigs.datasets,
           },
         ],
       },
-      options: chartPieConfigs.options as any,
+      options: {
+        ...chartPieConfigs.options,
+        plugins: {
+          ...chartPieConfigs.options.plugins,
+          tooltip: {
+            callbacks: {
+              label: (tooltipItem): any => {
+                return `${tooltipItem.formattedValue}%`;
+              },
+            },
+          },
+        },
+      },
     });
     this.chart.set(chart);
   }
