@@ -26,7 +26,8 @@ import { CorretoraService } from 'src/app/shared/services/corretora/service/corr
 import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { ModalTradesDetailsComponent } from '../../shared/components/modal-details-trade/modal-details-trades.component';
-import { PerformanceGraphComponent } from 'src/app/shared/components/performance-graph/performance-graph.component';
+import { PerformanceGraphComponent } from 'src/app/module/home/graphs/performance-graph/performance-graph.component';
+import { BotXManualGraphComponent } from './graphs/bot-x-manual-graph/bot-x-manual-graph.component';
 
 @Component({
   selector: 'app-home',
@@ -41,6 +42,7 @@ import { PerformanceGraphComponent } from 'src/app/shared/components/performance
     MonthSelectComponent,
     TradesGraphComponent,
     PerformanceGraphComponent,
+    BotXManualGraphComponent,
   ],
   providers: [CorretoraService, RoboService, UserService, ModalController],
 })
@@ -80,6 +82,26 @@ export class HomePage implements AfterViewInit {
     const loss = this.data.value()?.data.filter((it) => it.result === 'LOST');
     const price = loss?.reduce((prev, curr) => curr.pnl + prev, 0);
     const quant = loss?.length;
+    return { price, quant };
+  });
+
+  readonly totalBot = computed(() => {
+    if (this.data.isLoading()) return undefined;
+
+    const botOperations = this.data.value()?.data.filter((it) => it.fromBot);
+    const price = botOperations?.reduce((prev, curr) => curr.pnl + prev, 0);
+    const quant = botOperations?.length;
+    return { price, quant };
+  });
+
+  readonly totalManual = computed(() => {
+    if (this.data.isLoading()) return undefined;
+
+    const manualOperations = this.data
+      .value()
+      ?.data.filter((it) => !it.fromBot);
+    const price = manualOperations?.reduce((prev, curr) => curr.pnl + prev, 0);
+    const quant = manualOperations?.length;
     return { price, quant };
   });
 

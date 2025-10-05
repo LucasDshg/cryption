@@ -2,16 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Chart } from 'chart.js';
+import { CardLoadingComponent } from '../../../../shared/components/card-loading/card-loading.component';
+import { chartPieConfigs } from '../../../../shared/components/chart/chart.configs';
 import {
   PERFORMANCE_ARRAY,
   PERFORMANCE_DIC,
-} from '../../constants/performance.constants';
-import { IonicComponentsModule } from '../../ionic-components.module';
-import { ITradeInfo } from '../../services/corretora/interface/trade-info.interface';
-import { ITrades } from '../../services/corretora/interface/trades.interface';
-import { CorretoraService } from '../../services/corretora/service/corretor.service';
-import { CardLoadingComponent } from '../card-loading/card-loading.component';
-import { chartPieConfigs } from '../chart/chart.configs';
+} from '../../../../shared/constants/performance.constants';
+import { IonicComponentsModule } from '../../../../shared/ionic-components.module';
+import { ITradeInfo } from '../../../../shared/services/corretora/interface/trade-info.interface';
+import { ITrades } from '../../../../shared/services/corretora/interface/trades.interface';
+import { CorretoraService } from '../../../../shared/services/corretora/service/corretor.service';
 
 @Component({
   selector: 'app-performance-graph',
@@ -55,61 +55,62 @@ import { chartPieConfigs } from '../chart/chart.configs';
                 <canvas id="chart2">{{ chart() }}</canvas>
               </div>
               <div
-                class="ion-d-flex ion-align-items-center ion-justify-content-between ion-gap-60"
+                class="ion-d-flex ion-align-items-center ion-justify-content-around ion-w-100"
               >
                 @if (totalWin()) {
-                  <div class="ion-text-center">
+                  <div class="ion-d-flex ion-flex-column ion-text-center">
                     <ion-text color="success">
                       <p class="ion-m-0">{{ totalWin()?.quant }}</p>
                     </ion-text>
                     <ion-text color="medium">
-                      <small>Win - {{ totalWin()?.percent }}%</small>
+                      <small>Win</small>
                     </ion-text>
                   </div>
                 }
                 @if (totalLoss()) {
-                  <div class="ion-text-center">
+                  <div class="ion-d-flex ion-flex-column ion-text-center">
                     <ion-text color="danger">
                       <p class="ion-m-0">{{ totalLoss()?.quant }}</p>
                     </ion-text>
                     <ion-text color="medium">
-                      <small>Loss - {{ totalLoss()?.percent }}%</small>
+                      <small>Loss</small>
                     </ion-text>
                   </div>
                 }
               </div>
             </ion-col>
-            <ion-col
-              class="ion-d-flex ion-p-0 ion-justify-content-between"
-              size="12"
-            >
-              @if (totalProfit()) {
+            <ion-col size="4">
+              @defer (when totalProfit()) {
                 <div class="ion-text-center">
                   <ion-text [color]="getColor(totalProfit())">
                     <p class="ion-m-0">{{ totalProfit() | currency }}</p>
                   </ion-text>
                   <ion-text color="medium">
-                    <small>Lucro Total</small>
+                    <small>Lucro</small>
                   </ion-text>
                 </div>
               }
-              @if (higherOperation()) {
+            </ion-col>
+            <ion-col size="4">
+              @defer (when higherOperation()) {
                 <div class="ion-text-center">
                   <ion-text color="success">
                     <p class="ion-m-0">{{ higherOperation() | currency }}</p>
                   </ion-text>
                   <ion-text color="medium">
-                    <small>Maior Operação</small>
+                    <small>Maior Ganho</small>
                   </ion-text>
                 </div>
               }
-              @if (lowestOperation()) {
+            </ion-col>
+            <ion-col size="4">
+              @defer (when lowestOperation()) {
                 <div class="ion-text-center">
                   <ion-text color="danger">
                     <p class="ion-m-0">{{ lowestOperation() | currency }}</p>
                   </ion-text>
                   <ion-text color="medium">
-                    <small>Menor Operação</small>
+                    <small>Maior Perda</small>
                   </ion-text>
                 </div>
               }
@@ -298,12 +299,24 @@ export class PerformanceGraphComponent {
         labels: ['Win', 'Loss'],
         datasets: [
           {
-            data: [this.totalWin()!.quant, this.totalLoss()!.quant],
+            data: [this.totalWin()!.percent, this.totalLoss()!.percent],
             ...chartPieConfigs.datasets,
           },
         ],
       },
-      options: chartPieConfigs.options as any,
+      options: {
+        ...chartPieConfigs.options,
+        plugins: {
+          ...chartPieConfigs.options.plugins,
+          tooltip: {
+            callbacks: {
+              label: (tooltipItem): any => {
+                return `${tooltipItem.formattedValue}%`;
+              },
+            },
+          },
+        },
+      },
     });
     this.chart.set(chart);
   }

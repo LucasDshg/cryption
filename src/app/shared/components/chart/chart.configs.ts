@@ -1,3 +1,29 @@
+import { Chart } from 'chart.js';
+
+export const zeroLinePlugin = {
+  id: 'zeroLinePlugin',
+  afterDraw: (chart: Chart): void => {
+    const ctx = chart.ctx as CanvasRenderingContext2D;
+    const yScale = chart.scales['y'] as any;
+    if (!yScale) return;
+
+    const chartArea = chart.chartArea;
+    const yZero = yScale.getPixelForValue(0);
+    if (yZero === undefined) return;
+    if (yZero < chartArea.top || yZero > chartArea.bottom) return;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = '#717171';
+    const y = Math.round(yZero) + 0.5;
+    ctx.moveTo(chartArea.left, y);
+    ctx.lineTo(chartArea.right, y);
+    ctx.stroke();
+    ctx.restore();
+  },
+};
+
 export const chartLineConfigs = {
   datasets: {
     borderWidth: 6,
@@ -52,24 +78,19 @@ export const chartBarConfigs = {
   options: {
     maintainAspectRatio: false,
     plugins: {
-      datalabels: {
-        display: false,
-      },
-      legend: {
-        display: false,
-      },
+      datalabels: { display: false },
+      legend: { display: false },
     },
     scales: {
       y: {
-        display: false,
+        grid: { display: false },
+        ticks: { display: false },
+        border: { display: false },
       },
       x: {
-        border: {
-          width: 0,
-        },
-        grid: {
-          lineWidth: 0,
-        },
+        grid: { display: false },
+        border: { width: 0 },
+        ticks: { display: false },
       },
     },
   },

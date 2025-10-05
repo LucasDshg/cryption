@@ -1,3 +1,10 @@
 ion-loading {
   border-radius: 1rem !important;
 }
+
+.loading-wrapper.sc-ion-loading-md {
+  background: var(--ion-item-background);
+  border: 1px solid var(--ion-color-dark-shade);
+  border-radius: 1rem;
+  color: white;
+}

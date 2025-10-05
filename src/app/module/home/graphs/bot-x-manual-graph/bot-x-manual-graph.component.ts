@@ -1,17 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, input, signal } from '@angular/core';
 import { Chart } from 'chart.js';
-import { IonicComponentsModule } from '../../ionic-components.module';
-import { CardLoadingComponent } from '../card-loading/card-loading.component';
-import { chartPieConfigs } from '../chart/chart.configs';
+import { IonicComponentsModule } from '../../../../shared/ionic-components.module';
+import { CardLoadingComponent } from '../../../../shared/components/card-loading/card-loading.component';
+import {
+  chartBarConfigs,
+  chartPieConfigs,
+  zeroLinePlugin,
+} from '../../../../shared/components/chart/chart.configs';
 
 @Component({
-  selector: 'app-trades-graph',
+  selector: 'app-bot-x-manual-graph',
   template: `
-    @if (totalLoss() && totalWin()) {
+    @if (totalBot() && totalManual()) {
       <ion-card class="ion-no-shadow ion-m-0">
         <ion-card-header>
-          <ion-card-title class="ion-fs-16">Win X Loss</ion-card-title>
+          <ion-card-title class="ion-fs-16">Bot X Manual</ion-card-title>
         </ion-card-header>
         <ion-card-content>
           <ion-row>
@@ -20,36 +24,38 @@ import { chartPieConfigs } from '../chart/chart.configs';
                 style="height: 100px; width: 100px"
                 class="ion-margin-bottom ion-m-end-16"
               >
-                <canvas id="chart">{{ chart() }}</canvas>
+                <canvas id="chartBotXManual">{{ chart() }}</canvas>
               </div>
               <div
                 class="ion-d-flex ion-align-items-center ion-justify-content-around ion-w-100"
               >
-                @if (totalWin()) {
+                @if (totalBot()) {
                   <div>
                     <ion-text color="success">
-                      <small>Win</small>
+                      <small>Bot</small>
                     </ion-text>
                     <ion-text color="medium">
                       <p class="ion-m-0">
-                        {{ totalWin()?.price | currency }}
+                        {{ totalBot()?.price | currency }}
                       </p>
                     </ion-text>
                     <ion-text color="gray">
-                      <small>Total: {{ totalWin()!.quant }} </small>
+                      <small>Total: {{ totalBot()!.quant }} </small>
                     </ion-text>
                   </div>
                 }
-                @if (totalLoss()) {
+                @if (totalManual()) {
                   <div>
-                    <ion-text color="danger">
-                      <small>Loss</small>
+                    <ion-text color="primary">
+                      <small>Manual</small>
                     </ion-text>
                     <ion-text color="medium">
-                      <p class="ion-m-0">{{ totalLoss()!.price | currency }}</p>
+                      <p class="ion-m-0">
+                        {{ totalManual()!.price | currency }}
+                      </p>
                     </ion-text>
                     <ion-text color="gray">
-                      <small>Total: {{ totalLoss()!.quant }} </small>
+                      <small>Total: {{ totalManual()!.quant }} </small>
                     </ion-text>
                   </div>
                 }
@@ -64,15 +70,15 @@ import { chartPieConfigs } from '../chart/chart.configs';
   `,
   imports: [IonicComponentsModule, CommonModule, CardLoadingComponent],
 })
-export class TradesGraphComponent {
-  readonly totalWin = input.required<
+export class BotXManualGraphComponent {
+  readonly totalBot = input.required<
     | {
         price: number | undefined;
         quant: number | undefined;
       }
     | undefined
   >();
-  readonly totalLoss = input.required<
+  readonly totalManual = input.required<
     | {
         price: number | undefined;
         quant: number | undefined;
@@ -83,7 +89,7 @@ export class TradesGraphComponent {
 
   constructor() {
     effect(() => {
-      if (this.totalLoss() && this.totalWin()) {
+      if (this.totalBot() && this.totalManual()) {
         setTimeout(() => {
           this._chartWinLoss();
         }, 500);
@@ -97,18 +103,20 @@ export class TradesGraphComponent {
       this.chart().destroy();
     }
 
-    const chart = new Chart('chart', {
-      type: 'pie',
+    const chart = new Chart('chartBotXManual', {
+      type: 'bar',
       data: {
-        labels: ['Win', 'Loss'],
+        labels: ['Bot', 'Manual'],
         datasets: [
           {
-            data: [this.totalWin()!.price, this.totalLoss()!.price],
-            ...chartPieConfigs.datasets,
+            data: [this.totalBot()!.price, this.totalManual()!.price],
+            backgroundColor: ['#00b221', '#ecce91'],
+            borderColor: 'transparent',
           },
         ],
       },
-      options: chartPieConfigs.options as any,
+      options: chartBarConfigs.options as any,
+      plugins: [zeroLinePlugin],
     });
     this.chart.set(chart);
   }
