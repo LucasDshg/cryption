@@ -2,10 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RequestService } from 'src/app/core/service/request.service';
 import { UserStore } from 'src/app/core/store/user.store';
-import { ISetupData } from './robo/interface/steup.interface';
+import { ISetupDataPartial } from '../robo/interface/steup.interface';
 
 @Injectable()
-export class UserBotsService extends RequestService<ISetupData> {
+export class UserBotsService extends RequestService<ISetupDataPartial> {
   private _store = inject(UserStore);
 
   constructor() {
@@ -17,11 +17,11 @@ export class UserBotsService extends RequestService<ISetupData> {
     };
   }
 
-  fetch(): Observable<ISetupData[]> {
+  fetch(): Observable<ISetupDataPartial[]> {
     return this.get();
   }
 
-  insert(data: ISetupData): Observable<void | string> {
+  insert(data: ISetupDataPartial): Observable<void | string> {
     return this.addData(data, { id: data.id, toastText: 'Dados incluídos!' });
   }
 

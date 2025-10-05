@@ -1,17 +1,21 @@
-export interface ISetupData {
+export interface ISetupDataPartial {
   id: string;
-  userId: string;
-  tenantId: string;
   name: string;
   description: string;
+  active: boolean;
+  brokerUserBalance: number;
+  profit: number;
+  brokerMaxBalanceToUse: number;
+}
+export interface ISetupData extends ISetupDataPartial {
+  userId: string;
+  tenantId: string;
   brokerProfileId: string;
   brokerId: string;
   brokerToken: string;
   brokerUserId: string;
-  brokerMaxBalanceToUse: number;
   brokerUserEmail: string;
   brokerCopyTradeId: string;
-  active: boolean;
   createdAt: string;
   updatedAt: string;
   connectionActive: boolean;
@@ -52,8 +56,6 @@ export interface ISetupData {
       updatedAt: string;
     };
   };
-  brokerUserBalance: number;
-  profit: number;
 }
 
 export interface ISetup {

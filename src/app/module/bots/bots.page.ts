@@ -7,9 +7,12 @@ import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.co
 import { CardLoadingComponent } from 'src/app/shared/components/card-loading/card-loading.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
-import { ISetupData } from 'src/app/shared/services/robo/interface/steup.interface';
+import { UserBotsService } from 'src/app/shared/services//user-bots/user-bots.service';
+import {
+  ISetupData,
+  ISetupDataPartial,
+} from 'src/app/shared/services/robo/interface/steup.interface';
 import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
-import { UserBotsService } from 'src/app/shared/services/user-bots.service';
 
 @Component({
   selector: 'app-bots',
@@ -30,13 +33,13 @@ export class BotsPage {
   private _store = inject(UserStore);
   private _router = inject(NavController);
 
-  readonly data = signal<ISetupData[] | undefined>(undefined);
+  readonly data = signal<ISetupDataPartial[] | undefined>(undefined);
 
   ionViewDidEnter(): void {
     this._getData();
   }
 
-  goToDetails(item: ISetupData): void {
+  goToDetails(item: ISetupDataPartial): void {
     this._router.navigateForward(['/bots', 'details'], { state: { item } });
   }
   goToNewBot(): void {
@@ -50,20 +53,20 @@ export class BotsPage {
     ])
       .pipe(
         map((res) => {
-          const bots = res[1];
+          const bots = res[1].data as unknown as ISetupDataPartial[];
           const dbBot = res[0];
           if (dbBot.length === 3) {
             return dbBot.map((it) => {
               return {
                 ...it,
-                profit: bots.data.find((bot) => bot.id === it.id)?.profit,
+                profit: bots.find((bot) => bot.id === it.id)?.profit,
               } as ISetupData;
             });
           } else {
-            const filterBost = bots.data.filter(
+            const filterBost = bots.filter(
               (bot) => !dbBot.map((db) => db.id).includes(bot.id),
             );
-            return filterBost.concat(dbBot) as ISetupData[];
+            return filterBost.concat(dbBot) as ISetupDataPartial[];
           }
         }),
       )
