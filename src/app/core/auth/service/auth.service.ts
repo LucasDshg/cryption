@@ -73,14 +73,24 @@ export class AuthService {
   corretora(data: ICorretora): Observable<{ token: string }> {
     return this._http.post<{ token: string }>(
       `${environment.corretora}/auth/login`,
-      data,
+      {
+        tenantId: data.tenantId,
+        email: data.email,
+        password: data.password,
+        recaptchaToken: data.recaptchaToken,
+        cookie: data.cookie,
+      },
     );
   }
 
   robo(data: IBot): Observable<{ token: string }> {
     return this._http.post<{ token: string }>(
       `${environment.bot}/users/auth/login`,
-      data,
+      {
+        email: data.email,
+        password: data.password,
+        tenantId: data.tenantId,
+      },
     );
   }
 
@@ -90,7 +100,30 @@ export class AuthService {
   }
 
   account(data: IAuth): Observable<{ key: string }> {
-    return this._http.post<{ key: string }>(`${environment.api}/account`, data);
+    return this._http.post<{ key: string }>(`${environment.api}/account`, {
+      tokenCorretora: data.tokenCorretora,
+      tokenBot: data.tokenBot,
+      credential: {
+        corretora: {
+          tenantId: data.credential.corretora.tenantId,
+          email: data.credential.corretora.email,
+          password: data.credential.corretora.password,
+          recaptchaToken: data.credential.corretora.recaptchaToken,
+          cookie: data.credential.corretora.cookie,
+        },
+        robo: {
+          email: data.credential.robo.email,
+          password: data.credential.robo.password,
+          tenantId: data.credential.robo.tenantId,
+        },
+      },
+      robo: {
+        id: data.robo.id,
+        loginId: data.robo.loginId,
+        tenantId: data.robo.tenantId,
+        walletsId: data.robo.walletsId,
+      },
+    });
   }
 
   isTokenExpired = (token: string): boolean =>

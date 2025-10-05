@@ -22,7 +22,18 @@ export class UserBotsService extends RequestService<ISetupDataPartial> {
   }
 
   insert(data: ISetupDataPartial): Observable<void | string> {
-    return this.addData(data, { id: data.id, toastText: 'Dados incluídos!' });
+    return this.addData(
+      {
+        active: data.active,
+        brokerMaxBalanceToUse: data.brokerMaxBalanceToUse,
+        brokerUserBalance: data.brokerUserBalance,
+        description: data.description,
+        id: data.id,
+        name: data.name,
+        profit: data.profit,
+      },
+      { id: data.id, toastText: 'Dados incluídos!' },
+    );
   }
 
   remove(id: string): Observable<void | string> {
