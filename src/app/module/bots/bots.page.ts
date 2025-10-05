@@ -52,14 +52,21 @@ export class BotsPage {
         map((res) => {
           const bots = res[1];
           const dbBot = res[0];
-          return bots.data.map((it) => {
-            return {
-              ...it,
-              description: dbBot.find((db) => db.id === it.id)?.description,
-            } as ISetupData;
-          });
+          if (dbBot.length === 3) {
+            return dbBot.map((it) => {
+              return {
+                ...it,
+                profit: bots.data.find((bot) => bot.id === it.id)?.profit,
+              } as ISetupData;
+            });
+          } else {
+            const filterBost = bots.data.filter(
+              (bot) => !dbBot.map((db) => db.id).includes(bot.id),
+            );
+            return filterBost.concat(dbBot) as ISetupData[];
+          }
         }),
       )
-      .subscribe((res) => this.data.set(res));
+      .subscribe((res) => this.data.set(res!));
   }
 }
