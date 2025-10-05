@@ -1,8 +1,9 @@
-import { get } from 'axios';
+import { get, post } from 'axios';
 import * as adm from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import fcm from '../../core/fcm';
 import utils from '../../core/utils';
+import userBots from '../user-bots/user-bots';
 import user from '../user/user';
 import { IWallets } from './interface/wallets.interface';
 
@@ -24,9 +25,21 @@ async function getSaldo(token: string): Promise<IWallets[]> {
   return request.data;
 }
 
+async function active(token: string, id: string): Promise<number> {
+  const request = await post<any>(
+    `${api}/users/setups${id}/active`,
+    {},
+    {
+      headers: {
+        ...headers,
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return request.status;
+}
+
 const checkWallet = functions
-  // .document('user/{id}')
-  // .onUpdate(async (snapshot: any) => {
   .region('southamerica-east1')
   .pubsub.schedule('every 2 hours from 07:00 to 23:00')
   .timeZone('America/Sao_Paulo')
@@ -57,4 +70,51 @@ const checkWallet = functions
     }
   });
 
-export default { checkWallet };
+const activeBots = functions
+  .region('southamerica-east1')
+  .pubsub.schedule('every day  00:10')
+  .timeZone('America/Sao_Paulo')
+  .onRun(async () => {
+    try {
+      functions.logger.debug('start verification bots');
+      const users = await user.getAll();
+
+      users.forEach(async (user) => {
+        const bots = await userBots.getDisabled(user.id);
+
+        bots.forEach(async (bot) => {
+          const result = await active(user.bot, bot.id);
+          const userFcm = await fcm.getTokenUserById(user.id);
+
+          if (userFcm) {
+            if (result === 201) {
+              await adm.messaging().sendEach([
+                {
+                  ...utils.payload(
+                    'Robô ativado!',
+                    `O robô ${bot.name} foi ativado novamente.`,
+                  ),
+                  token: userFcm.token,
+                },
+              ]);
+            } else {
+              await adm.messaging().sendEach([
+                {
+                  ...utils.payload(
+                    'Erro ao ativar o robô!',
+                    `Não foi possível ativar o robô ${bot.name}.`,
+                  ),
+                  token: userFcm.token,
+                },
+              ]);
+            }
+          }
+        });
+      });
+      functions.logger.debug('end verification bots');
+    } catch (error) {
+      functions.logger.error(error);
+    }
+  });
+
+export default { checkWallet, activeBots };

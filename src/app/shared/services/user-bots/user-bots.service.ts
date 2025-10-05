@@ -31,6 +31,7 @@ export class UserBotsService extends RequestService<ISetupDataPartial> {
         id: data.id,
         name: data.name,
         profit: data.profit,
+        reactivate: true,
       },
       { id: data.id, toastText: 'Dados incluídos!' },
     );
@@ -45,6 +46,14 @@ export class UserBotsService extends RequestService<ISetupDataPartial> {
       id,
       { active: status },
       { toastText: `Robô ${status ? 'ativado' : 'desativado'}` },
+    );
+  }
+
+  toggleReactivate(id: string, status: boolean): Observable<void | string> {
+    return this.updateData(
+      id,
+      { reactivate: status },
+      { toastText: `Reativer robô ${status ? 'ativado' : 'desativado'}` },
     );
   }
 }

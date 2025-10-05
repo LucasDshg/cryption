@@ -38,6 +38,24 @@
     </ion-card-header>
   </ion-card>
 
+  <ion-card
+    class="ion-no-shadow"
+    [disabled]="state.item.description !== 'Salvo no banco'"
+    [button]="true"
+    (click)="toggleReactivate()"
+  >
+    <ion-card-header
+      class="ion-d-flex ion-flex-row ion-align-items-center ion-justify-content-between"
+    >
+      <ion-card-title>Reativar a meia noite</ion-card-title>
+      <app-icon
+        name="radio-button-on"
+        size="small"
+        [color]="state.item.reactivate ? 'success' : 'danger'"
+      ></app-icon>
+    </ion-card-header>
+  </ion-card>
+
   <ion-card class="ion-no-shadow">
     <ion-card-header>
       <ion-card-title>Banco Dados</ion-card-title>

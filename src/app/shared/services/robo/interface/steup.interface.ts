@@ -6,6 +6,7 @@ export interface ISetupDataPartial {
   brokerUserBalance: number;
   profit: number;
   brokerMaxBalanceToUse: number;
+  reactivate: boolean;
 }
 export interface ISetupData extends ISetupDataPartial {
   userId: string;

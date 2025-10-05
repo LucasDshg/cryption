@@ -59,6 +59,12 @@ export class BotDetailsPage {
     }
   }
 
+  async toggleReactivate(): Promise<void> {
+    this._userBotService
+      .toggleReactivate(this.state.item.id, !this.state.item.reactivate)
+      .subscribe(() => this._back());
+  }
+
   remove(): void {
     this._userBotService
       .remove(this.state.item.id)
