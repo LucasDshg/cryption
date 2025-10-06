@@ -27,7 +27,7 @@ async function getSaldo(token: string): Promise<IWallets[]> {
 
 async function active(token: string, id: string): Promise<number> {
   const request = await post<any>(
-    `${api}/users/setups${id}/active`,
+    `${api}/users/setups/${id}/active`,
     {},
     {
       headers: {
@@ -70,9 +70,8 @@ const checkWallet = functions
     }
   });
 
-const activeBots = functions
-  .region('southamerica-east1')
-  .pubsub.schedule('every day  00:10')
+const activeBots = functions.pubsub
+  .schedule('every day  00:10')
   .timeZone('America/Sao_Paulo')
   .onRun(async () => {
     try {
@@ -113,6 +112,7 @@ const activeBots = functions
       });
       functions.logger.debug('end verification bots');
     } catch (error) {
+      console.log(error);
       functions.logger.error(error);
     }
   });
