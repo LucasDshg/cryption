@@ -96,6 +96,12 @@
                   [isButton]="true"
                   (click)="detailsTrade(item)"
                 ></app-trade-item>
+              } @empty {
+                <ion-item>
+                  <ion-label color="medium"
+                    >Nenhuma operação encontrada!</ion-label
+                  >
+                </ion-item>
               }
             </ion-card-content>
           </ion-card>
