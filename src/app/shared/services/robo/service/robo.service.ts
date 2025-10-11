@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { MOCK_BOT_TYPE } from 'mocks/bots-type.mocks';
 import { MOCK_ME } from 'mocks/me.mocks';
 import { MOCK_STEUP } from 'mocks/steup.mocks';
+import { MOCK_TRANSACTIONS } from 'mocks/transactions.mocks';
 import { MOCK_WALLETS } from 'mocks/wallets.mocks';
 import { delay, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -12,7 +13,6 @@ import { IMe } from '../interface/me.interface';
 import { ISetup } from '../interface/steup.interface';
 import { ITransactions } from '../interface/transactions.interface';
 import { IWallets } from '../interface/wallets.interface';
-import { MOCK_TRANSACTIONS } from 'mocks/transactions.mocks';
 
 @Injectable()
 export class RoboService {
@@ -83,20 +83,21 @@ export class RoboService {
     walletDestinationId: string;
     walletOriginId: string;
   }): Observable<any> {
-    return this._http.post<void>(
-      `${environment.bot}/users/wallets/transfer`,
-      data,
-    );
+    return this._http.post<void>(`${environment.bot}/users/wallets/transfer`, {
+      amount: data.amount,
+      walletDestinationId: data.walletDestinationId,
+      walletOriginId: data.walletOriginId,
+    });
   }
 
   depositPix(data: {
     amount: string | number;
     documentNumber: string;
   }): Observable<IDepositPix> {
-    return this._http.post<IDepositPix>(
-      `${environment.bot}/deposits/pix`,
-      data,
-    );
+    return this._http.post<IDepositPix>(`${environment.bot}/deposits/pix`, {
+      amount: data.amount,
+      documentNumber: data.documentNumber,
+    });
   }
 
   tradesByInterval(

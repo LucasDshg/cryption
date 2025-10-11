@@ -48,10 +48,10 @@ import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
   ],
   template: `
     <div class="ion-w-100 ion-d-flex ion-m-bottom-16">
-      <span class="bar win" [style.width.%]="win()">
+      <span class="bar win" [style.width.%]="win() !== 0 ? win() : 50">
         {{ win().toFixed(2) }}
       </span>
-      <span class="bar loss" [style.width.%]="loss()">
+      <span class="bar loss" [style.width.%]="loss() !== 0 ? loss() : 50">
         {{ loss().toFixed(2) }}
       </span>
     </div>
@@ -67,10 +67,12 @@ export class ChartForceBarComponent {
   readonly total = input.required<number>();
   readonly expenses = input.required<number>();
   readonly win = computed(() => {
+    if (this.total() <= 0) return 0;
     const totalValue = Math.abs(this.expenses()) + this.total();
     return (this.total() * 100) / totalValue;
   });
   readonly loss = computed(() => {
+    if (this.total() <= 0) return 0;
     const totalValue = Math.abs(this.expenses()) + this.total();
     return (Math.abs(this.expenses()) * 100) / totalValue;
   });

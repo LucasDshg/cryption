@@ -6,9 +6,9 @@ import { finalize, switchMap } from 'rxjs';
 import { AppIconComponent } from 'src/app/shared/components/app-icon/app-icon.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { IonicComponentsModule } from 'src/app/shared/ionic-components.module';
-import { ISetupData } from 'src/app/shared/services/robo/interface/steup.interface';
+import { ISetupDataPartial } from 'src/app/shared/services/robo/interface/steup.interface';
 import { RoboService } from 'src/app/shared/services/robo/service/robo.service';
-import { UserBotsService } from 'src/app/shared/services/user-bots.service';
+import { UserBotsService } from 'src/app/shared/services/user-bots/user-bots.service';
 
 @Component({
   selector: 'app-bot-details',
@@ -28,7 +28,7 @@ export class BotDetailsPage {
   private _loading = inject(LoadingController);
   private _userBotService = inject(UserBotsService);
   private _roboService = inject(RoboService);
-  readonly state = inject(Location).getState() as { item: ISetupData };
+  readonly state = inject(Location).getState() as { item: ISetupDataPartial };
   readonly loading = signal<boolean>(false);
 
   async toggle(): Promise<void> {
@@ -57,6 +57,12 @@ export class BotDetailsPage {
         )
         .subscribe(() => this._back());
     }
+  }
+
+  async toggleReactivate(): Promise<void> {
+    this._userBotService
+      .toggleReactivate(this.state.item.id, !this.state.item.reactivate)
+      .subscribe(() => this._back());
   }
 
   remove(): void {

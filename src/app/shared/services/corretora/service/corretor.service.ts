@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { MOCK_TRADES_INFO } from 'mocks/trades-info.mocks';
 import { MOCK_TRADES } from 'mocks/trades.mocks';
+import { MOCK_WITHDRAWALS } from 'mocks/withdrawals.mocks';
 import { delay, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ITradeInfo } from '../interface/trade-info.interface';
 import { ITrades } from '../interface/trades.interface';
 import { IUserToken } from '../interface/user-token.interface';
 import { IWithdrawals } from '../interface/withdrawals.interface';
-import { MOCK_WITHDRAWALS } from 'mocks/withdrawals.mocks';
 
 @Injectable()
 export class CorretoraService {
@@ -39,6 +39,9 @@ export class CorretoraService {
           if (it.fromBot) {
             switch (it.result) {
               case 'DRAW':
+                pnl = it.amount;
+                break;
+              case 'CANCELLED':
                 pnl = it.amount;
                 break;
               case 'WON':
