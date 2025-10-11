@@ -67,10 +67,12 @@ export class ChartForceBarComponent {
   readonly total = input.required<number>();
   readonly expenses = input.required<number>();
   readonly win = computed(() => {
+    if (this.total() <= 0) return 50;
     const totalValue = Math.abs(this.expenses()) + this.total();
     return (this.total() * 100) / totalValue;
   });
   readonly loss = computed(() => {
+    if (this.total() <= 0) return 50;
     const totalValue = Math.abs(this.expenses()) + this.total();
     return (Math.abs(this.expenses()) * 100) / totalValue;
   });
