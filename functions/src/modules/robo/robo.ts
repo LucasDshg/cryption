@@ -78,13 +78,11 @@ const activeBots = functions.pubsub
       functions.logger.debug('start verification bots');
       const users = await user.getAll();
 
-      users.forEach(async (user) => {
+      for (const user of users) {
         const bots = await userBots.getDisabled(user.id);
-
-        bots.forEach(async (bot) => {
+        for (const bot of bots) {
           const result = await active(user.bot, bot.id);
           const userFcm = await fcm.getTokenUserById(user.id);
-
           if (userFcm) {
             if (result === 201) {
               await adm.messaging().sendEach([
@@ -108,8 +106,9 @@ const activeBots = functions.pubsub
               ]);
             }
           }
-        });
-      });
+        }
+      }
+
       functions.logger.debug('end verification bots');
     } catch (error) {
       console.log(error);
