@@ -18,6 +18,11 @@ export const TRADE_RESULT_DIC = new Map<
 TRADE_RESULT_DIC.set('WON', { color: 'success', name: 'Win', symbol: '' });
 TRADE_RESULT_DIC.set('LOST', { color: 'danger', name: 'Loss', symbol: '-' });
 TRADE_RESULT_DIC.set('DRAW', { color: 'medium', name: 'Draw', symbol: '' });
+TRADE_RESULT_DIC.set('CANCELLED', {
+  color: 'medium',
+  name: 'Draw',
+  symbol: '',
+});
 
 export const TRADE_DIRECTION_DIC = new Map<
   string,
